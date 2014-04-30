@@ -258,14 +258,14 @@ int id beginning 0x7f050011
 int id checkbox 0x7f05002d
 int id collapseActionView 0x7f05000d
 int id container 0x7f05003d
-int id createMember 0x7f050043
+int id create_member 0x7f050044
 int id default_activity_button 0x7f050028
 int id dialog 0x7f05000e
 int id disableHome 0x7f050008
 int id drawerList 0x7f05003e
 int id drawer_layout 0x7f05003c
 int id dropdown 0x7f05000f
-int id editMember 0x7f050044
+int id editMember 0x7f050043
 int id edit_query 0x7f050030
 int id end 0x7f050013
 int id expand_activities_button 0x7f050026

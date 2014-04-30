@@ -40,6 +40,7 @@ public class MemberListFrag extends ListFragment implements
 	public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
+		setRetainInstance(true);
 		
 		int[] to = new int[]{
 				R.id.tvId

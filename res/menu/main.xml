@@ -8,5 +8,10 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never"/>
-
+  <item
+        android:id="@+id/editMember"
+        android:showAsAction="always"
+        android:icon="@drawable/ic_action_edit"
+        android:title="@string/action_edit_member"
+        />
 </menu>

@@ -8,20 +8,13 @@
         android:showAsAction="never"
         android:title="@string/action_settings"/>
     <item
-        android:id="@+id/createMember"
+        android:id="@+id/create_member"
         android:showAsAction="always"
         android:icon="@drawable/ic_action_new"
         android:title="@string/action_create_member"
-        >
+        android:orderInCategory="100" android:titleCondensed="New Member">
     </item>
     
     
-    <item
-        android:id="@+id/editMember"
-        android:showAsAction="always"
-        android:icon="@drawable/ic_action_edit"
-        android:title="@string/action_edit_member"
-        >
-    </item>
 
 </menu>
