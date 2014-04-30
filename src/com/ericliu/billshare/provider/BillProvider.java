@@ -1,6 +1,6 @@
-package com.billshare.provider;
+package com.ericliu.billshare.provider;
 
-import static com.billshare.provider.DatabaseConstants.*;
+import static com.ericliu.billshare.provider.DatabaseConstants.*;
 
 import java.sql.SQLException;
 
@@ -15,7 +15,7 @@ import android.net.Uri;
 
 public class BillProvider extends ContentProvider {
 
-	public static final String AUTH = "com.billshare.provdier";
+	public static final String AUTH = "com.ericliu.billshare.provdier";
 
 	public static final Uri BILL_URI = Uri.parse("content://" + AUTH + "/bill");
 	public static final Uri HOUSEMATE_URI = Uri.parse("content://" + AUTH

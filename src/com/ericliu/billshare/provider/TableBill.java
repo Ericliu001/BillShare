@@ -1,6 +1,6 @@
-package com.billshare.provider;
+package com.ericliu.billshare.provider;
 
-import static com.billshare.provider.DatabaseConstants.*;
+import static com.ericliu.billshare.provider.DatabaseConstants.*;
 import android.database.sqlite.SQLiteDatabase;
 
 public class TableBill {

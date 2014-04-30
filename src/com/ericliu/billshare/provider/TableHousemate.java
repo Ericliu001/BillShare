@@ -1,5 +1,5 @@
-package com.billshare.provider;
-import static com.billshare.provider.DatabaseConstants.*;
+package com.ericliu.billshare.provider;
+import static com.ericliu.billshare.provider.DatabaseConstants.*;
 import android.database.sqlite.SQLiteDatabase;
 
 

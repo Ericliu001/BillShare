@@ -1,4 +1,4 @@
-package com.billshare.provider;
+package com.ericliu.billshare.provider;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
