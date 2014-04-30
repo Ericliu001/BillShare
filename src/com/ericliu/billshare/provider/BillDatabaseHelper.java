@@ -1,10 +1,12 @@
 package com.ericliu.billshare.provider;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import static com.ericliu.billshare.provider.DatabaseConstants.*;
 public class BillDatabaseHelper extends SQLiteOpenHelper {
 	
 	
@@ -32,6 +34,25 @@ public class BillDatabaseHelper extends SQLiteOpenHelper {
 		TableBill.onCreate(db);
 		TablePayment.onCreate(db);
 		TableHousemate.onCreate(db);
+		
+		
+		ContentValues values = new ContentValues();
+		
+		
+		values.put(COL_FIRSTNAME, "Eric");
+		values.put(COL_LASTNAME, "Liu");
+		db.insert(TABLE_HOUSEMATE, null, values);
+		
+		
+		values.put(COL_FIRSTNAME, "Simon");
+		values.put(COL_LASTNAME, "Zac");
+		db.insert(TABLE_HOUSEMATE, null, values);
+		
+		
+		values.put(COL_FIRSTNAME, "Ellis");
+		values.put(COL_LASTNAME, "Ally");
+		
+		db.insert(TABLE_HOUSEMATE, null, values);
 	}
 
 	@Override

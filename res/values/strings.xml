@@ -7,4 +7,15 @@
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
 
+    <string-array name="drawer_rows">
+        <item>Quick Even Division</item>
+        <item>Calculate by Days</item>
+        <item>Payment History</item>
+        <item>Housemate Management</item>
+    </string-array>
+
+    <string name="title_activity_memeber">Memebers</string>
+    <string name="action_create_member">Create Member</string>
+    <string name="action_edit_member">Edit Member</string>
+
 </resources>

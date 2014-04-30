@@ -19,7 +19,7 @@ public class TablePayment {
 			+ COL_PAYEE_DAYS + " integer, "
 			+ COL_PAYEE_START_DATE + " datetime, "
 			+ COL_PAYEE_END_DATE + " datetime, "
-			+ COL_PAYEE_AMOUNT + " numeric,  "
+			+ COL_PAYEE_AMOUNT + " numeric "
 			+ " ); "
 			;
 
