@@ -1,15 +1,11 @@
 package com.ericliu.billshare.activity;
 
-import com.ericliu.billshare.R;
-import com.ericliu.billshare.R.id;
-import com.ericliu.billshare.R.layout;
-import com.ericliu.billshare.R.menu;
-import com.ericliu.billshare.provider.BillProvider;
-import com.ericliu.billshare.provider.DatabaseConstants;
+import java.lang.reflect.Array;
 
 import android.app.Activity;
-import android.app.ActionBar;
 import android.app.Fragment;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,9 +17,19 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.os.Build;
 
-public class BillEditActivity extends Activity {
+import com.ericliu.billshare.MyApplication;
+import com.ericliu.billshare.R;
+import com.ericliu.billshare.model.Bill;
+import com.ericliu.billshare.model.Model;
+import com.ericliu.billshare.provider.BillProvider;
+import com.ericliu.billshare.provider.DatabaseConstants;
+
+import static com.ericliu.billshare.provider.DatabaseConstants.*;
+
+public class BillEditActivity extends EditActivity {
+
+	private Bill mBill;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +46,6 @@ public class BillEditActivity extends Activity {
 		}
 	}
 
-
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
@@ -48,9 +53,15 @@ public class BillEditActivity extends Activity {
 
 		private long id;
 
+		private BillEditActivity mCallBack;
+
 		private Spinner spType;
 		private EditText etAmount;
 		private CheckBox cbPaid;
+
+		private static final String[] PROJECTION = { COL_ROWID, COL_TYPE,
+				COL_AMOUNT, COL_BILLING_START, COL_BILLING_END, COL_DUE_DATE,
+				COL_PAID };
 
 		public static Fragment newInstance(long id) {
 			BillEditFragment frag = new BillEditFragment();
@@ -62,6 +73,13 @@ public class BillEditActivity extends Activity {
 		}
 
 		@Override
+		public void onAttach(Activity activity) {
+
+			super.onAttach(activity);
+			mCallBack = (BillEditActivity) activity;
+		}
+
+		@Override
 		public void onCreate(Bundle savedInstanceState) {
 
 			super.onCreate(savedInstanceState);
@@ -69,7 +87,44 @@ public class BillEditActivity extends Activity {
 			setHasOptionsMenu(true);
 
 			id = getArguments().getLong(DatabaseConstants.COL_ROWID);
+			if (id > 0) {
 
+				fillForm(id);
+			}
+		}
+
+		private void fillForm(long id) {
+			Cursor c = null;
+			try {
+				Uri uri = Uri.withAppendedPath(BillProvider.BILL_URI,
+						String.valueOf(id));
+				c = MyApplication.getInstance().getContentResolver()
+						.query(uri, PROJECTION, null, null, null);
+
+				c.moveToFirst();
+
+				int position = 0;
+				String type = c.getString(c.getColumnIndexOrThrow(COL_TYPE));
+
+				String[] spinnerItems = getResources().getStringArray(
+						R.array.bill_type_spinner_items);
+				for (int i = 0; i < spinnerItems.length; i++) {
+					if (type.equals(spinnerItems[i])) {
+						position = i;
+					}
+				}
+
+				spType.setSelection(position, true);
+				etAmount.setText(String.valueOf(c.getDouble(c.getColumnIndex(COL_AMOUNT))));
+				cbPaid.setChecked(c.getInt(c.getColumnIndex(COL_PAID)) > 0 ? true : false);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if (c != null) {
+					c.close();
+				}
+			}
 		}
 
 		@Override
@@ -82,39 +137,66 @@ public class BillEditActivity extends Activity {
 			etAmount = (EditText) rootView.findViewById(R.id.etAmount);
 			cbPaid = (CheckBox) rootView.findViewById(R.id.cbPaid);
 
-			
-			ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(getActivity(),
-					android.R.layout.simple_spinner_item, getResources()
-					.getStringArray(R.array.bill_type_spinner_items));
+			ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(
+					getActivity(), android.R.layout.simple_spinner_item,
+					getResources().getStringArray(
+							R.array.bill_type_spinner_items));
 			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			
+
 			spType.setAdapter(adapter);
 
 			return rootView;
 		}
-		
+
 		@Override
 		public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-			
-			
+
 			inflater.inflate(R.menu.bill_edit, menu);
 		}
-		
+
 		@Override
 		public boolean onOptionsItemSelected(MenuItem item) {
-			
+
 			switch (item.getItemId()) {
 			case R.id.saveBill:
-				
+
+				saveBill();
+				getActivity().finish();
+
 				break;
 
 			default:
 				break;
 			}
-			
+
 			return super.onOptionsItemSelected(item);
 		}
-		
+
+		private void saveBill() {
+			Bill bill = new Bill();
+
+			if (id > 0) {
+				bill.setId(id);
+
+			}
+
+			bill.setType(spType.getSelectedItem().toString());
+			bill.setAmount(Double.valueOf(etAmount.getText().toString()));
+			bill.setPaid(cbPaid.isChecked() ? 1 : 0);
+
+			mCallBack.setBill(bill);
+		}
+
+	}
+
+	public void setBill(Bill bill) {
+		this.mBill = bill;
+	}
+
+	@Override
+	public Model getModel() {
+
+		return mBill;
 	}
 
 }

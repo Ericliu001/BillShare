@@ -36,6 +36,7 @@ public class Member extends Model {
 			getCr().update(uri, values, null, null);
 		}else{
 			uri = getCr().insert(BillProvider.HOUSEMATE_URI, values);
+			this.id = Integer.valueOf(uri.getLastPathSegment());
 		}
 
 		return uri;
