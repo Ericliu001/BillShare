@@ -22,10 +22,24 @@ public class TableBill {
 			;
 	
 	// create view
-
+	private static final String VIEW_CREATE = "create view "
+			+ VIEW_BILL
+			+ " as select "
+			+ COL_ROWID + " , "
+			+ COL_TYPE + " , "
+			+ COL_AMOUNT +  " , "
+			+ COL_BILLING_START + " , "
+			+ COL_BILLING_END + " , "
+			+ COL_DUE_DATE + " ,  "
+			+ COL_PAID 
+			+ " from  "
+			+ TABLE_BILL
+			+ " where  " + COL_DELETED + " = 0"
+			+";";
 
 	public static void onCreate(SQLiteDatabase db){
 		db.execSQL(TABLE_CREATE);
+		db.execSQL(VIEW_CREATE);
 	}
 	
 	public static void onUpgrade(SQLiteDatabase db){

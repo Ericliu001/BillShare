@@ -33,7 +33,7 @@ public class BillDatabaseHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		TableBill.onCreate(db);
 		TablePayment.onCreate(db);
-		TableHousemate.onCreate(db);
+		TableMember.onCreate(db);
 		
 		
 		ContentValues values = new ContentValues();
@@ -41,25 +41,25 @@ public class BillDatabaseHelper extends SQLiteOpenHelper {
 		
 		values.put(COL_FIRSTNAME, "Eric");
 		values.put(COL_LASTNAME, "Liu");
-		db.insert(TABLE_HOUSEMATE, null, values);
+		db.insert(TABLE_MEMBER, null, values);
 		
 		
 		values.put(COL_FIRSTNAME, "Simon");
 		values.put(COL_LASTNAME, "Zac");
-		db.insert(TABLE_HOUSEMATE, null, values);
+		db.insert(TABLE_MEMBER, null, values);
 		
 		
 		values.put(COL_FIRSTNAME, "Ellis");
 		values.put(COL_LASTNAME, "Ally");
 		
-		db.insert(TABLE_HOUSEMATE, null, values);
+		db.insert(TABLE_MEMBER, null, values);
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		TableBill.onUpgrade(db);
 		TablePayment.onUpgrade(db);
-		TableHousemate.onUpgrade(db);
+		TableMember.onUpgrade(db);
 	}
 
 }

@@ -21,5 +21,6 @@
     <string name="title_activity_bill">Bills</string>
     <string name="create_bill">Create Bill</string>
     <string name="title_activity_bill_edit">BillEditActivity</string>
+    <string name="create_member">Create Member</string>
 
 </resources>

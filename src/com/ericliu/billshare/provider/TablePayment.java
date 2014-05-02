@@ -15,7 +15,7 @@ public class TablePayment {
 			+ COL_ROWID + " integer primary key autoincrement, "
 			+ COL_PAID_TIME + " datetime, "
 			+ COL_BILL_ID +  " integer not null references " + TABLE_BILL + "(" + COL_ROWID+"),"
-			+ COL_PAYEE_ID + " integer not null references " + TABLE_HOUSEMATE + "("+ COL_ROWID+"),"
+			+ COL_PAYEE_ID + " integer not null references " + TABLE_MEMBER + "("+ COL_ROWID+"),"
 			+ COL_PAYEE_DAYS + " integer, "
 			+ COL_PAYEE_START_DATE + " datetime, "
 			+ COL_PAYEE_END_DATE + " datetime, "

@@ -9,6 +9,7 @@ public class DatabaseConstants {
 	
 	// constants for table bill
 	public static final String TABLE_BILL = "table_bill";
+	public static final String VIEW_BILL = "view_bill";
 	public static final String COL_TYPE = "bill_type";
 	public static final String COL_AMOUNT = "amount";
 	public static final String COL_BILLING_START = "billing_period_start_date";
@@ -29,10 +30,11 @@ public class DatabaseConstants {
 	public static final String COL_PAYEE_AMOUNT = "payee_amount";
 	
 	// constants for table housemate
-	public static final String TABLE_HOUSEMATE = "table_housemate";
+	public static final String TABLE_MEMBER = "table_member";
+	public static final String VIEW_MEMBER = "view_member";
 	public static final String COL_FIRSTNAME = "firstname";
 	public static final String COL_LASTNAME = "lastname";
-	public static final String COL_TELEPHONE = "telephone";
+	public static final String COL_PHONE = "telephone";
 	public static final String COL_EMAIL = "email";
 	public static final String COL_MOVE_IN_DATE = "move_in_date";
 	public static final String COL_MOVE_OUT_DATE = "move_out_date";

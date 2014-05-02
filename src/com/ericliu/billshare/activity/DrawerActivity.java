@@ -16,7 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.billshare.R;
+import com.ericliu.billshare.R;
 
 public class DrawerActivity extends Activity implements
 		OnItemClickListener {

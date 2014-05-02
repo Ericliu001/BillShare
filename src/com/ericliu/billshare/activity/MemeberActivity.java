@@ -2,7 +2,8 @@ package com.ericliu.billshare.activity;
 
 import static com.ericliu.billshare.provider.DatabaseConstants.COL_FIRSTNAME;
 import static com.ericliu.billshare.provider.DatabaseConstants.COL_LASTNAME;
-import android.app.ListActivity;
+import android.app.Activity;
+import android.app.ListFragment;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
 import android.content.Loader;
@@ -12,8 +13,7 @@ import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.billshare.R;
-import com.ericliu.billshare.fragment.MemberListFrag;
+import com.ericliu.billshare.R;
 import com.ericliu.billshare.provider.BillProvider;
 import com.ericliu.billshare.provider.DatabaseConstants;
 
@@ -26,8 +26,10 @@ public class MemeberActivity extends DrawerActivity {
 		super.onCreate(savedInstanceState);
 
 		if (getFragmentManager().findFragmentByTag(FRAGMENT_TAG) == null) {
-			getFragmentManager().beginTransaction()
-					.replace(R.id.container, new MemberListFrag(), FRAGMENT_TAG).commit();
+			getFragmentManager()
+					.beginTransaction()
+					.replace(R.id.container, new MemberListFrag(), FRAGMENT_TAG)
+					.commit();
 		}
 
 	}
@@ -50,6 +52,56 @@ public class MemeberActivity extends DrawerActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	public static class MemberListFrag extends ListFragment implements
+			LoaderCallbacks<Cursor> {
+
+		private static final String[] PROJECTION = new String[] {
+				DatabaseConstants.COL_ROWID, COL_FIRSTNAME, COL_LASTNAME
+
+		};
+
+		private SimpleCursorAdapter adapter = null;
+
+		@Override
+		public void onAttach(Activity activity) {
+
+			super.onAttach(activity);
+			activity.getLoaderManager().initLoader(0, null, this);
+		}
+
+		@Override
+		public void onCreate(Bundle savedInstanceState) {
+
+			super.onCreate(savedInstanceState);
+			setRetainInstance(true);
+
+			int[] to = new int[] { R.id.tvId, R.id.tvFristName, R.id.tvLastName };
+
+			adapter = new SimpleCursorAdapter(getActivity(),
+					R.layout.member_row, null, PROJECTION, to, 0);
+
+			setListAdapter(adapter);
+		}
+
+		@Override
+		public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+
+			return new CursorLoader(getActivity(), BillProvider.HOUSEMATE_URI,
+					PROJECTION, null, null, null);
+		}
+
+		@Override
+		public void onLoadFinished(Loader<Cursor> loader, Cursor c) {
+			adapter.swapCursor(c);
+		}
+
+		@Override
+		public void onLoaderReset(Loader<Cursor> loader) {
+			adapter.swapCursor(null);
+		}
+
 	}
 
 }

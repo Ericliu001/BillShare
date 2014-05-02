@@ -12,6 +12,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.text.TextUtils;
 
 public class BillProvider extends ContentProvider {
 
@@ -64,7 +65,7 @@ public class BillProvider extends ContentProvider {
 		switch (uriMatch) {
 		case BILLS:
 
-			qb.setTables(TABLE_BILL);
+			qb.setTables(VIEW_BILL);
 			break;
 
 		case BILL_ID:
@@ -76,12 +77,12 @@ public class BillProvider extends ContentProvider {
 			
 		case HOUSEMATES:
 
-			qb.setTables(TABLE_HOUSEMATE);
+			qb.setTables(VIEW_MEMBER);
 			break;
 
 		case HOUSEMATE_ID:
 
-			qb.setTables(TABLE_HOUSEMATE);
+			qb.setTables(TABLE_MEMBER);
 			qb.appendWhere(COL_ROWID + " = " + uri.getLastPathSegment() );
 			break;
 			
@@ -130,7 +131,7 @@ public class BillProvider extends ContentProvider {
 			
 			
 		case HOUSEMATES:
-			rowID = db.insert(TABLE_HOUSEMATE, null, values);
+			rowID = db.insert(TABLE_MEMBER, null, values);
 			newUri = ContentUris.withAppendedId(HOUSEMATE_URI, rowID);
 			break;
 
@@ -173,34 +174,42 @@ public class BillProvider extends ContentProvider {
 		int count;
 		int uriMatch = URI_MATCHER.match(uri);
 		
+		String where;
+		if (TextUtils.isEmpty(selection)) {
+			where = "";
+			
+		}else {
+			where = " AND ( " + selection + " )";
+		}
+		
 		switch (uriMatch) {
 		case BILLS:
-			count = db.update(TABLE_BILL, values, selection, selectionArgs);
+			count = db.update(TABLE_BILL, values, where, selectionArgs);
 			break;
 
 		case BILL_ID:
 			segment = uri.getLastPathSegment();
-			count = db.update(TABLE_BILL, values, "_id=" + segment + selection, selectionArgs);
+			count = db.update(TABLE_BILL, values, "_id=" + segment + where, selectionArgs);
 			break;
 			
 			
 		case HOUSEMATES:
-			count = db.update(TABLE_HOUSEMATE, values, selection, selectionArgs);
+			count = db.update(TABLE_MEMBER, values, where, selectionArgs);
 			break;
 
 		case HOUSEMATE_ID:
 			segment = uri.getLastPathSegment();
-			count = db.update(TABLE_HOUSEMATE, values, "_id=" + segment + selection, selectionArgs);
+			count = db.update(TABLE_MEMBER, values, "_id=" + segment + where, selectionArgs);
 			break;
 			
 			
 		case PAYMENTS:
-			count = db.update(TABLE_PAYMENT, values, selection, selectionArgs);
+			count = db.update(TABLE_PAYMENT, values, where, selectionArgs);
 			break;
 
 		case PAYMENT_ID:
 			segment = uri.getLastPathSegment();
-			count = db.update(TABLE_PAYMENT, values, "_id=" + segment + selection, selectionArgs);
+			count = db.update(TABLE_PAYMENT, values, "_id=" + segment + where, selectionArgs);
 			break;
 
 		default:
