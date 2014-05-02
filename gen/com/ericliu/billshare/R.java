@@ -1227,9 +1227,10 @@ containing a value of this type.
         public static final int support_simple_spinner_dropdown_item=0x7f03001f;
     }
     public static final class menu {
-        public static final int main=0x7f0d0000;
-        public static final int member_edit=0x7f0d0001;
-        public static final int memeber=0x7f0d0002;
+        public static final int bill=0x7f0d0000;
+        public static final int main=0x7f0d0001;
+        public static final int member_edit=0x7f0d0002;
+        public static final int memeber=0x7f0d0003;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 

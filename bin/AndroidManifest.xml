@@ -39,6 +39,10 @@
             android:name="com.ericliu.billshare.activity.MemberEditActivity"
             android:label="@string/title_activity_member_edit" >
         </activity>
+        <activity
+            android:name="com.ericliu.billshare.activity.BillActivity"
+            android:label="@string/title_activity_bill" >
+        </activity>
     </application>
 
 </manifest>

@@ -24,7 +24,10 @@ public class DrawerActivity extends Activity implements
 	private static final int QUICK_EVEN_DIVISION = 0;
 	private static final int CALCULATE_BY_DAYS = 1;
 	private static final int PAYMENT_HISTORY = 2;
-	private static final int HOUSEMATE_MANAGEMENT = 3;
+	private static final int HOUSEMATES = 3;
+	private static final int MANAGING_BILLS = 4;
+	
+	
 	private DrawerLayout drawerLayout = null;
 	private ActionBarDrawerToggle toggle;
 	private ListView drawerList;
@@ -94,6 +97,7 @@ public class DrawerActivity extends Activity implements
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
+		Intent i;
 
 		switch (position) {
 		case QUICK_EVEN_DIVISION:
@@ -108,8 +112,13 @@ public class DrawerActivity extends Activity implements
 
 			break;
 
-		case HOUSEMATE_MANAGEMENT:
-			Intent i = new Intent(this, MemeberActivity.class);
+		case HOUSEMATES:
+			 i = new Intent(this, MemeberActivity.class);
+			startActivity(i);
+			break;
+			
+		case MANAGING_BILLS:
+			 i = new Intent(this, BillActivity.class);
 			startActivity(i);
 			break;
 

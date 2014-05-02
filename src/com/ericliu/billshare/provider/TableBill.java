@@ -12,11 +12,11 @@ public class TableBill {
 			+ "("
 			+ COL_ROWID + " integer primary key autoincrement, "
 			+ COL_TYPE + " text, "
-			+ COL_AMOUNT +  " numeric not null, "
+			+ COL_AMOUNT +  " real not null, "
 			+ COL_BILLING_START + " datetime, "
 			+ COL_BILLING_END + " datetime, "
 			+ COL_DUE_DATE + " datetime,  "
-			+ COL_PAID + " boolean, "
+			+ COL_PAID + " boolean default 0, "
 			+ COL_DELETED + " boolean not null default 0 "
 			+ " ); "
 			;
