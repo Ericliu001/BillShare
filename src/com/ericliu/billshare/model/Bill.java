@@ -26,6 +26,7 @@ public class Bill extends Model {
 		
 		ContentValues values = new ContentValues();
 		values.put(COL_TYPE, type);
+		values.put(COL_AMOUNT, amount);
 		values.put(COL_BILLING_START, startDate);
 		values.put(COL_BILLING_END, endDate);
 		values.put(COL_DUE_DATE, dueDate);
@@ -43,7 +44,7 @@ public class Bill extends Model {
 		}
 		
 
-		return null;
+		return uri;
 	}
 
 

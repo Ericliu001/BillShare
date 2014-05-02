@@ -62,18 +62,18 @@ public class BillDatabaseHelper extends SQLiteOpenHelper {
 		db.insert(TABLE_BILL, null, values);
 		
 		values = new ContentValues();
-		values.put(COL_TYPE, "water");
+		values.put(COL_TYPE, "Water");
 		values.put(COL_AMOUNT, 34.25);
 		db.insert(TABLE_BILL, null, values);
 		
 		values = new ContentValues();
-		values.put(COL_TYPE, "gas");
+		values.put(COL_TYPE, "Gas");
 		values.put(COL_AMOUNT, 1644.45);
 		values.put(COL_PAID, 1);
 		db.insert(TABLE_BILL, null, values);
 		
 		values = new ContentValues();
-		values.put(COL_TYPE, "water");
+		values.put(COL_TYPE, "Water");
 		values.put(COL_AMOUNT, 700.45);
 		values.put(COL_PAID, 1);
 		db.insert(TABLE_BILL, null, values);

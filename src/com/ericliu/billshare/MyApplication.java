@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.ContentResolver;
 
 public class MyApplication extends Application {
-	
+	public static boolean isTesting = true;
 	public static MyApplication mApp;
 	
 	

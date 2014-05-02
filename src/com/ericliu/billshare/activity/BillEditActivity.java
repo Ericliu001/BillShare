@@ -7,6 +7,7 @@ import android.app.Fragment;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -86,45 +87,6 @@ public class BillEditActivity extends EditActivity {
 			setRetainInstance(true);
 			setHasOptionsMenu(true);
 
-			id = getArguments().getLong(DatabaseConstants.COL_ROWID);
-			if (id > 0) {
-
-				fillForm(id);
-			}
-		}
-
-		private void fillForm(long id) {
-			Cursor c = null;
-			try {
-				Uri uri = Uri.withAppendedPath(BillProvider.BILL_URI,
-						String.valueOf(id));
-				c = MyApplication.getInstance().getContentResolver()
-						.query(uri, PROJECTION, null, null, null);
-
-				c.moveToFirst();
-
-				int position = 0;
-				String type = c.getString(c.getColumnIndexOrThrow(COL_TYPE));
-
-				String[] spinnerItems = getResources().getStringArray(
-						R.array.bill_type_spinner_items);
-				for (int i = 0; i < spinnerItems.length; i++) {
-					if (type.equals(spinnerItems[i])) {
-						position = i;
-					}
-				}
-
-				spType.setSelection(position, true);
-				etAmount.setText(String.valueOf(c.getDouble(c.getColumnIndex(COL_AMOUNT))));
-				cbPaid.setChecked(c.getInt(c.getColumnIndex(COL_PAID)) > 0 ? true : false);
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				if (c != null) {
-					c.close();
-				}
-			}
 		}
 
 		@Override
@@ -144,8 +106,63 @@ public class BillEditActivity extends EditActivity {
 			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 			spType.setAdapter(adapter);
+			
+
+			id = getArguments().getLong(DatabaseConstants.COL_ROWID);
+			if (MyApplication.isTesting) {
+				Log.i("eric", "id is: " + id);
+			}
+
+			if (id > 0) {
+
+				fillForm(id);
+			}
 
 			return rootView;
+		}
+
+		private void fillForm(long id) {
+			Cursor c = null;
+			try {
+				Uri uri = Uri.withAppendedPath(BillProvider.BILL_URI,
+						String.valueOf(id));
+				c = MyApplication.getInstance().getContentResolver()
+						.query(uri, PROJECTION, null, null, null);
+		
+				c.moveToFirst();
+		
+				int position = 0;
+				String type = c.getString(c.getColumnIndexOrThrow(COL_TYPE));
+				if (MyApplication.isTesting) {
+					Log.i("eric", "type is: " + type );
+				}
+		
+				String[] spinnerItems = getResources().getStringArray(
+						R.array.bill_type_spinner_items);
+				for (int i = 0; i < spinnerItems.length; i++) {
+					
+					if (MyApplication.isTesting) {
+						Log.i("eric", "type is: " + type + " looping to: " + spinnerItems[i]);
+					}
+					if (type.equals(spinnerItems[i])) {
+						position = i;
+					}
+				}
+		
+				spType.setSelection(position, true);
+		
+				etAmount.setText(c.getString(c.getColumnIndex(COL_AMOUNT)));
+		
+				cbPaid.setChecked(c.getInt(c.getColumnIndex(COL_PAID)) > 0 ? true
+						: false);
+		
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if (c != null) {
+					c.close();
+				}
+			}
 		}
 
 		@Override
@@ -183,8 +200,13 @@ public class BillEditActivity extends EditActivity {
 			bill.setType(spType.getSelectedItem().toString());
 			bill.setAmount(Double.valueOf(etAmount.getText().toString()));
 			bill.setPaid(cbPaid.isChecked() ? 1 : 0);
+			
+			if (MyApplication.isTesting) {
+				Log.i("eric", "amount: " + Double.valueOf(etAmount.getText().toString()) );
+			}
 
 			mCallBack.setBill(bill);
+			mCallBack.saveToDb();
 		}
 
 	}

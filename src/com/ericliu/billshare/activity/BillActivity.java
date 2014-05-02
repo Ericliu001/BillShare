@@ -31,7 +31,6 @@ public class BillActivity extends DrawerActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
 
 		if (getFragmentManager().findFragmentByTag("saved") == null) {
 			getFragmentManager().beginTransaction()
