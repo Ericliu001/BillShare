@@ -23,18 +23,14 @@ import com.ericliu.billshare.provider.DatabaseConstants;
 
 import static com.ericliu.billshare.provider.DatabaseConstants.*;
 
-
 public class MemberEditActivity extends EditActivity {
 
 	private Member mMember = null;
-	
 
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
 
 		Bundle data = getIntent().getExtras();
 		long id = -1;
@@ -51,17 +47,17 @@ public class MemberEditActivity extends EditActivity {
 		}
 	}
 
-
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
 	public static class MemberEditFragment extends Fragment {
-		
+
 		private EditText etFirstName;
 		private EditText etLastName;
 		private EditText etPhone;
 		private EditText etEmail;
-		
+		private long id;
+
 		private MemberEditActivity mCallBack = null;
 
 		public static MemberEditFragment newInstance(long id) {
@@ -71,21 +67,20 @@ public class MemberEditActivity extends EditActivity {
 			frag.setArguments(args);
 			return frag;
 		}
-		
-		
+
 		@Override
 		public void onAttach(Activity activity) {
-			
+
 			super.onAttach(activity);
 			mCallBack = (MemberEditActivity) activity;
 		}
-		
+
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
-			
+
 			super.onCreate(savedInstanceState);
 			setHasOptionsMenu(true);
-			
+
 			setRetainInstance(true);
 		}
 
@@ -94,63 +89,61 @@ public class MemberEditActivity extends EditActivity {
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_member_edit,
 					container, false);
-			
+
 			etFirstName = (EditText) rootView.findViewById(R.id.etFirstName);
 			etLastName = (EditText) rootView.findViewById(R.id.etLastName);
 			etPhone = (EditText) rootView.findViewById(R.id.etPhone);
 			etEmail = (EditText) rootView.findViewById(R.id.etEmail);
-			
-			long id = getArguments().getLong(COL_ROWID);
+
+			id = getArguments().getLong(COL_ROWID);
 			if (id > 0) {
-				
+
 				fillForm(id);
 			}
-			
-			
+
 			return rootView;
 		}
-		
-		
+
 		private void fillForm(long id) {
-			Uri uri = Uri.withAppendedPath(BillProvider.HOUSEMATE_URI, String.valueOf(id));
-			String[] projection = {
-					COL_ROWID
-					,COL_FIRSTNAME
-					,COL_LASTNAME
-					,COL_PHONE
-					,COL_EMAIL
-					
+			Uri uri = Uri.withAppendedPath(BillProvider.HOUSEMATE_URI,
+					String.valueOf(id));
+			String[] projection = { COL_ROWID, COL_FIRSTNAME, COL_LASTNAME,
+					COL_PHONE, COL_EMAIL
+
 			};
-			
+
 			Cursor c = null;
 			try {
-				c = MyApplication.getInstance().getContentResolver().query(uri, projection, null, null, null);
+				c = MyApplication.getInstance().getContentResolver()
+						.query(uri, projection, null, null, null);
 				c.moveToFirst();
-				
-				etFirstName.setText(c.getString(c.getColumnIndexOrThrow(COL_FIRSTNAME)));
-				etLastName.setText(c.getString(c.getColumnIndexOrThrow(COL_LASTNAME)));
+
+				etFirstName.setText(c.getString(c
+						.getColumnIndexOrThrow(COL_FIRSTNAME)));
+				etLastName.setText(c.getString(c
+						.getColumnIndexOrThrow(COL_LASTNAME)));
 				etPhone.setText(c.getString(c.getColumnIndexOrThrow(COL_PHONE)));
 				etEmail.setText(c.getString(c.getColumnIndexOrThrow(COL_EMAIL)));
-				
+
 			} catch (Exception e) {
 				e.printStackTrace();
-			}finally{
+			} finally {
 				if (c != null) {
 					c.close();
 				}
 			}
-			
+
 		}
 
 		@Override
 		public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-			
+
 			inflater.inflate(R.menu.member_edit, menu);
 		}
-		
+
 		@Override
 		public boolean onOptionsItemSelected(MenuItem item) {
-			
+
 			switch (item.getItemId()) {
 			case R.id.saveMember:
 				saveMember();
@@ -160,30 +153,26 @@ public class MemberEditActivity extends EditActivity {
 			default:
 				break;
 			}
-			
-			
+
 			return super.onOptionsItemSelected(item);
 		}
 
 		private void saveMember() {
 			Member member = new Member();
-			
-			long id = getArguments().getLong(COL_ROWID);
+
 			if (id > 0) {
 				member.setId(id);
 			}
-			
+
 			member.setFirstName(etFirstName.getText().toString());
 			member.setLastName(etLastName.getText().toString());
 			member.setPhone(etPhone.getText().toString());
 			member.setEmail(etEmail.getText().toString());
-			
+
 			mCallBack.setMember(member);
 			mCallBack.saveToDb();
 		}
-		
-		
-		
+
 	}
 
 	public void setMember(Member member) {

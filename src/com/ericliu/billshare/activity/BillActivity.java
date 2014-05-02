@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.ListFragment;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -123,6 +124,11 @@ public class BillActivity extends DrawerActivity {
 		public void onListItemClick(ListView l, View v, int position, long id) {
 
 			super.onListItemClick(l, v, position, id);
+			
+			Intent i = new Intent(getActivity(), BillEditActivity.class);
+			
+			i.putExtra(DatabaseConstants.COL_ROWID, id);
+			startActivity(i);
 		}
 
 		@Override

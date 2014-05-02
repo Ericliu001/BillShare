@@ -27,6 +27,8 @@ public class MemeberActivity extends DrawerActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		long id = getIntent().getLongExtra(DatabaseConstants.COL_ROWID, -1);
 
 		if (getFragmentManager().findFragmentByTag(FRAGMENT_TAG) == null) {
 			getFragmentManager()

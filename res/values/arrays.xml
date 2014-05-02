@@ -7,5 +7,12 @@
         <item >Housemates</item>
         <item >Managing Bills</item>
     </string-array>
+    <string-array name="bill_type_spinner_items">
+        <item >Electricity</item>
+        <item >Water</item>
+        <item >Gas</item>
+        <item >Internet</item>
+        <item >Other</item>
+    </string-array>
     
 </resources>
