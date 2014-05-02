@@ -6,16 +6,20 @@
     <string name="action_settings">Settings</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
-
-    <string-array name="drawer_rows">
-        <item>Quick Even Division</item>
-        <item>Calculate by Days</item>
-        <item>Payment History</item>
-        <item>Housemate Management</item>
-    </string-array>
-
     <string name="title_activity_memeber">Memebers</string>
     <string name="action_create_member">Create Member</string>
     <string name="action_edit_member">Edit Member</string>
+    <string name="title_activity_member_edit">Edit</string>
+    <string name="edit_member">Edit Member Information</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="email">Email</string>
+    <string name="comment">Comment</string>
+    <string name="save_member">SAVE</string>
+    <string name="cancel">Cancel</string>
+    <string name="title_activity_bill">Bills</string>
+    <string name="create_bill">Create Bill</string>
+    <string name="title_activity_bill_edit">BillEditActivity</string>
 
 </resources>
