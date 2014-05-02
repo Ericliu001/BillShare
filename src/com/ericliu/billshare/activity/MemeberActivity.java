@@ -6,12 +6,15 @@ import android.app.Activity;
 import android.app.ListFragment;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
 
 import com.ericliu.billshare.R;
 import com.ericliu.billshare.provider.BillProvider;
@@ -83,6 +86,19 @@ public class MemeberActivity extends DrawerActivity {
 					R.layout.member_row, null, PROJECTION, to, 0);
 
 			setListAdapter(adapter);
+		}
+		
+		
+		@Override
+		public void onListItemClick(ListView l, View v, int position, long id) {
+			
+			super.onListItemClick(l, v, position, id);
+			
+			Intent i = new Intent(getActivity(), MemberEditActivity.class);
+			Bundle extras = new Bundle();
+			extras.putLong(DatabaseConstants.COL_ROWID, id);
+			i.putExtras(extras);
+			startActivity(i);
 		}
 
 		@Override

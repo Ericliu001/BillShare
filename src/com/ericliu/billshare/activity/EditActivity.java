@@ -1,13 +1,13 @@
 package com.ericliu.billshare.activity;
 
-import android.app.ListActivity;
+import android.app.Activity;
 import android.os.Bundle;
 
 import com.ericliu.billshare.fragment.DbWriteFragment;
 import com.ericliu.billshare.fragment.DbWriteFragment.DbFragCallBack;
 import com.ericliu.billshare.model.Model;
 
-public abstract class EditActivity extends ListActivity implements DbFragCallBack {
+public abstract class EditActivity extends Activity implements DbFragCallBack {
 
 	private boolean isSaving = false;
 	private DbWriteFragment dbWriteFrag;
