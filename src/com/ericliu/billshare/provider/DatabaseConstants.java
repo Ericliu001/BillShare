@@ -4,6 +4,8 @@ public class DatabaseConstants {
 	
 	
 	public static final String COL_ROWID = "_id";
+	public static final String COL_DELETED = "deleted";
+
 	
 	// constants for table bill
 	public static final String TABLE_BILL = "table_bill";
@@ -35,7 +37,6 @@ public class DatabaseConstants {
 	public static final String COL_MOVE_IN_DATE = "move_in_date";
 	public static final String COL_MOVE_OUT_DATE = "move_out_date";
 	public static final String COL_CURRENT_HOUSEMATE = "current_housemate";
-	public static final String COL_DELETED = "deleted";
 	
 	
 	

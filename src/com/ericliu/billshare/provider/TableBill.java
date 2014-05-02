@@ -16,9 +16,12 @@ public class TableBill {
 			+ COL_BILLING_START + " datetime, "
 			+ COL_BILLING_END + " datetime, "
 			+ COL_DUE_DATE + " datetime,  "
-			+ COL_PAID + " boolean "
+			+ COL_PAID + " boolean, "
+			+ COL_DELETED + " boolean not null default 0 "
 			+ " ); "
 			;
+	
+	// create view
 
 
 	public static void onCreate(SQLiteDatabase db){
