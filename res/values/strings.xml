@@ -28,5 +28,6 @@
     <string name="billing_end_date">Billing End Date</string>
     <string name="paid">Paid</string>
     <string name="due_date">Due Date</string>
+    <string name="save_bill">Save Bill</string>
 
 </resources>

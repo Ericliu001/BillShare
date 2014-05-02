@@ -1108,7 +1108,7 @@ containing a value of this type.
         public static final int checkbox=0x7f05002d;
         public static final int collapseActionView=0x7f05000d;
         public static final int container=0x7f05003d;
-        public static final int createMember=0x7f050050;
+        public static final int createMember=0x7f050051;
         public static final int default_activity_button=0x7f050028;
         public static final int dialog=0x7f05000e;
         public static final int disableHome=0x7f050008;
@@ -1139,7 +1139,8 @@ containing a value of this type.
         public static final int progress_circular=0x7f050018;
         public static final int progress_horizontal=0x7f050019;
         public static final int radio=0x7f05002f;
-        public static final int saveMember=0x7f05004f;
+        public static final int saveBill=0x7f05004f;
+        public static final int saveMember=0x7f050050;
         public static final int search_badge=0x7f050032;
         public static final int search_bar=0x7f050031;
         public static final int search_button=0x7f050033;
@@ -1300,6 +1301,7 @@ containing a value of this type.
         public static final int last_name=0x7f0a0018;
         public static final int paid=0x7f0a0026;
         public static final int phone_number=0x7f0a0019;
+        public static final int save_bill=0x7f0a0028;
         public static final int save_member=0x7f0a001c;
         public static final int title_activity_bill=0x7f0a001e;
         public static final int title_activity_bill_edit=0x7f0a0020;

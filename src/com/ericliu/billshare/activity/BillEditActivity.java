@@ -13,6 +13,7 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,25 +40,6 @@ public class BillEditActivity extends Activity {
 		}
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.bill_edit, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
 
 	/**
 	 * A placeholder fragment containing a simple view.
@@ -84,6 +66,7 @@ public class BillEditActivity extends Activity {
 
 			super.onCreate(savedInstanceState);
 			setRetainInstance(true);
+			setHasOptionsMenu(true);
 
 			id = getArguments().getLong(DatabaseConstants.COL_ROWID);
 
@@ -99,12 +82,39 @@ public class BillEditActivity extends Activity {
 			etAmount = (EditText) rootView.findViewById(R.id.etAmount);
 			cbPaid = (CheckBox) rootView.findViewById(R.id.cbPaid);
 
-			spType.setAdapter(new ArrayAdapter<CharSequence>(getActivity(),
+			
+			ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(getActivity(),
 					android.R.layout.simple_spinner_item, getResources()
-							.getStringArray(R.array.bill_type_spinner_items)));
+					.getStringArray(R.array.bill_type_spinner_items));
+			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			
+			spType.setAdapter(adapter);
 
 			return rootView;
 		}
+		
+		@Override
+		public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+			
+			
+			inflater.inflate(R.menu.bill_edit, menu);
+		}
+		
+		@Override
+		public boolean onOptionsItemSelected(MenuItem item) {
+			
+			switch (item.getItemId()) {
+			case R.id.saveBill:
+				
+				break;
+
+			default:
+				break;
+			}
+			
+			return super.onOptionsItemSelected(item);
+		}
+		
 	}
 
 }
