@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="drawer_rows">
+        <item >Quick Even Division</item>
+        <item >Calculate by Days</item>
+        <item >Payment History</item>
+        <item >Housemates</item>
+        <item >Managing Bills</item>
+    </string-array>
+    
+</resources>
