@@ -34,6 +34,7 @@ public class MemberEditActivity extends EditActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
 
 		Bundle data = getIntent().getExtras();
 		long id = -1;
@@ -153,6 +154,7 @@ public class MemberEditActivity extends EditActivity {
 			switch (item.getItemId()) {
 			case R.id.saveMember:
 				saveMember();
+				getActivity().finish();
 				break;
 
 			default:

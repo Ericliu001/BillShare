@@ -259,7 +259,7 @@ int id beginning 0x7f050011
 int id checkbox 0x7f05002d
 int id collapseActionView 0x7f05000d
 int id container 0x7f05003d
-int id create_member 0x7f05004d
+int id createMember 0x7f05004d
 int id default_activity_button 0x7f050028
 int id dialog 0x7f05000e
 int id disableHome 0x7f050008
