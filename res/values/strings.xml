@@ -29,5 +29,7 @@
     <string name="paid">Paid</string>
     <string name="due_date">Due Date</string>
     <string name="save_bill">Save Bill</string>
+    <string name="pick_date">Pick Date</string>
+    <string name="undefined">Undefined</string>
 
 </resources>

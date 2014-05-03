@@ -1,6 +1,14 @@
 package com.ericliu.billshare.activity;
 
-import java.lang.reflect.Array;
+import static com.ericliu.billshare.provider.DatabaseConstants.COL_AMOUNT;
+import static com.ericliu.billshare.provider.DatabaseConstants.COL_BILLING_END;
+import static com.ericliu.billshare.provider.DatabaseConstants.COL_BILLING_START;
+import static com.ericliu.billshare.provider.DatabaseConstants.COL_DUE_DATE;
+import static com.ericliu.billshare.provider.DatabaseConstants.COL_PAID;
+import static com.ericliu.billshare.provider.DatabaseConstants.COL_ROWID;
+import static com.ericliu.billshare.provider.DatabaseConstants.COL_TYPE;
+
+import java.text.SimpleDateFormat;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -13,20 +21,23 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.ericliu.billshare.MyApplication;
 import com.ericliu.billshare.R;
+import com.ericliu.billshare.fragment.DatePickerFragment;
+import com.ericliu.billshare.fragment.DatePickerFragment.DatePickerListener;
 import com.ericliu.billshare.model.Bill;
 import com.ericliu.billshare.model.Model;
 import com.ericliu.billshare.provider.BillProvider;
 import com.ericliu.billshare.provider.DatabaseConstants;
-
-import static com.ericliu.billshare.provider.DatabaseConstants.*;
 
 public class BillEditActivity extends EditActivity {
 
@@ -50,15 +61,20 @@ public class BillEditActivity extends EditActivity {
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
-	public static class BillEditFragment extends Fragment {
+	public static class BillEditFragment extends Fragment implements
+			OnClickListener, DatePickerListener {
 
 		private long id;
 
 		private BillEditActivity mCallBack;
+		private DatePickerFragment datePickerFrag;
 
 		private Spinner spType;
 		private EditText etAmount;
 		private CheckBox cbPaid;
+		private Button btStartDate;
+		private Button btEndDate;
+		private Button btDueDate;
 
 		private static final String[] PROJECTION = { COL_ROWID, COL_TYPE,
 				COL_AMOUNT, COL_BILLING_START, COL_BILLING_END, COL_DUE_DATE,
@@ -78,6 +94,9 @@ public class BillEditActivity extends EditActivity {
 
 			super.onAttach(activity);
 			mCallBack = (BillEditActivity) activity;
+			
+			
+				
 		}
 
 		@Override
@@ -87,6 +106,7 @@ public class BillEditActivity extends EditActivity {
 			setRetainInstance(true);
 			setHasOptionsMenu(true);
 
+			datePickerFrag = new DatePickerFragment();
 		}
 
 		@Override
@@ -98,6 +118,13 @@ public class BillEditActivity extends EditActivity {
 			spType = (Spinner) rootView.findViewById(R.id.spType);
 			etAmount = (EditText) rootView.findViewById(R.id.etAmount);
 			cbPaid = (CheckBox) rootView.findViewById(R.id.cbPaid);
+			btStartDate = (Button) rootView.findViewById(R.id.btStartDate);
+			btEndDate = (Button) rootView.findViewById(R.id.btEndDate);
+			btDueDate = (Button) rootView.findViewById(R.id.btDueDate);
+
+			btStartDate.setOnClickListener(this);
+			btEndDate.setOnClickListener(this);
+			btDueDate.setOnClickListener(this);
 
 			ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(
 					getActivity(), android.R.layout.simple_spinner_item,
@@ -106,7 +133,6 @@ public class BillEditActivity extends EditActivity {
 			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 			spType.setAdapter(adapter);
-			
 
 			id = getArguments().getLong(DatabaseConstants.COL_ROWID);
 			if (MyApplication.isTesting) {
@@ -128,34 +154,30 @@ public class BillEditActivity extends EditActivity {
 						String.valueOf(id));
 				c = MyApplication.getInstance().getContentResolver()
 						.query(uri, PROJECTION, null, null, null);
-		
+
 				c.moveToFirst();
-		
+
 				int position = 0;
 				String type = c.getString(c.getColumnIndexOrThrow(COL_TYPE));
 				if (MyApplication.isTesting) {
-					Log.i("eric", "type is: " + type );
+					Log.i("eric", "type is: " + type);
 				}
-		
+
 				String[] spinnerItems = getResources().getStringArray(
 						R.array.bill_type_spinner_items);
 				for (int i = 0; i < spinnerItems.length; i++) {
-					
-					if (MyApplication.isTesting) {
-						Log.i("eric", "type is: " + type + " looping to: " + spinnerItems[i]);
-					}
 					if (type.equals(spinnerItems[i])) {
 						position = i;
 					}
 				}
-		
+
 				spType.setSelection(position, true);
-		
+
 				etAmount.setText(c.getString(c.getColumnIndex(COL_AMOUNT)));
-		
+
 				cbPaid.setChecked(c.getInt(c.getColumnIndex(COL_PAID)) > 0 ? true
 						: false);
-		
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {
@@ -200,13 +222,41 @@ public class BillEditActivity extends EditActivity {
 			bill.setType(spType.getSelectedItem().toString());
 			bill.setAmount(Double.valueOf(etAmount.getText().toString()));
 			bill.setPaid(cbPaid.isChecked() ? 1 : 0);
-			
-			if (MyApplication.isTesting) {
-				Log.i("eric", "amount: " + Double.valueOf(etAmount.getText().toString()) );
-			}
 
 			mCallBack.setBill(bill);
 			mCallBack.saveToDb();
+		}
+
+		@Override
+		public void onClick(View v) {
+			switch (v.getId()) {
+			case R.id.btStartDate:
+				showDatePickerDialog();
+				break;
+			case R.id.btEndDate:
+				showDatePickerDialog();
+				break;
+			case R.id.btDueDate:
+				showDatePickerDialog();
+				break;
+
+			default:
+				break;
+			}
+
+		}
+
+		private void showDatePickerDialog() {
+			
+			datePickerFrag.show(getFragmentManager(), "timePicker");
+			
+		}
+
+		@Override
+		public void onFinishPicking() {
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			String dateString = dateFormat.format(datePickerFrag.getDate());
+			Toast.makeText(getActivity(), dateString, Toast.LENGTH_SHORT).show();
 		}
 
 	}
