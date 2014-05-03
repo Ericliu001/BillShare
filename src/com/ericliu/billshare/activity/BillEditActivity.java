@@ -39,7 +39,7 @@ import com.ericliu.billshare.model.Model;
 import com.ericliu.billshare.provider.BillProvider;
 import com.ericliu.billshare.provider.DatabaseConstants;
 
-public class BillEditActivity extends EditActivity {
+public class BillEditActivity extends EditActivity implements DatePickerListener {
 
 	private Bill mBill;
 
@@ -269,6 +269,12 @@ public class BillEditActivity extends EditActivity {
 	public Model getModel() {
 
 		return mBill;
+	}
+
+	@Override
+	public void onFinishPicking() {
+		BillEditFragment fragment = (BillEditFragment) getFragmentManager().findFragmentByTag("saved");
+		fragment.onFinishPicking();
 	}
 
 }
