@@ -182,6 +182,12 @@ public class BillEditActivity extends EditActivity implements
 				spType.setSelection(position, true);
 
 				etAmount.setText(c.getString(c.getColumnIndex(COL_AMOUNT)));
+				
+				tvStartDate.setText(c.getString(c.getColumnIndex(COL_BILLING_START)));
+				tvEndDate.setText(c.getString(c.getColumnIndex(COL_BILLING_END)));
+				tvDueDate.setText(c.getString(c.getColumnIndex(COL_DUE_DATE)));
+				
+				
 
 				cbPaid.setChecked(c.getInt(c.getColumnIndex(COL_PAID)) > 0 ? true
 						: false);
@@ -229,6 +235,10 @@ public class BillEditActivity extends EditActivity implements
 
 			bill.setType(spType.getSelectedItem().toString());
 			bill.setAmount(Double.valueOf(etAmount.getText().toString()));
+			bill.setStartDate(tvStartDate.getText().toString());
+			bill.setEndDate(tvEndDate.getText().toString());
+			bill.setDueDate(tvDueDate.getText().toString());
+			
 			bill.setPaid(cbPaid.isChecked() ? 1 : 0);
 
 			mCallBack.setBill(bill);
