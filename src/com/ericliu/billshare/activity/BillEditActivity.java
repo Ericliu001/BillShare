@@ -17,6 +17,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.sax.StartElementListener;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -93,6 +94,8 @@ public class BillEditActivity extends EditActivity implements
 				COL_AMOUNT, COL_BILLING_START, COL_BILLING_END, COL_DUE_DATE,
 				COL_PAID };
 
+		private  String undefined;
+
 		public static Fragment newInstance(long id) {
 			BillEditFragment frag = new BillEditFragment();
 			Bundle args = new Bundle();
@@ -118,6 +121,8 @@ public class BillEditActivity extends EditActivity implements
 			setHasOptionsMenu(true);
 
 			datePickerFrag = new DatePickerFragment();
+			
+			undefined = getResources().getString(R.string.undefined);
 		}
 
 		@Override
@@ -183,9 +188,27 @@ public class BillEditActivity extends EditActivity implements
 
 				etAmount.setText(c.getString(c.getColumnIndex(COL_AMOUNT)));
 				
-				tvStartDate.setText(c.getString(c.getColumnIndex(COL_BILLING_START)));
-				tvEndDate.setText(c.getString(c.getColumnIndex(COL_BILLING_END)));
-				tvDueDate.setText(c.getString(c.getColumnIndex(COL_DUE_DATE)));
+				String startDateString = c.getString(c.getColumnIndex(COL_BILLING_START));
+				if (TextUtils.isEmpty(startDateString)) {
+					startDateString = undefined;
+				}
+				
+				tvStartDate.setText(startDateString);
+				
+				
+				String endDateString = c.getString(c.getColumnIndex(COL_BILLING_END));
+				if (TextUtils.isEmpty(endDateString)) {
+					endDateString = undefined;
+				}
+				
+				tvEndDate.setText(endDateString);
+				
+				
+				String dueDateString = c.getString(c.getColumnIndex(COL_DUE_DATE));
+				if (TextUtils.isEmpty(dueDateString)) {
+					dueDateString = undefined;
+				}
+				tvDueDate.setText(dueDateString);
 				
 				
 
@@ -235,9 +258,21 @@ public class BillEditActivity extends EditActivity implements
 
 			bill.setType(spType.getSelectedItem().toString());
 			bill.setAmount(Double.valueOf(etAmount.getText().toString()));
-			bill.setStartDate(tvStartDate.getText().toString());
-			bill.setEndDate(tvEndDate.getText().toString());
-			bill.setDueDate(tvDueDate.getText().toString());
+			
+			if (! tvStartDate.getText().toString().equals(undefined)) {
+				
+				bill.setStartDate(tvStartDate.getText().toString());
+			}
+			
+			if (! tvEndDate.getText().toString().equals(undefined)) {
+				
+				bill.setEndDate(tvEndDate.getText().toString());
+			}
+			
+			if (! tvDueDate.getText().toString().equals(undefined)) {
+				
+				bill.setDueDate(tvDueDate.getText().toString());
+			}
 			
 			bill.setPaid(cbPaid.isChecked() ? 1 : 0);
 
