@@ -9,12 +9,14 @@ import static com.ericliu.billshare.provider.DatabaseConstants.COL_ROWID;
 import static com.ericliu.billshare.provider.DatabaseConstants.COL_TYPE;
 
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.app.Fragment;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.sax.StartElementListener;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -28,6 +30,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ericliu.billshare.MyApplication;
@@ -39,7 +42,8 @@ import com.ericliu.billshare.model.Model;
 import com.ericliu.billshare.provider.BillProvider;
 import com.ericliu.billshare.provider.DatabaseConstants;
 
-public class BillEditActivity extends EditActivity implements DatePickerListener {
+public class BillEditActivity extends EditActivity implements
+		DatePickerListener {
 
 	private Bill mBill;
 
@@ -62,7 +66,7 @@ public class BillEditActivity extends EditActivity implements DatePickerListener
 	 * A placeholder fragment containing a simple view.
 	 */
 	public static class BillEditFragment extends Fragment implements
-			OnClickListener, DatePickerListener {
+			OnClickListener {
 
 		private long id;
 
@@ -72,9 +76,18 @@ public class BillEditActivity extends EditActivity implements DatePickerListener
 		private Spinner spType;
 		private EditText etAmount;
 		private CheckBox cbPaid;
+		private TextView tvStartDate;
+		private TextView tvEndDate;
+		private TextView tvDueDate;
+
 		private Button btStartDate;
 		private Button btEndDate;
 		private Button btDueDate;
+
+		private  int dateTypeId;
+		private static final int DATE_TYPE_START = 1;
+		private static final int DATE_TYPE_END = 2;
+		private static final int DATE_TYPE_DUE = 3;
 
 		private static final String[] PROJECTION = { COL_ROWID, COL_TYPE,
 				COL_AMOUNT, COL_BILLING_START, COL_BILLING_END, COL_DUE_DATE,
@@ -94,9 +107,7 @@ public class BillEditActivity extends EditActivity implements DatePickerListener
 
 			super.onAttach(activity);
 			mCallBack = (BillEditActivity) activity;
-			
-			
-				
+
 		}
 
 		@Override
@@ -118,6 +129,9 @@ public class BillEditActivity extends EditActivity implements DatePickerListener
 			spType = (Spinner) rootView.findViewById(R.id.spType);
 			etAmount = (EditText) rootView.findViewById(R.id.etAmount);
 			cbPaid = (CheckBox) rootView.findViewById(R.id.cbPaid);
+			tvStartDate = (TextView) rootView.findViewById(R.id.tvStartDate);
+			tvEndDate = (TextView) rootView.findViewById(R.id.tvEndDate);
+			tvDueDate = (TextView) rootView.findViewById(R.id.tvDueDate);
 			btStartDate = (Button) rootView.findViewById(R.id.btStartDate);
 			btEndDate = (Button) rootView.findViewById(R.id.btEndDate);
 			btDueDate = (Button) rootView.findViewById(R.id.btDueDate);
@@ -135,9 +149,6 @@ public class BillEditActivity extends EditActivity implements DatePickerListener
 			spType.setAdapter(adapter);
 
 			id = getArguments().getLong(DatabaseConstants.COL_ROWID);
-			if (MyApplication.isTesting) {
-				Log.i("eric", "id is: " + id);
-			}
 
 			if (id > 0) {
 
@@ -159,9 +170,6 @@ public class BillEditActivity extends EditActivity implements DatePickerListener
 
 				int position = 0;
 				String type = c.getString(c.getColumnIndexOrThrow(COL_TYPE));
-				if (MyApplication.isTesting) {
-					Log.i("eric", "type is: " + type);
-				}
 
 				String[] spinnerItems = getResources().getStringArray(
 						R.array.bill_type_spinner_items);
@@ -232,12 +240,16 @@ public class BillEditActivity extends EditActivity implements DatePickerListener
 			switch (v.getId()) {
 			case R.id.btStartDate:
 				showDatePickerDialog();
+				dateTypeId = DATE_TYPE_START;
 				break;
 			case R.id.btEndDate:
 				showDatePickerDialog();
+				dateTypeId = DATE_TYPE_END;
+
 				break;
 			case R.id.btDueDate:
 				showDatePickerDialog();
+				dateTypeId = DATE_TYPE_DUE;
 				break;
 
 			default:
@@ -247,16 +259,32 @@ public class BillEditActivity extends EditActivity implements DatePickerListener
 		}
 
 		private void showDatePickerDialog() {
-			
+
 			datePickerFrag.show(getFragmentManager(), "timePicker");
-			
+
 		}
 
-		@Override
 		public void onFinishPicking() {
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd",
+					Locale.US);
 			String dateString = dateFormat.format(datePickerFrag.getDate());
-			Toast.makeText(getActivity(), dateString, Toast.LENGTH_SHORT).show();
+
+			switch (dateTypeId) {
+			case DATE_TYPE_START:
+				tvStartDate.setText(dateString);
+				break;
+
+			case DATE_TYPE_END:
+				tvEndDate.setText(dateString);
+				break;
+
+			case DATE_TYPE_DUE:
+				tvDueDate.setText(dateString);
+				break;
+
+			default:
+				break;
+			}
 		}
 
 	}
@@ -273,7 +301,8 @@ public class BillEditActivity extends EditActivity implements DatePickerListener
 
 	@Override
 	public void onFinishPicking() {
-		BillEditFragment fragment = (BillEditFragment) getFragmentManager().findFragmentByTag("saved");
+		BillEditFragment fragment = (BillEditFragment) getFragmentManager()
+				.findFragmentByTag("saved");
 		fragment.onFinishPicking();
 	}
 
