@@ -63,7 +63,7 @@
             android:id="@+id/tvStartDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/undefined" />
+            android:hint="@string/undefined" />
     </TableRow>
 
     <Button
@@ -87,7 +87,7 @@
             android:id="@+id/tvEndDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/undefined" />
+            android:hint="@string/undefined" />
 
     </TableRow>
 
@@ -112,7 +112,7 @@
             android:id="@+id/tvDueDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/undefined" />
+            android:hint="@string/undefined" />
 
     </TableRow>
 

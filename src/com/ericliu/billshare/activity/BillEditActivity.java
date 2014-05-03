@@ -188,27 +188,13 @@ public class BillEditActivity extends EditActivity implements
 
 				etAmount.setText(c.getString(c.getColumnIndex(COL_AMOUNT)));
 				
-				String startDateString = c.getString(c.getColumnIndex(COL_BILLING_START));
-				if (TextUtils.isEmpty(startDateString)) {
-					startDateString = undefined;
-				}
 				
-				tvStartDate.setText(startDateString);
+				tvStartDate.setText(c.getString(c.getColumnIndex(COL_BILLING_START)));
 				
 				
-				String endDateString = c.getString(c.getColumnIndex(COL_BILLING_END));
-				if (TextUtils.isEmpty(endDateString)) {
-					endDateString = undefined;
-				}
+				tvEndDate.setText(c.getString(c.getColumnIndex(COL_BILLING_END)));
 				
-				tvEndDate.setText(endDateString);
-				
-				
-				String dueDateString = c.getString(c.getColumnIndex(COL_DUE_DATE));
-				if (TextUtils.isEmpty(dueDateString)) {
-					dueDateString = undefined;
-				}
-				tvDueDate.setText(dueDateString);
+				tvDueDate.setText( c.getString(c.getColumnIndex(COL_DUE_DATE)));
 				
 				
 
@@ -259,20 +245,14 @@ public class BillEditActivity extends EditActivity implements
 			bill.setType(spType.getSelectedItem().toString());
 			bill.setAmount(Double.valueOf(etAmount.getText().toString()));
 			
-			if (! tvStartDate.getText().toString().equals(undefined)) {
 				
 				bill.setStartDate(tvStartDate.getText().toString());
-			}
 			
-			if (! tvEndDate.getText().toString().equals(undefined)) {
 				
 				bill.setEndDate(tvEndDate.getText().toString());
-			}
 			
-			if (! tvDueDate.getText().toString().equals(undefined)) {
 				
 				bill.setDueDate(tvDueDate.getText().toString());
-			}
 			
 			bill.setPaid(cbPaid.isChecked() ? 1 : 0);
 
