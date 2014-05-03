@@ -10,7 +10,7 @@ import static com.ericliu.billshare.provider.DatabaseConstants.*;
 public class Member extends Model {
 	
 	private long id = -1;
-	private String firstName;
+	private String firstName = null;
 	private String lastName;
 	private String phone;
 	private String email;
