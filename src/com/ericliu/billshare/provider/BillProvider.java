@@ -23,6 +23,8 @@ public class BillProvider extends ContentProvider {
 			+ "/housemate");
 	public static final Uri PAYMENT_URI = Uri.parse("content://" + AUTH
 			+ "/payment");
+	
+	public static final Uri PAYMENT_INFO_URI = Uri.parse("content://" + AUTH + "/paymentinfo");
 
 	// Basic tables
 	private static final int BILLS = 1;
@@ -33,6 +35,10 @@ public class BillProvider extends ContentProvider {
 
 	private static final int PAYMENTS = 3;
 	private static final int PAYMENT_ID = 30;
+	
+	private static final int PAYMENT_INFO = 4;
+	private static final int PAYMENT_INFO_ID = 40;
+	
 
 	private static final UriMatcher URI_MATCHER;
 	static {
@@ -45,6 +51,9 @@ public class BillProvider extends ContentProvider {
 
 		URI_MATCHER.addURI(AUTH, "payment", PAYMENTS);
 		URI_MATCHER.addURI(AUTH, "payment/#", PAYMENT_ID);
+		
+		URI_MATCHER.addURI(AUTH, "paymentinfo", PAYMENT_INFO);
+		URI_MATCHER.addURI(AUTH, "paymentinfo/#", PAYMENT_INFO_ID);
 	}
 
 	private BillDatabaseHelper dbHelper;
@@ -97,6 +106,15 @@ public class BillProvider extends ContentProvider {
 			qb.setTables(TABLE_PAYMENT);
 			qb.appendWhere(COL_ROWID + " = " + uri.getLastPathSegment() );
 			break;
+			
+		case PAYMENT_INFO:
+			qb.setTables(TABLE_PAYMENT_INFO);
+			break;
+			
+		case PAYMENT_INFO_ID:
+			qb.setTables(TABLE_PAYMENT_INFO);
+			qb.appendWhere(COL_ROWID + "=" + uri.getLastPathSegment());
+			break;
 
 		default:
 			throw new IllegalArgumentException(" Unknow URL "+ uri);
@@ -143,6 +161,10 @@ public class BillProvider extends ContentProvider {
 			break;
 
 
+		case PAYMENT_INFO:
+			rowID = db.insert(TABLE_PAYMENT_INFO, null, values);
+			newUri = ContentUris.withAppendedId(PAYMENT_INFO_URI, rowID);
+			
 		default:
 			throw new IllegalArgumentException(" Unknow URL "+ uri);
 		}
@@ -212,6 +234,15 @@ public class BillProvider extends ContentProvider {
 			count = db.update(TABLE_PAYMENT, values, "_id=" + segment + where, selectionArgs);
 			break;
 
+			
+		case PAYMENT_INFO:
+			count = db.update(TABLE_PAYMENT_INFO, values, where, selectionArgs);
+			break;
+			
+		case PAYMENT_INFO_ID:
+			segment = uri.getLastPathSegment();
+			count = db.update(TABLE_PAYMENT_INFO, values, where, selectionArgs);
+			
 		default:
 			throw new IllegalArgumentException(" Unknow URL "+ uri);
 		}

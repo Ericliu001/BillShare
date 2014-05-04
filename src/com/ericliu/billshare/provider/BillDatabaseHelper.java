@@ -34,6 +34,7 @@ public class BillDatabaseHelper extends SQLiteOpenHelper {
 		TableBill.onCreate(db);
 		TablePayment.onCreate(db);
 		TableMember.onCreate(db);
+		TablePaymentInfo.onCreate(db);
 		
 		
 		ContentValues values = new ContentValues();
@@ -84,6 +85,7 @@ public class BillDatabaseHelper extends SQLiteOpenHelper {
 		TableBill.onUpgrade(db);
 		TablePayment.onUpgrade(db);
 		TableMember.onUpgrade(db);
+		TablePaymentInfo.onUpdate(db);
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.ericliu.billshare.provider;
 
 import static com.ericliu.billshare.provider.DatabaseConstants.*;
+import android.database.sqlite.SQLiteDatabase;
 public class TablePaymentInfo {
 
 	
@@ -12,8 +13,15 @@ public class TablePaymentInfo {
 			+ COL_DESCRIPTION + " text, "
 			+ COL_PAID_TIME + " datetime "
 			+";"
-			
-			
 			;
+	
+	public static void onCreate(SQLiteDatabase db){
+		db.execSQL(TABLE_CREATE);
+	}
+	
+	public static void onUpdate(SQLiteDatabase db){
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_PAYMENT_INFO);
+		onCreate(db);
+	}
 
 }
