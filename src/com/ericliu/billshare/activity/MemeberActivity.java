@@ -43,7 +43,7 @@ public class MemeberActivity extends DrawerActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.memeber, menu);
+		getMenuInflater().inflate(R.menu.create, menu);
 		return true;
 	}
 
@@ -53,7 +53,7 @@ public class MemeberActivity extends DrawerActivity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.createMember) {
+		if (id == R.id.create) {
 			Intent i = new Intent(this, MemberEditActivity.class);
 			startActivity(i);
 			return true;

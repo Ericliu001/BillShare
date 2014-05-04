@@ -213,14 +213,14 @@ public class BillEditActivity extends EditActivity implements
 		@Override
 		public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-			inflater.inflate(R.menu.bill_edit, menu);
+			inflater.inflate(R.menu.edit, menu);
 		}
 
 		@Override
 		public boolean onOptionsItemSelected(MenuItem item) {
 
 			switch (item.getItemId()) {
-			case R.id.saveBill:
+			case R.id.save:
 
 				saveBill();
 				getActivity().finish();

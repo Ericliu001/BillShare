@@ -138,14 +138,14 @@ public class MemberEditActivity extends EditActivity {
 		@Override
 		public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-			inflater.inflate(R.menu.member_edit, menu);
+			inflater.inflate(R.menu.edit, menu);
 		}
 
 		@Override
 		public boolean onOptionsItemSelected(MenuItem item) {
 
 			switch (item.getItemId()) {
-			case R.id.saveMember:
+			case R.id.save:
 				saveMember();
 				getActivity().finish();
 				break;
