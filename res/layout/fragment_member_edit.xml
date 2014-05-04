@@ -26,6 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:imeOptions="actionDone"
             android:inputType="textPersonName" >
 
             <requestFocus />
@@ -46,7 +47,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:imeOptions="actionDone"
             android:inputType="textPersonName" />
+
     </TableRow>
 
     <TableRow
@@ -63,7 +66,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:imeOptions="actionDone"
             android:inputType="phone" />
+
     </TableRow>
 
     <TableRow
@@ -80,7 +85,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:imeOptions="actionDone"
             android:inputType="textEmailAddress" />
+
     </TableRow>
 
     <TextView
@@ -94,6 +101,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:imeOptions="actionDone"
         android:inputType="textMultiLine" />
 
 </TableLayout>
