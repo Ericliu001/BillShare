@@ -11,7 +11,11 @@ public class TablePaymentInfo {
 			+ COL_ROWID + " integer primary key autoincrement, "
 			+ COL_NAME + "  text, "
 			+ COL_DESCRIPTION + " text, "
+			+ COL_TOTAL_AMOUNT + " numeric, "
+			+ COL_NUMBER_OF_MEMBERS_PAID + " integer, "
+			+ COL_NUMBER_OF_BILLS_PAID + " integer, "
 			+ COL_PAID_TIME + " datetime "
+			
 			+";"
 			;
 	

@@ -25,6 +25,7 @@ public class DatabaseConstants {
 	
 	
 	
+	public static final String COL_PAYMENT_INFO_ID = "info_id";
 	public static final String COL_BILL_ID = "bill_id";
 	public static final String COL_PAYEE_ID = "payee_id";
 	public static final String COL_PAYEE_DAYS = "payee_days";
@@ -36,6 +37,9 @@ public class DatabaseConstants {
 	public static final String TABLE_PAYMENT_INFO = "table_payment_info";
 	public static final String COL_NAME = "payment_name";
 	public static final String COL_PAID_TIME = "paid_time";
+	public static final String COL_TOTAL_AMOUNT = "total_amount";
+	public static final String COL_NUMBER_OF_MEMBERS_PAID = "number_of_members_paid";
+	public static final String COL_NUMBER_OF_BILLS_PAID = "number_of_bills_paid";
 	
 	
 	// constants for table housemate

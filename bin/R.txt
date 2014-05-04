@@ -370,7 +370,8 @@ int layout fragment_even_division 0x7f03001c
 int layout fragment_main 0x7f03001d
 int layout fragment_member_edit 0x7f03001e
 int layout member_row 0x7f03001f
-int layout support_simple_spinner_dropdown_item 0x7f030020
+int layout result_even_division 0x7f030020
+int layout support_simple_spinner_dropdown_item 0x7f030021
 int menu create 0x7f0d0000
 int menu edit 0x7f0d0001
 int menu main 0x7f0d0002

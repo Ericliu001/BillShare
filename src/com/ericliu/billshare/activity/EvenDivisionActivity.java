@@ -28,6 +28,8 @@ public class EvenDivisionActivity extends DrawerActivity {
 	 * A placeholder fragment containing a simple view.
 	 */
 	public static class EvenDivisionFragment extends Fragment {
+		
+		
 
 		public EvenDivisionFragment() {
 		}

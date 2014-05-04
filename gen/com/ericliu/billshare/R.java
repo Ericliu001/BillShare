@@ -1243,7 +1243,8 @@ containing a value of this type.
         public static final int fragment_main=0x7f03001d;
         public static final int fragment_member_edit=0x7f03001e;
         public static final int member_row=0x7f03001f;
-        public static final int support_simple_spinner_dropdown_item=0x7f030020;
+        public static final int result_even_division=0x7f030020;
+        public static final int support_simple_spinner_dropdown_item=0x7f030021;
     }
     public static final class menu {
         public static final int create=0x7f0d0000;
