@@ -262,7 +262,8 @@ int id btDueDate 0x7f05004a
 int id btEndDate 0x7f050048
 int id btStartDate 0x7f050046
 int id button1 0x7f050050
-int id button2 0x7f050054
+int id button2 0x7f050053
+int id button3 0x7f050054
 int id cbPaid 0x7f05004b
 int id checkbox 0x7f05002d
 int id collapseActionView 0x7f05000d
@@ -319,8 +320,7 @@ int id spType 0x7f050043
 int id split_action_bar 0x7f05001e
 int id submit_area 0x7f050039
 int id tabMode 0x7f050002
-int id textView1 0x7f050053
-int id textView4 0x7f050051
+int id textView1 0x7f050051
 int id textView5 0x7f050052
 int id title 0x7f05002b
 int id top_action_bar 0x7f050020

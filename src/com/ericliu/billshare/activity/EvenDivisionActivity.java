@@ -37,7 +37,6 @@ public class EvenDivisionActivity extends DrawerActivity {
 			
 			super.onCreate(savedInstanceState);
 			setRetainInstance(true);
-			setHasOptionsMenu(true);
 		}
 
 		@Override
@@ -48,20 +47,6 @@ public class EvenDivisionActivity extends DrawerActivity {
 			return rootView;
 		}
 		
-		@Override
-		public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-			
-			super.onCreateOptionsMenu(menu, inflater);
-			inflater.inflate(R.menu.edit, menu);
-		}
-		
-		@Override
-		public boolean onOptionsItemSelected(MenuItem item) {
-			
-			
-			
-			return super.onOptionsItemSelected(item);
-		}
 	}
 
 }

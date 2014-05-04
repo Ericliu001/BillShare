@@ -42,5 +42,6 @@
     <string name="select_bills">Select Bills</string>
     <string name="description">Description</string>
     <string name="save">Save</string>
+    <string name="calculate">Calculate</string>
 
 </resources>
