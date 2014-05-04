@@ -5,6 +5,7 @@ public class DatabaseConstants {
 	
 	public static final String COL_ROWID = "_id";
 	public static final String COL_DELETED = "deleted";
+	public static final String COL_DESCRIPTION = "description";
 
 	
 	// constants for table bill
@@ -20,6 +21,8 @@ public class DatabaseConstants {
 	
 	// constants for table payment
 	public static final String TABLE_PAYMENT = "table_payment";
+	
+	public static final String COL_NAME = "payment_name";
 	public static final String COL_PAID_TIME = "paid_time";
 	public static final String COL_BILL_ID = "bill_id";
 	public static final String COL_PAYEE_ID = "payee_id";
