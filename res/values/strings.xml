@@ -31,5 +31,15 @@
     <string name="save_bill">Save Bill</string>
     <string name="pick_date">Pick Date</string>
     <string name="undefined">Undefined</string>
+    <string name="title_activity_even_division">EvenDivisionActivity</string>
+    <string name="even_division_calculation">Even Division Calculation</string>
+    <string name="payment_name">Payment Name</string>
+    <string name="number_of_chosen_members">Number of Chosen Members</string>
+    <string name="number_of_selected_members">Member Number   </string>
+    <string name="select_members">Select Members</string>
+    <string name="number_of_selected_bills">Number of Selected Bills</string>
+    <string name="total_amount">Total Amount   </string>
+    <string name="select_bills">Select Bills</string>
+    <string name="description">Description</string>
 
 </resources>

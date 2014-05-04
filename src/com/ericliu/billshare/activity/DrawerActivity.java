@@ -101,7 +101,8 @@ public class DrawerActivity extends Activity implements
 
 		switch (position) {
 		case QUICK_EVEN_DIVISION:
-			Toast.makeText(this, "0", Toast.LENGTH_SHORT).show();
+			i = new Intent(this, EvenDivisionActivity.class);
+			startActivity(i);
 			break;
 
 		case CALCULATE_BY_DAYS:

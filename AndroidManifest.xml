@@ -47,6 +47,10 @@
             android:name="com.ericliu.billshare.activity.BillEditActivity"
             android:label="@string/title_activity_bill_edit" >
         </activity>
+        <activity
+            android:name="com.ericliu.billshare.activity.EvenDivisionActivity"
+            android:label="@string/title_activity_even_division" >
+        </activity>
     </application>
 
 </manifest>
