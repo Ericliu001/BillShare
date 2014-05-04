@@ -1,6 +1,5 @@
 <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/GridLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
@@ -73,14 +72,13 @@
         android:hint="0" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/btSelectMember"
         android:layout_width="match_parent"
         android:layout_column="0"
         android:layout_columnSpan="3"
-        android:layout_row="4"
-        android:text="@string/select_members"
         android:layout_marginBottom="15dp"
-         />
+        android:layout_row="4"
+        android:text="@string/select_members" />
 
     <TextView
         android:layout_column="0"
@@ -89,10 +87,10 @@
         android:text="@string/number_of_selected_bills" />
     
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/tvTotalAmount"
         android:layout_column="2"
-        android:layout_row="5"
         android:layout_marginLeft="10dp"
+        android:layout_row="5"
         android:hint="0" />
 
     <TextView
@@ -102,14 +100,14 @@
         android:text="@string/total_amount" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/tvTotalAmount"
         android:layout_column="2"
-        android:layout_row="6"
         android:layout_marginLeft="10dp"
+        android:layout_row="6"
         android:hint="0.00" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btSelectBills"
         android:layout_width="match_parent"
         android:layout_column="0"
         android:layout_columnSpan="3"
@@ -117,7 +115,7 @@
         android:text="@string/select_bills" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btCalculate"
         android:layout_width="match_parent"
         android:layout_column="0"
         android:layout_columnSpan="3"

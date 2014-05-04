@@ -22,7 +22,7 @@ import com.ericliu.billshare.provider.DatabaseConstants;
 
 public class MemeberActivity extends DrawerActivity {
 
-	private static final String FRAGMENT_TAG = "MemberFragment";
+	private static final String TAG = "MemberFragment";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +30,10 @@ public class MemeberActivity extends DrawerActivity {
 		
 		long id = getIntent().getLongExtra(DatabaseConstants.COL_ROWID, -1);
 
-		if (getFragmentManager().findFragmentByTag(FRAGMENT_TAG) == null) {
+		if (getFragmentManager().findFragmentByTag(TAG) == null) {
 			getFragmentManager()
 					.beginTransaction()
-					.replace(R.id.container, new MemberListFrag(), FRAGMENT_TAG)
+					.replace(R.id.container, new MemberListFrag(), TAG)
 					.commit();
 		}
 

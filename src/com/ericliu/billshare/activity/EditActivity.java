@@ -9,6 +9,8 @@ import com.ericliu.billshare.model.Model;
 
 public abstract class EditActivity extends Activity implements DbFragCallBack {
 
+	
+	
 	private boolean isSaving = false;
 	private DbWriteFragment dbWriteFrag;
 

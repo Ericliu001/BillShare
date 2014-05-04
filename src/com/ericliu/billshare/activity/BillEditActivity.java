@@ -45,6 +45,8 @@ import com.ericliu.billshare.provider.DatabaseConstants;
 
 public class BillEditActivity extends EditActivity implements
 		DatePickerListener {
+	
+	private static final String TAG = "BillEditFragment";
 
 	private Bill mBill;
 
@@ -55,11 +57,11 @@ public class BillEditActivity extends EditActivity implements
 
 		long id = getIntent().getLongExtra(DatabaseConstants.COL_ROWID, -1);
 
-		if (getFragmentManager().findFragmentByTag("saved") == null) {
+		if (getFragmentManager().findFragmentByTag(TAG) == null) {
 			getFragmentManager()
 					.beginTransaction()
 					.add(R.id.container, BillEditFragment.newInstance(id),
-							"saved").commit();
+							TAG).commit();
 		}
 	}
 

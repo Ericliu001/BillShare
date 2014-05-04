@@ -27,14 +27,15 @@ import com.ericliu.billshare.provider.DatabaseConstants;
 import static com.ericliu.billshare.provider.DatabaseConstants.*;
 
 public class BillActivity extends DrawerActivity {
+	private static final String TAG = "BillFragment";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		if (getFragmentManager().findFragmentByTag("saved") == null) {
+		if (getFragmentManager().findFragmentByTag(TAG) == null) {
 			getFragmentManager().beginTransaction()
-					.add(R.id.container, new BillFragment(), "saved").commit();
+					.add(R.id.container, new BillFragment(), TAG).commit();
 		}
 	}
 

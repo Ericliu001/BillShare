@@ -25,6 +25,8 @@ import static com.ericliu.billshare.provider.DatabaseConstants.*;
 
 public class MemberEditActivity extends EditActivity {
 
+	
+	private static final String TAG = "MemberEditFragment";
 	private Member mMember = null;
 
 	@Override
@@ -39,11 +41,11 @@ public class MemberEditActivity extends EditActivity {
 			id = data.getLong(DatabaseConstants.COL_ROWID, -1);
 		}
 
-		if (getFragmentManager().findFragmentByTag("saved") == null) {
+		if (getFragmentManager().findFragmentByTag(TAG) == null) {
 			getFragmentManager()
 					.beginTransaction()
 					.add(R.id.container, MemberEditFragment.newInstance(id),
-							"saved").commit();
+							TAG).commit();
 		}
 	}
 
