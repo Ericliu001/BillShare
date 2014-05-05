@@ -52,6 +52,7 @@ public class TableBill {
 	public static void onCreate(SQLiteDatabase db){
 		db.execSQL(TABLE_CREATE);
 		db.execSQL(VIEW_CREATE);
+		db.execSQL(VIEW_BILL_NAME_CREATE);
 	}
 	
 	public static void onUpgrade(SQLiteDatabase db){
