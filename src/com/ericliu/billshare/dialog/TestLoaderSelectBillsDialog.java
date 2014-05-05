@@ -1,12 +1,12 @@
 package com.ericliu.billshare.dialog;
 
-import com.ericliu.billshare.R;
-import com.ericliu.billshare.dialog.SelectBillsDialog.SelectBillsDialogListener;
-import com.ericliu.billshare.provider.BillProvider;
-
+import static com.ericliu.billshare.provider.DatabaseConstants.COL_AMOUNT;
+import static com.ericliu.billshare.provider.DatabaseConstants.COL_ROWID;
+import static com.ericliu.billshare.provider.DatabaseConstants.COL_TYPE;
+import static com.ericliu.billshare.provider.DatabaseConstants.COL_UNPAID;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.LoaderManager.LoaderCallbacks;
@@ -16,16 +16,15 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
-import static com.ericliu.billshare.provider.DatabaseConstants.*;
+
+import com.ericliu.billshare.R;
+import com.ericliu.billshare.provider.BillProvider;
 
 /*
  * Try to use Loader to load data into Dialog but failed

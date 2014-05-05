@@ -1,6 +1,5 @@
 package com.ericliu.billshare.activity;
 
-import android.app.DialogFragment;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,13 +7,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckedTextView;
 import android.widget.TextView;
 
 import com.ericliu.billshare.R;
-import com.ericliu.billshare.dialog.SelectBillsDialog.SelectBillsDialogListener;
-import com.ericliu.billshare.dialog.SelectMembersDialog;
 import com.ericliu.billshare.dialog.TestLoaderSelectBillsDialog;
+import com.ericliu.billshare.dialog.TestLoaderSelectMembersDialog;
 
 public class EvenDivisionActivity extends DrawerActivity implements com.ericliu.billshare.dialog.TestLoaderSelectBillsDialog.SelectBillsDialogListener {
 	
@@ -90,7 +87,7 @@ public class EvenDivisionActivity extends DrawerActivity implements com.ericliu.
 				billDialog.show(getFragmentManager(), "billSelect");
 				break;
 			case R.id.btSelectMember:
-				SelectMembersDialog memberDialog = new SelectMembersDialog();
+				TestLoaderSelectMembersDialog memberDialog = new TestLoaderSelectMembersDialog();
 				memberDialog.show(getFragmentManager(), "memberSelect");
 
 				break;
