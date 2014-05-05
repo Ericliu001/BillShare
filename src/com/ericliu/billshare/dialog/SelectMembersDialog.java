@@ -21,7 +21,7 @@ import com.ericliu.billshare.R;
 import com.ericliu.billshare.provider.BillProvider;
 
 import static com.ericliu.billshare.provider.DatabaseConstants.*;
-public class TestLoaderSelectMembersDialog extends DialogFragment implements OnClickListener, LoaderCallbacks<Cursor>  {
+public class SelectMembersDialog extends DialogFragment implements OnClickListener, LoaderCallbacks<Cursor>  {
 	
 	private static final String[] PROJECTION = {
 		COL_ROWID,
@@ -83,7 +83,7 @@ public class TestLoaderSelectMembersDialog extends DialogFragment implements OnC
 	public void onClick(DialogInterface dialog, int which) {
 		switch (which) {
 		case DialogInterface.BUTTON_POSITIVE:
-			
+			mCallback.onFinishSelectMembers(lv.getCheckedItemIds());
 			break;
 case DialogInterface.BUTTON_NEGATIVE:
 			
