@@ -57,14 +57,10 @@ public class TestLoaderSelectBillsDialog extends DialogFragment implements OnCli
 		builder.setTitle(R.string.select_bills).setPositiveButton(R.string.done, this).setNegativeButton(R.string.cancel, this);
 		
 		View dialogView = getActivity().getLayoutInflater().inflate(R.layout.multi_choice_listview, null);
-		builder.setView(dialogView).setAdapter(adapter,new OnClickListener() {
-			
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-			}
-		});
+		builder.setView(dialogView);
 		
 		ListView lv = (ListView) dialogView.findViewById(R.id.lvMulti);
+		lv.setAdapter(adapter);
 		lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 		lv.setOnItemSelectedListener(this);
 		

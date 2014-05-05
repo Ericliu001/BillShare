@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.ericliu.billshare.R;
-import com.ericliu.billshare.dialog.SelectBillsDialog;
 import com.ericliu.billshare.dialog.SelectBillsDialog.SelectBillsDialogListener;
 import com.ericliu.billshare.dialog.SelectMembersDialog;
+import com.ericliu.billshare.dialog.TestLoaderSelectBillsDialog;
 
 public class EvenDivisionActivity extends DrawerActivity implements SelectBillsDialogListener {
 	
@@ -73,7 +73,7 @@ public class EvenDivisionActivity extends DrawerActivity implements SelectBillsD
 		public void onClick(View v) {
 			switch (v.getId()) {
 			case R.id.btSelectBills:
-				SelectBillsDialog billDialog = new SelectBillsDialog();
+				TestLoaderSelectBillsDialog billDialog = new TestLoaderSelectBillsDialog();
 				billDialog.show(getFragmentManager(), "billSelect");
 				break;
 			case R.id.btSelectMember:
