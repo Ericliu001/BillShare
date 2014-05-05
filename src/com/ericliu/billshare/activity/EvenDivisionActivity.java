@@ -8,13 +8,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckedTextView;
+import android.widget.TextView;
 
 import com.ericliu.billshare.R;
 import com.ericliu.billshare.dialog.SelectBillsDialog.SelectBillsDialogListener;
 import com.ericliu.billshare.dialog.SelectMembersDialog;
 import com.ericliu.billshare.dialog.TestLoaderSelectBillsDialog;
 
-public class EvenDivisionActivity extends DrawerActivity implements SelectBillsDialogListener {
+public class EvenDivisionActivity extends DrawerActivity implements com.ericliu.billshare.dialog.TestLoaderSelectBillsDialog.SelectBillsDialogListener {
 	
 	private static final String TAG = "EvenDivisionFragment";
 	private EvenDivisionFragment frag;
@@ -41,6 +43,10 @@ public class EvenDivisionActivity extends DrawerActivity implements SelectBillsD
 		private Button btSelectMembers;
 		private Button btSelectBills;
 		private Button btCalculate;
+		
+		private TextView tvMemberNumber;
+		private TextView tvBillNumber;
+		private TextView tvTotalAmount;
 
 		public EvenDivisionFragment() {
 		}
@@ -62,10 +68,17 @@ public class EvenDivisionActivity extends DrawerActivity implements SelectBillsD
 			btSelectMembers = (Button) rootView
 					.findViewById(R.id.btSelectMember);
 			btCalculate = (Button) rootView.findViewById(R.id.btCalculate);
+			
+			
+			tvMemberNumber = (TextView) rootView.findViewById(R.id.tvMemberSelected);
+			tvBillNumber = (TextView) rootView.findViewById(R.id.tvBillSelected);
+			tvTotalAmount = (TextView) rootView.findViewById(R.id.tvTotalAmount);
 
 			btSelectBills.setOnClickListener(this);
 			btSelectMembers.setOnClickListener(this);
 			btCalculate.setOnClickListener(this);
+			
+			
 			return rootView;
 		}
 
@@ -90,15 +103,15 @@ public class EvenDivisionActivity extends DrawerActivity implements SelectBillsD
 			}
 		}
 		
-		public void onFinishSelectBills(){
-			
+		public void onFinishSelectBills(long[] ids){
+			tvBillNumber.setText(String.valueOf(ids.length));
 		}
 
 	}
 
 	@Override
-	public void onFinishSelectBills(DialogFragment dialog) {
-		frag.onFinishSelectBills();
+	public void onFinishSelectBills(long[] ids) {
+		frag.onFinishSelectBills(ids);
 	}
 
 
