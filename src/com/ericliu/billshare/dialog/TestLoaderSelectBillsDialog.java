@@ -21,6 +21,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import android.view.ViewGroup;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
@@ -40,6 +41,12 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 >>>>>>> parent of 9a75014... Implement default check unpaid bills
+=======
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
+>>>>>>> parent of 9a75014... Implement default check unpaid bills
 import static com.ericliu.billshare.provider.DatabaseConstants.*;
 /*
  * Try to use Loader to load data into Dialog but failed
@@ -52,12 +59,15 @@ public class TestLoaderSelectBillsDialog extends DialogFragment implements OnCli
 	private static final int loaderID = 11;
 	private SimpleCursorAdapter adapter;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	private ListView lv;
 	private SelectBillsDialogListener mCallback;
 
 	public interface SelectBillsDialogListener{
 		
 	}
+=======
+>>>>>>> parent of 9a75014... Implement default check unpaid bills
 =======
 >>>>>>> parent of 9a75014... Implement default check unpaid bills
 	
@@ -72,6 +82,7 @@ public class TestLoaderSelectBillsDialog extends DialogFragment implements OnCli
 		
 		super.onAttach(activity);
 		activity.getLoaderManager().initLoader(loaderID, null, this);
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 		String[] from = {  COL_TYPE,
@@ -107,10 +118,15 @@ public class TestLoaderSelectBillsDialog extends DialogFragment implements OnCli
 		};
 		
 =======
+=======
+>>>>>>> parent of 9a75014... Implement default check unpaid bills
 		
 		String[] from = {COL_BILL_NAME};
 		int[] to = {android.R.id.text1};
 		adapter = new SimpleCursorAdapter(activity, android.R.layout.simple_list_item_multiple_choice, null, from, to, 0);
+<<<<<<< HEAD
+>>>>>>> parent of 9a75014... Implement default check unpaid bills
+=======
 >>>>>>> parent of 9a75014... Implement default check unpaid bills
 	}
 	
@@ -154,9 +170,12 @@ public class TestLoaderSelectBillsDialog extends DialogFragment implements OnCli
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 		return new CursorLoader(getActivity(), BillProvider.BILL_URI,
 				PROJECTION, null, null, null);
+=======
+>>>>>>> parent of 9a75014... Implement default check unpaid bills
 =======
 >>>>>>> parent of 9a75014... Implement default check unpaid bills
 		
