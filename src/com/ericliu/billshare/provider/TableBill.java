@@ -35,7 +35,6 @@ public class TableBill {
 			+ " from  "
 			+ TABLE_BILL
 			+ " where  " + COL_DELETED + " = 0"
-			+ " order by " + COL_ROWID + " desc "
 			+";";
 	
 	// create view for dialog
@@ -47,7 +46,6 @@ public class TableBill {
 			+ COL_TYPE + "||' '||"  + COL_AMOUNT + " as  " + COL_BILL_NAME
 			+ " from "
 			+ TABLE_BILL
-			+ " order by " + COL_ROWID + " desc "
 			+";";
 
 	public static void onCreate(SQLiteDatabase db){

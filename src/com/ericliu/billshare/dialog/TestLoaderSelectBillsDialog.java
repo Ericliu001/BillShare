@@ -22,7 +22,14 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import static com.ericliu.billshare.provider.DatabaseConstants.*;
-public class SelectBillsDialog extends DialogFragment implements OnClickListener, LoaderCallbacks<Cursor>, OnItemSelectedListener {
+/*
+ * Try to use Loader to load data into Dialog but failed
+ */
+
+public class TestLoaderSelectBillsDialog extends DialogFragment implements OnClickListener, LoaderCallbacks<Cursor>, OnItemSelectedListener {
+	
+	
+	
 	private static final int loaderID = 11;
 	private SimpleCursorAdapter adapter;
 	

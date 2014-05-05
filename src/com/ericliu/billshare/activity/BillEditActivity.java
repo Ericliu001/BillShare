@@ -47,7 +47,7 @@ public class BillEditActivity extends EditActivity implements
 		DatePickerListener {
 	
 	private static final String TAG = "BillEditFragment";
-
+	private BillEditFragment frag;
 	private Bill mBill;
 
 	@Override
@@ -57,10 +57,13 @@ public class BillEditActivity extends EditActivity implements
 
 		long id = getIntent().getLongExtra(DatabaseConstants.COL_ROWID, -1);
 
-		if (getFragmentManager().findFragmentByTag(TAG) == null) {
+		
+		frag = (BillEditFragment) getFragmentManager().findFragmentByTag(TAG);
+		if (frag == null) {
+			frag = BillEditFragment.newInstance(id);
 			getFragmentManager()
 					.beginTransaction()
-					.add(R.id.container, BillEditFragment.newInstance(id),
+					.add(R.id.container, frag,
 							TAG).commit();
 		}
 	}
@@ -98,7 +101,7 @@ public class BillEditActivity extends EditActivity implements
 
 		private  String undefined;
 
-		public static Fragment newInstance(long id) {
+		public static BillEditFragment newInstance(long id) {
 			BillEditFragment frag = new BillEditFragment();
 			Bundle args = new Bundle();
 			args.putLong(DatabaseConstants.COL_ROWID, id);
@@ -328,9 +331,7 @@ public class BillEditActivity extends EditActivity implements
 
 	@Override
 	public void onFinishPicking() {
-		BillEditFragment fragment = (BillEditFragment) getFragmentManager()
-				.findFragmentByTag(TAG);
-		fragment.onFinishPicking();
+		frag.onFinishPicking();
 	}
 
 }

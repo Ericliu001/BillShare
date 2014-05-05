@@ -10,7 +10,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 
-public class SelectMembersDialog extends DialogFragment implements OnClickListener {
+public class TestLoaderSelectMembersDialog extends DialogFragment implements OnClickListener {
 	
 	
 	@Override
