@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.ericliu.billshare.R;
+import com.ericliu.billshare.dialog.SelectBillsDialog;
 import com.ericliu.billshare.dialog.SelectMembersDialog;
 
 public class EvenDivisionActivity extends DrawerActivity {
@@ -70,7 +71,8 @@ public class EvenDivisionActivity extends DrawerActivity {
 		public void onClick(View v) {
 			switch (v.getId()) {
 			case R.id.btSelectBills:
-
+				SelectBillsDialog billDialog = new SelectBillsDialog();
+				billDialog.show(getFragmentManager(), "billSelect");
 				break;
 			case R.id.btSelectMember:
 				SelectMembersDialog memberDialog = new SelectMembersDialog();
@@ -78,7 +80,7 @@ public class EvenDivisionActivity extends DrawerActivity {
 
 				break;
 			case R.id.btCalculate:
-
+				
 				break;
 
 			default:

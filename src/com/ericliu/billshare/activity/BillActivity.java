@@ -68,7 +68,7 @@ public class BillActivity extends DrawerActivity {
 			LoaderCallbacks<Cursor> {
 
 		private static final String[] PROJECTION = new String[] { COL_ROWID,
-				COL_TYPE, COL_AMOUNT, COL_PAID, COL_DUE_DATE };
+				COL_TYPE, COL_AMOUNT, COL_UNPAID, COL_DUE_DATE };
 
 		private SimpleCursorAdapter adapter;
 
@@ -88,7 +88,7 @@ public class BillActivity extends DrawerActivity {
 			super.onCreate(savedInstanceState);
 			setRetainInstance(true);
 
-			String[] from = {COL_TYPE, COL_AMOUNT, COL_PAID, COL_DUE_DATE };
+			String[] from = {COL_TYPE, COL_AMOUNT, COL_UNPAID, COL_DUE_DATE };
 			int[] to = { R.id.tvType, R.id.tvAmount, R.id.tvPaid, R.id.tvDueDay };
 
 			adapter = new SimpleCursorAdapter(getActivity(), R.layout.bill_row,

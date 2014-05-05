@@ -254,7 +254,7 @@ int id action_context_bar 0x7f05001d
 int id action_menu_divider 0x7f050016
 int id action_menu_presenter 0x7f050017
 int id action_mode_close_button 0x7f050024
-int id action_settings 0x7f05005e
+int id action_settings 0x7f05005c
 int id activity_chooser_view_content 0x7f050025
 int id always 0x7f05000b
 int id beginning 0x7f050011
@@ -264,12 +264,11 @@ int id btEndDate 0x7f050048
 int id btSelectBills 0x7f050051
 int id btSelectMember 0x7f05004f
 int id btStartDate 0x7f050046
-int id button1 0x7f05005d
 int id cbPaid 0x7f05004b
 int id checkbox 0x7f05002d
 int id collapseActionView 0x7f05000d
 int id container 0x7f05003d
-int id create 0x7f05005f
+int id create 0x7f05005d
 int id default_activity_button 0x7f050028
 int id dialog 0x7f05000e
 int id disableHome 0x7f050008
@@ -302,7 +301,7 @@ int id normal 0x7f050000
 int id progress_circular 0x7f050018
 int id progress_horizontal 0x7f050019
 int id radio 0x7f05002f
-int id save 0x7f050060
+int id save 0x7f05005e
 int id search_badge 0x7f050032
 int id search_bar 0x7f050031
 int id search_button 0x7f050033
@@ -321,7 +320,6 @@ int id spType 0x7f050043
 int id split_action_bar 0x7f05001e
 int id submit_area 0x7f050039
 int id tabMode 0x7f050002
-int id textView1 0x7f05005c
 int id title 0x7f05002b
 int id top_action_bar 0x7f050020
 int id tvAmount 0x7f050040
@@ -374,7 +372,6 @@ int layout fragment_member_edit 0x7f03001e
 int layout member_row 0x7f03001f
 int layout result_even_division 0x7f030020
 int layout support_simple_spinner_dropdown_item 0x7f030021
-int layout test_dialog 0x7f030022
 int menu create 0x7f0d0000
 int menu edit 0x7f0d0001
 int menu main 0x7f0d0002

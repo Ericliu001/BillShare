@@ -67,11 +67,8 @@ public class SelectMembersDialog extends DialogFragment implements
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-		LayoutInflater inflater = getActivity().getLayoutInflater();
 
-		builder.setView(inflater.inflate(R.layout.test_dialog, null));
 
-		builder.setTitle(R.string.select_members);
 
 
 		 Cursor cursor = getActivity().managedQuery(BillProvider.DIALOG_URI_MEMBER,
@@ -79,7 +76,7 @@ public class SelectMembersDialog extends DialogFragment implements
 
 		builder.setMultiChoiceItems(cursor, COL_CHECKED, COL_FULL_NAME, this);
 
-		builder.setPositiveButton(R.string.done, this);
+		builder.setTitle(R.string.select_members).setPositiveButton(R.string.done, this);
 
 		return builder.create();
 	}
