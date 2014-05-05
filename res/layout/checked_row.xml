@@ -13,8 +13,8 @@
     android:textAppearance="?android:attr/textAppearanceListItem"
     android:gravity="center_vertical"
     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-    android:paddingLeft="8dip"
-    android:paddingRight="8dip"
+    android:paddingLeft="5dip"
+    android:paddingRight="5dip"
 />
     
     
@@ -23,14 +23,8 @@
         android:id="@+id/tvChecked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
         android:visibility="gone"
          />
 
-    <TextView
-        android:id="@+id/tvBillAmount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
 
 </LinearLayout>

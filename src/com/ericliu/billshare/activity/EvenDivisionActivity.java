@@ -1,5 +1,6 @@
 package com.ericliu.billshare.activity;
 
+import android.app.DialogFragment;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,16 +8,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-<<<<<<< HEAD
-<<<<<<< HEAD
-import android.widget.TextView;
-=======
->>>>>>> parent of 9a75014... Implement default check unpaid bills
-=======
->>>>>>> parent of 9a75014... Implement default check unpaid bills
 
 import com.ericliu.billshare.R;
 import com.ericliu.billshare.dialog.TestLoaderSelectBillsDialog;
+import com.ericliu.billshare.dialog.TestLoaderSelectBillsDialog.SelectBillsDialogListener;
 import com.ericliu.billshare.dialog.TestLoaderSelectMembersDialog;
 
 public class EvenDivisionActivity extends DrawerActivity implements SelectBillsDialogListener {
@@ -95,15 +90,15 @@ public class EvenDivisionActivity extends DrawerActivity implements SelectBillsD
 			}
 		}
 		
-		public void onFinishSelectBills(){
+		public void onFinishSelectBills(long[] ids){
 			
 		}
 
 	}
 
 	@Override
-	public void onFinishSelectBills(DialogFragment dialog) {
-		frag.onFinishSelectBills();
+	public void onFinishSelectBills(long[] ids) {
+		frag.onFinishSelectBills(ids);
 	}
 
 

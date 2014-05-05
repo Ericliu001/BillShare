@@ -26,7 +26,8 @@ public class BillProvider extends ContentProvider {
 	
 	public static final Uri PAYMENT_INFO_URI = Uri.parse("content://" + AUTH + "/paymentinfo");
 
-	
+	public static final Uri DIALOG_BILL_URI = Uri.parse("content://" + AUTH + "/dialogbill");
+	public static final Uri DIALOG_MEMBER_URI = Uri.parse("content://" + AUTH + "/dialogmember");
 	
 	// Basic tables
 	private static final int BILLS = 1;
@@ -40,6 +41,10 @@ public class BillProvider extends ContentProvider {
 	
 	private static final int PAYMENT_INFO = 4;
 	private static final int PAYMENT_INFO_ID = 40;
+	
+	
+	private static final int DIALOG_BILL = 5;
+	private static final int DIALOG_MEMBER = 6;
 	
 	
 
@@ -57,6 +62,13 @@ public class BillProvider extends ContentProvider {
 		
 		URI_MATCHER.addURI(AUTH, "paymentinfo", PAYMENT_INFO);
 		URI_MATCHER.addURI(AUTH, "paymentinfo/#", PAYMENT_INFO_ID);
+		
+		
+		
+		URI_MATCHER.addURI(AUTH, "dialogbill", DIALOG_BILL);
+		URI_MATCHER.addURI(AUTH, "dialogmember", DIALOG_MEMBER);
+		
+		
 		
 	}
 
@@ -118,6 +130,15 @@ public class BillProvider extends ContentProvider {
 		case PAYMENT_INFO_ID:
 			qb.setTables(TABLE_PAYMENT_INFO);
 			qb.appendWhere(COL_ROWID + "=" + uri.getLastPathSegment());
+			break;
+			
+			
+		case DIALOG_BILL:
+			qb.setTables(VIEW_BILL_NAME);
+			break;
+			
+		case DIALOG_MEMBER:
+			qb.setTables(VIEW_MEMBER_NAME);
 			break;
 			
 			

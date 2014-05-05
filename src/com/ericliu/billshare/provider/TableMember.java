@@ -41,6 +41,17 @@ public class TableMember {
 				+";";
 		
 
+		// create member name
+		private static final String VIEW_MEMBER_NAME_CREATE = " create view "
+				+ VIEW_MEMBER_NAME
+				+ " as select "
+				+ COL_ROWID + " , "
+				+ 1 + " as  " + COL_CHECKED + ","
+				+ COL_FIRSTNAME + "|| ' ' ||" + COL_LASTNAME + " as " + COL_MEMBER_FULLNAME + ","
+				+ " from  "
+				+ TABLE_MEMBER
+				+ " where  " + COL_DELETED + " = 0"
+				+ ";";
 
 	public static void onCreate(SQLiteDatabase db){
 		db.execSQL(TABLE_CREATE);

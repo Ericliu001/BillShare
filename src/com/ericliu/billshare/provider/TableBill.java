@@ -46,6 +46,7 @@ public class TableBill {
 			+ COL_TYPE + "||' '||" + COL_AMOUNT  + " as  " + COL_BILL_NAME
 			+ " from  "
 			+ TABLE_BILL
+			+ " where  " + COL_DELETED + " = 0"
 			+ ";";
 	
 

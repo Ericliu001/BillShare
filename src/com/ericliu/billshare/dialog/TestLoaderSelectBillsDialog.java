@@ -1,6 +1,6 @@
 package com.ericliu.billshare.dialog;
 
-import static com.ericliu.billshare.provider.DatabaseConstants.COL_AMOUNT;
+import static com.ericliu.billshare.provider.DatabaseConstants.*;
 import static com.ericliu.billshare.provider.DatabaseConstants.COL_ROWID;
 import static com.ericliu.billshare.provider.DatabaseConstants.COL_TYPE;
 import static com.ericliu.billshare.provider.DatabaseConstants.COL_UNPAID;
@@ -20,8 +20,6 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
-<<<<<<< HEAD
-<<<<<<< HEAD
 import android.view.ViewGroup;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
@@ -35,18 +33,14 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-=======
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
->>>>>>> parent of 9a75014... Implement default check unpaid bills
-=======
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
->>>>>>> parent of 9a75014... Implement default check unpaid bills
 import static com.ericliu.billshare.provider.DatabaseConstants.*;
 /*
  * Try to use Loader to load data into Dialog but failed
@@ -58,22 +52,16 @@ public class TestLoaderSelectBillsDialog extends DialogFragment implements OnCli
 	
 	private static final int loaderID = 11;
 	private SimpleCursorAdapter adapter;
-<<<<<<< HEAD
-<<<<<<< HEAD
 	private ListView lv;
 	private SelectBillsDialogListener mCallback;
 
 	public interface SelectBillsDialogListener{
-		
+		void onFinishSelectBills(long[] ids);
 	}
-=======
->>>>>>> parent of 9a75014... Implement default check unpaid bills
-=======
->>>>>>> parent of 9a75014... Implement default check unpaid bills
 	
 	private static final String[] PROJECTION = {
 		COL_ROWID,
-		COL_CHECKED,
+		COL_UNPAID,
 		COL_BILL_NAME
 	};
 	
@@ -82,26 +70,21 @@ public class TestLoaderSelectBillsDialog extends DialogFragment implements OnCli
 		
 		super.onAttach(activity);
 		activity.getLoaderManager().initLoader(loaderID, null, this);
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-		String[] from = {  COL_TYPE,
-				COL_AMOUNT, COL_UNPAID };
-		int[] to = { R.id.tvMultiChoiceListRow, R.id.tvBillAmount ,R.id.tvChecked };
+		String[] from = {  COL_BILL_NAME,
+				 COL_UNPAID };
+		int[] to = { R.id.tvMultiChoiceListRow ,R.id.tvChecked };
+		
 		adapter = new SimpleCursorAdapter(activity, R.layout.checked_row, null,
 				from, to, 0) {
 			@Override
 			public View getView(int position, View convertView, ViewGroup parent) {
-				if (convertView == null) {
+				View result = super.getView(position, convertView, parent);
 
-					convertView = super.getView(position, convertView, parent);
-				}
-				View result = convertView;
-
-				Holder holder = (Holder) result.getTag();
+				ViewHolder holder = (ViewHolder) result.getTag();
 
 				if (holder == null) {
-					holder = new Holder();
+					holder = new ViewHolder();
 					holder.cktv = (CheckedTextView) result
 							.findViewById(R.id.tvMultiChoiceListRow);
 					holder.tvChecked = (TextView) result
@@ -117,17 +100,12 @@ public class TestLoaderSelectBillsDialog extends DialogFragment implements OnCli
 			}
 		};
 		
-=======
-=======
->>>>>>> parent of 9a75014... Implement default check unpaid bills
 		
-		String[] from = {COL_BILL_NAME};
-		int[] to = {android.R.id.text1};
-		adapter = new SimpleCursorAdapter(activity, android.R.layout.simple_list_item_multiple_choice, null, from, to, 0);
-<<<<<<< HEAD
->>>>>>> parent of 9a75014... Implement default check unpaid bills
-=======
->>>>>>> parent of 9a75014... Implement default check unpaid bills
+	}
+	
+	private static class ViewHolder{
+		private CheckedTextView cktv;
+		private TextView tvChecked;
 	}
 	
 	@Override
@@ -139,7 +117,7 @@ public class TestLoaderSelectBillsDialog extends DialogFragment implements OnCli
 		View dialogView = getActivity().getLayoutInflater().inflate(R.layout.multi_choice_listview, null);
 		builder.setView(dialogView);
 		
-		ListView lv = (ListView) dialogView.findViewById(R.id.lvMulti);
+		lv = (ListView) dialogView.findViewById(R.id.lvMulti);
 		lv.setAdapter(adapter);
 		lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 		lv.setOnItemSelectedListener(this);
@@ -154,7 +132,7 @@ public class TestLoaderSelectBillsDialog extends DialogFragment implements OnCli
 		// respond to action buttons click
 		switch (which) {
 		case DialogInterface.BUTTON_POSITIVE:
-			
+			mCallback.onFinishSelectBills(lv.getCheckedItemIds());
 			break;
 		case DialogInterface.BUTTON_NEGATIVE:
 			
@@ -169,17 +147,9 @@ public class TestLoaderSelectBillsDialog extends DialogFragment implements OnCli
 
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-		return new CursorLoader(getActivity(), BillProvider.BILL_URI,
-				PROJECTION, null, null, null);
-=======
->>>>>>> parent of 9a75014... Implement default check unpaid bills
-=======
->>>>>>> parent of 9a75014... Implement default check unpaid bills
 		
-		return new CursorLoader(getActivity(), BillProvider.DIALOG_URI_BILL, PROJECTION, null, null, null);
+		return new CursorLoader(getActivity(), BillProvider.DIALOG_BILL_URI, PROJECTION, null, null, null);
 	}
 
 	@Override
@@ -192,13 +162,18 @@ public class TestLoaderSelectBillsDialog extends DialogFragment implements OnCli
 		adapter.swapCursor(null);
 	}
 
+
+
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position,
 			long id) {
 	}
 
+
+
 	@Override
 	public void onNothingSelected(AdapterView<?> parent) {
 	}
+
 
 }
