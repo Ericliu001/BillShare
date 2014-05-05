@@ -70,6 +70,13 @@ public class TestLoaderSelectBillsDialog extends DialogFragment implements OnCli
 		
 		super.onAttach(activity);
 		activity.getLoaderManager().initLoader(loaderID, null, this);
+		
+		try {
+			mCallback = (SelectBillsDialogListener) activity;
+		} catch (ClassCastException e) {
+			// TODO: handle exception
+			throw new ClassCastException(activity.toString() + " must implement SelectBillsDialogListener");
+		}
 
 		String[] from = {  COL_BILL_NAME,
 				 COL_UNPAID };
@@ -167,6 +174,7 @@ public class TestLoaderSelectBillsDialog extends DialogFragment implements OnCli
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position,
 			long id) {
+		lv.setItemChecked(position, true);
 	}
 
 
