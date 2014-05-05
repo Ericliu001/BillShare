@@ -14,7 +14,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 
 import static com.ericliu.billshare.provider.DatabaseConstants.*;
-public class SelectBillsDialog extends DialogFragment implements OnClickListener, OnMultiChoiceClickListener {
+public class ExpiredSelectBillsDialog extends DialogFragment implements OnClickListener, OnMultiChoiceClickListener {
 
 	private static final String[] PROJECTION = {
 		COL_ROWID,

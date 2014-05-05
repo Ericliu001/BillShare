@@ -54,7 +54,7 @@ import com.ericliu.billshare.provider.BillProvider;
 import com.ericliu.billshare.provider.DatabaseConstants;
 import static com.ericliu.billshare.provider.DatabaseConstants.*;
 
-public class SelectMembersDialog extends DialogFragment implements
+public class ExpiredSelectMembersDialog extends DialogFragment implements
 		OnClickListener,  OnMultiChoiceClickListener {
 
 	private static final String[] PROJECTION = new String[] {

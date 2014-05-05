@@ -3,9 +3,6 @@ package com.ericliu.billshare.activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -71,11 +68,11 @@ public class EvenDivisionActivity extends DrawerActivity {
 		public void onClick(View v) {
 			switch (v.getId()) {
 			case R.id.btSelectBills:
-				SelectBillsDialog billDialog = new SelectBillsDialog();
+				ExpiredSelectBillsDialog billDialog = new ExpiredSelectBillsDialog();
 				billDialog.show(getFragmentManager(), "billSelect");
 				break;
 			case R.id.btSelectMember:
-				SelectMembersDialog memberDialog = new SelectMembersDialog();
+				ExpiredSelectMembersDialog memberDialog = new ExpiredSelectMembersDialog();
 				memberDialog.show(getFragmentManager(), "memberSelect");
 
 				break;
