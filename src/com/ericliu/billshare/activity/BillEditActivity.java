@@ -256,7 +256,7 @@ public class BillEditActivity extends EditActivity implements
 				
 				bill.setDueDate(tvDueDate.getText().toString());
 			
-			bill.setPaid(cbPaid.isChecked() ? 1 : 0);
+			bill.setPaid(cbPaid.isChecked() ? 0 : 1);
 
 			mCallBack.setBill(bill);
 			mCallBack.saveToDb();

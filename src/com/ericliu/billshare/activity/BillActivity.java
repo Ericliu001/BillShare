@@ -105,13 +105,13 @@ public class BillActivity extends DrawerActivity {
 					if (tvPaid == null) {
 						tvPaid = (TextView) result.findViewById(R.id.tvPaid);
 					}
-					String paid = tvPaid.getText().toString();
-					if (paid != null) {
+					String unpaid = tvPaid.getText().toString();
+					if (unpaid != null) {
 
-						if (Integer.valueOf(paid) > 0) {
-							tvPaid.setText("Paid");
-						} else {
+						if (Integer.valueOf(unpaid) > 0) {
 							tvPaid.setText("Unpaid");
+						} else {
+							tvPaid.setText("Paid");
 						}
 					}
 
