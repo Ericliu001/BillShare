@@ -10,11 +10,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.ericliu.billshare.R;
-import com.ericliu.billshare.dialog.TestLoaderSelectBillsDialog;
-import com.ericliu.billshare.dialog.TestLoaderSelectBillsDialog.SelectBillsDialogListener;
+import com.ericliu.billshare.dialog.SelectBillsDialog;
+import com.ericliu.billshare.dialog.SelectBillsDialog.SelectBillsDialogListener;
 import com.ericliu.billshare.dialog.TestLoaderSelectMembersDialog;
+import com.ericliu.billshare.dialog.TestLoaderSelectMembersDialog.SelectMemberDialogListener;
 
-public class EvenDivisionActivity extends DrawerActivity implements SelectBillsDialogListener {
+public class EvenDivisionActivity extends DrawerActivity implements SelectBillsDialogListener, SelectMemberDialogListener {
 	
 	private static final String TAG = "EvenDivisionFragment";
 	private EvenDivisionFragment frag;
@@ -73,7 +74,7 @@ public class EvenDivisionActivity extends DrawerActivity implements SelectBillsD
 		public void onClick(View v) {
 			switch (v.getId()) {
 			case R.id.btSelectBills:
-				TestLoaderSelectBillsDialog billDialog = new TestLoaderSelectBillsDialog();
+				SelectBillsDialog billDialog = new SelectBillsDialog();
 				billDialog.show(getFragmentManager(), "billSelect");
 				break;
 			case R.id.btSelectMember:
@@ -94,11 +95,19 @@ public class EvenDivisionActivity extends DrawerActivity implements SelectBillsD
 			
 		}
 
+		public void onFinishSelectMembers(long[] ids) {
+		}
+
 	}
 
 	@Override
 	public void onFinishSelectBills(long[] ids) {
 		frag.onFinishSelectBills(ids);
+	}
+
+	@Override
+	public void onFinishSelectMembers(long[] ids) {
+		frag.onFinishSelectMembers(ids);
 	}
 
 

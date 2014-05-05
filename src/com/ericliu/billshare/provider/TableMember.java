@@ -24,7 +24,7 @@ public class TableMember {
 	
 	
 	// create view
-		private static final String VIEW_CREATE = "create view "
+		private static final String VIEW_MEMBER_CREATE = "create view "
 				+ VIEW_MEMBER
 				+ " as select "
 				+ COL_ROWID + " , "
@@ -47,7 +47,7 @@ public class TableMember {
 				+ " as select "
 				+ COL_ROWID + " , "
 				+ 1 + " as  " + COL_CHECKED + ","
-				+ COL_FIRSTNAME + "|| ' ' ||" + COL_LASTNAME + " as " + COL_MEMBER_FULLNAME + ","
+				+ COL_FIRSTNAME + "|| ' ' ||" + COL_LASTNAME + " as " + COL_MEMBER_FULLNAME + " "
 				+ " from  "
 				+ TABLE_MEMBER
 				+ " where  " + COL_DELETED + " = 0"
@@ -55,7 +55,8 @@ public class TableMember {
 
 	public static void onCreate(SQLiteDatabase db){
 		db.execSQL(TABLE_CREATE);
-		db.execSQL(VIEW_CREATE);
+		db.execSQL(VIEW_MEMBER_CREATE);
+		db.execSQL(VIEW_MEMBER_NAME_CREATE);
 	}
 	
 	public static void onUpgrade(SQLiteDatabase db){

@@ -45,8 +45,8 @@ import static com.ericliu.billshare.provider.DatabaseConstants.*;
 /*
  * Try to use Loader to load data into Dialog but failed
  */
-
-public class TestLoaderSelectBillsDialog extends DialogFragment implements OnClickListener, LoaderCallbacks<Cursor>, OnItemSelectedListener {
+import static com.ericliu.billshare.provider.DatabaseConstants.*;
+public class SelectBillsDialog extends DialogFragment implements OnClickListener, LoaderCallbacks<Cursor>, OnItemSelectedListener {
 	
 	
 	
@@ -160,8 +160,9 @@ public class TestLoaderSelectBillsDialog extends DialogFragment implements OnCli
 	}
 
 	@Override
-	public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-		adapter.swapCursor(data);
+	public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+		adapter.swapCursor(cursor);
+		
 	}
 
 	@Override
@@ -174,7 +175,6 @@ public class TestLoaderSelectBillsDialog extends DialogFragment implements OnCli
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position,
 			long id) {
-		lv.setItemChecked(position, true);
 	}
 
 
