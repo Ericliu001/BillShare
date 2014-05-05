@@ -78,34 +78,34 @@ public class TestLoaderSelectBillsDialog extends DialogFragment implements OnCli
 			throw new ClassCastException(activity.toString() + " must implement SelectBillsDialogListener");
 		}
 
-		String[] from = {  COL_BILL_NAME,
-				 COL_UNPAID };
-		int[] to = { R.id.tvMultiChoiceListRow ,R.id.tvChecked };
+		String[] from = {  COL_BILL_NAME};
+		int[] to = { android.R.id.text1  };
 		
-		adapter = new SimpleCursorAdapter(activity, R.layout.checked_row, null,
-				from, to, 0) {
-			@Override
-			public View getView(int position, View convertView, ViewGroup parent) {
-				View result = super.getView(position, convertView, parent);
-
-				ViewHolder holder = (ViewHolder) result.getTag();
-
-				if (holder == null) {
-					holder = new ViewHolder();
-					holder.cktv = (CheckedTextView) result
-							.findViewById(R.id.tvMultiChoiceListRow);
-					holder.tvChecked = (TextView) result
-							.findViewById(R.id.tvChecked);
-					result.setTag(holder);
-				}
-				
-				if (holder.tvChecked.getText().toString().equals(String.valueOf(1))) {
-					holder.cktv.setChecked(true);
-				}
-
-				return result;
-			}
-		};
+		adapter = new SimpleCursorAdapter(activity, android.R.layout.simple_list_item_multiple_choice, null,
+				from, to, 0) ;
+//		{
+//			@Override
+//			public View getView(int position, View convertView, ViewGroup parent) {
+//				View result = super.getView(position, convertView, parent);
+//
+//				ViewHolder holder = (ViewHolder) result.getTag();
+//
+//				if (holder == null) {
+//					holder = new ViewHolder();
+//					holder.cktv = (CheckedTextView) result
+//							.findViewById(R.id.text1);
+//					holder.tvChecked = (TextView) result
+//							.findViewById(R.id.tvChecked);
+//					result.setTag(holder);
+//				}
+//				
+//				if (holder.tvChecked.getText().toString().equals(String.valueOf(1))) {
+//					holder.cktv.setChecked(true);
+//				}
+//
+//				return result;
+//			}
+//		};
 		
 		
 	}
@@ -148,7 +148,7 @@ public class TestLoaderSelectBillsDialog extends DialogFragment implements OnCli
 		default:
 			break;
 		}
-		getActivity().getLoaderManager().destroyLoader(loaderID);
+		
 		
 	}
 
@@ -183,5 +183,11 @@ public class TestLoaderSelectBillsDialog extends DialogFragment implements OnCli
 	public void onNothingSelected(AdapterView<?> parent) {
 	}
 
+	
+	@Override
+	public void onDismiss(DialogInterface dialog) {
+		getActivity().getLoaderManager().destroyLoader(loaderID);
+		super.onDismiss(dialog);
+	}
 
 }

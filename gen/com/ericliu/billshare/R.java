@@ -1168,6 +1168,7 @@ containing a value of this type.
         public static final int split_action_bar=0x7f05001e;
         public static final int submit_area=0x7f050039;
         public static final int tabMode=0x7f050002;
+        public static final int text1=0x7f050043;
         public static final int title=0x7f05002b;
         public static final int top_action_bar=0x7f050020;
         public static final int tvAmount=0x7f050040;
@@ -1179,7 +1180,6 @@ containing a value of this type.
         public static final int tvId=0x7f05005a;
         public static final int tvLastName=0x7f05005c;
         public static final int tvMemberSelected=0x7f050050;
-        public static final int tvMultiChoiceListRow=0x7f050043;
         public static final int tvPaid=0x7f050041;
         public static final int tvStartDate=0x7f050047;
         public static final int tvTotalAmount=0x7f050052;

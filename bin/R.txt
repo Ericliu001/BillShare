@@ -321,6 +321,7 @@ int id spType 0x7f050045
 int id split_action_bar 0x7f05001e
 int id submit_area 0x7f050039
 int id tabMode 0x7f050002
+int id text1 0x7f050043
 int id title 0x7f05002b
 int id top_action_bar 0x7f050020
 int id tvAmount 0x7f050040
@@ -332,7 +333,6 @@ int id tvFristName 0x7f05005b
 int id tvId 0x7f05005a
 int id tvLastName 0x7f05005c
 int id tvMemberSelected 0x7f050050
-int id tvMultiChoiceListRow 0x7f050043
 int id tvPaid 0x7f050041
 int id tvStartDate 0x7f050047
 int id tvTotalAmount 0x7f050052
