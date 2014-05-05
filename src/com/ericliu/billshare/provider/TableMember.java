@@ -40,23 +40,11 @@ public class TableMember {
 				+ " where  " + COL_DELETED + " = 0"
 				+";";
 		
-	// create view that firstname and lastname in one column
-		private static final String VIEW_NAME_CREATE = " create view "
-				+ VIEW_MEMBER_NAME
-				+ " as select "
-				+ COL_ROWID + " , "
-				+ 1 + " as " + COL_CHECKED + ","
-				+ COL_FIRSTNAME +"|| ' '||" + COL_LASTNAME + " as " + COL_FULL_NAME
-				+ " from "
-				+ TABLE_MEMBER
-				+ ";";
-				
 
 
 	public static void onCreate(SQLiteDatabase db){
 		db.execSQL(TABLE_CREATE);
 		db.execSQL(VIEW_CREATE);
-		db.execSQL(VIEW_NAME_CREATE);
 	}
 	
 	public static void onUpgrade(SQLiteDatabase db){

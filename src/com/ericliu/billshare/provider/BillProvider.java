@@ -27,8 +27,6 @@ public class BillProvider extends ContentProvider {
 	public static final Uri PAYMENT_INFO_URI = Uri.parse("content://" + AUTH + "/paymentinfo");
 
 	
-	public static final Uri DIALOG_URI_MEMBER = Uri.parse("content://" + AUTH + "/dialogmember");
-	public static final Uri DIALOG_URI_BILL = Uri.parse("content://" + AUTH + "/dialogbill");
 	
 	// Basic tables
 	private static final int BILLS = 1;
@@ -43,8 +41,6 @@ public class BillProvider extends ContentProvider {
 	private static final int PAYMENT_INFO = 4;
 	private static final int PAYMENT_INFO_ID = 40;
 	
-	private static final int DIALOG_MEMBER = 5;
-	private static final int DIALOG_BILL = 6;
 	
 
 	private static final UriMatcher URI_MATCHER;
@@ -62,8 +58,6 @@ public class BillProvider extends ContentProvider {
 		URI_MATCHER.addURI(AUTH, "paymentinfo", PAYMENT_INFO);
 		URI_MATCHER.addURI(AUTH, "paymentinfo/#", PAYMENT_INFO_ID);
 		
-		URI_MATCHER.addURI(AUTH, "dialogmember", DIALOG_MEMBER);
-		URI_MATCHER.addURI(AUTH, "dialogbill", DIALOG_BILL);
 	}
 
 	private BillDatabaseHelper dbHelper;
@@ -126,13 +120,6 @@ public class BillProvider extends ContentProvider {
 			qb.appendWhere(COL_ROWID + "=" + uri.getLastPathSegment());
 			break;
 			
-		case DIALOG_MEMBER:
-			qb.setTables(VIEW_MEMBER_NAME);
-			break;
-
-		case DIALOG_BILL:
-			qb.setTables(VIEW_BILL_NAME);
-			break;
 			
 		default:
 			throw new IllegalArgumentException(" Unknow URL "+ uri);

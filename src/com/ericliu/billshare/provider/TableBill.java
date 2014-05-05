@@ -37,21 +37,10 @@ public class TableBill {
 			+ " where  " + COL_DELETED + " = 0"
 			+";";
 	
-	// create view for dialog
-	private static final String VIEW_BILL_NAME_CREATE = " create view "
-			+ VIEW_BILL_NAME
-			+ " as select "
-			+ COL_ROWID + " , "
-			+ COL_UNPAID + " as  " + COL_CHECKED + " , "
-			+ COL_TYPE + "||' '||"  + COL_AMOUNT + " as  " + COL_BILL_NAME
-			+ " from "
-			+ TABLE_BILL
-			+";";
 
 	public static void onCreate(SQLiteDatabase db){
 		db.execSQL(TABLE_CREATE);
 		db.execSQL(VIEW_CREATE);
-		db.execSQL(VIEW_BILL_NAME_CREATE);
 	}
 	
 	public static void onUpgrade(SQLiteDatabase db){

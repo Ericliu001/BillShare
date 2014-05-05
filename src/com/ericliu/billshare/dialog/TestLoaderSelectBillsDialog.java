@@ -44,8 +44,8 @@ public class TestLoaderSelectBillsDialog extends DialogFragment implements
 	private ListView lv;
 	private SelectBillsDialogListener mCallback;
 
-	private static final String[] PROJECTION = { COL_ROWID, COL_CHECKED,
-			COL_BILL_NAME };
+	private static final String[] PROJECTION = { COL_ROWID, COL_TYPE,
+			COL_AMOUNT, COL_UNPAID };
 
 	@Override
 	public void onAttach(Activity activity) {
@@ -61,8 +61,9 @@ public class TestLoaderSelectBillsDialog extends DialogFragment implements
 
 		activity.getLoaderManager().initLoader(loaderID, null, this);
 
-		String[] from = { COL_BILL_NAME, COL_CHECKED };
-		int[] to = { R.id.tvMultiChoiceListRow, R.id.tvChecked };
+		String[] from = {  COL_TYPE,
+				COL_AMOUNT, COL_UNPAID };
+		int[] to = { R.id.tvMultiChoiceListRow, R.id.tvBillAmount ,R.id.tvChecked };
 		adapter = new SimpleCursorAdapter(activity, R.layout.checked_row, null,
 				from, to, 0) {
 			@Override
@@ -145,7 +146,7 @@ public class TestLoaderSelectBillsDialog extends DialogFragment implements
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
-		return new CursorLoader(getActivity(), BillProvider.DIALOG_URI_BILL,
+		return new CursorLoader(getActivity(), BillProvider.BILL_URI,
 				PROJECTION, null, null, null);
 	}
 

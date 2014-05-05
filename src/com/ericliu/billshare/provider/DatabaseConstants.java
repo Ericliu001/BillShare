@@ -7,19 +7,13 @@ public class DatabaseConstants {
 	public static final String COL_DELETED = "deleted";
 	public static final String COL_DESCRIPTION = "description";
 	public static final String COL_AMOUNT = "amount";
-	public static final String COL_CHECKED = "checked";
 	
 
 	
 	// constants for table bill
 	public static final String TABLE_BILL = "table_bill";
 	public static final String VIEW_BILL = "view_bill";
-	public static final String VIEW_BILL_NAME = "view_bill_name";
-	public static final String COL_BILL_NAME = "bill_name";
-	
-	
 	public static final String COL_TYPE = "bill_type";
-	
 	public static final String COL_BILLING_START = "billing_period_start_date";
 	public static final String COL_BILLING_END = "billing_period_end_date";
 	public static final String COL_DUE_DATE = "bill_due_date";
@@ -51,11 +45,9 @@ public class DatabaseConstants {
 	// constants for table housemate
 	public static final String TABLE_MEMBER = "table_member";
 	public static final String VIEW_MEMBER = "view_member";
-	public static final String VIEW_MEMBER_NAME = "view_member_name";
 	
 	public static final String COL_FIRSTNAME = "firstname";
 	public static final String COL_LASTNAME = "lastname";
-	public static final String COL_FULL_NAME = "fullname";
 	public static final String COL_PHONE = "telephone";
 	public static final String COL_EMAIL = "email";
 	public static final String COL_MOVE_IN_DATE = "move_in_date";
