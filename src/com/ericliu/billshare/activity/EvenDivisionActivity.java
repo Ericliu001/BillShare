@@ -13,7 +13,7 @@ import com.ericliu.billshare.R;
 import com.ericliu.billshare.dialog.TestLoaderSelectBillsDialog;
 import com.ericliu.billshare.dialog.TestLoaderSelectMembersDialog;
 
-public class EvenDivisionActivity extends DrawerActivity implements com.ericliu.billshare.dialog.TestLoaderSelectBillsDialog.SelectBillsDialogListener {
+public class EvenDivisionActivity extends DrawerActivity implements SelectBillsDialogListener {
 	
 	private static final String TAG = "EvenDivisionFragment";
 	private EvenDivisionFragment frag;
@@ -40,10 +40,6 @@ public class EvenDivisionActivity extends DrawerActivity implements com.ericliu.
 		private Button btSelectMembers;
 		private Button btSelectBills;
 		private Button btCalculate;
-		
-		private TextView tvMemberNumber;
-		private TextView tvBillNumber;
-		private TextView tvTotalAmount;
 
 		public EvenDivisionFragment() {
 		}
@@ -65,17 +61,10 @@ public class EvenDivisionActivity extends DrawerActivity implements com.ericliu.
 			btSelectMembers = (Button) rootView
 					.findViewById(R.id.btSelectMember);
 			btCalculate = (Button) rootView.findViewById(R.id.btCalculate);
-			
-			
-			tvMemberNumber = (TextView) rootView.findViewById(R.id.tvMemberSelected);
-			tvBillNumber = (TextView) rootView.findViewById(R.id.tvBillSelected);
-			tvTotalAmount = (TextView) rootView.findViewById(R.id.tvTotalAmount);
 
 			btSelectBills.setOnClickListener(this);
 			btSelectMembers.setOnClickListener(this);
 			btCalculate.setOnClickListener(this);
-			
-			
 			return rootView;
 		}
 
@@ -100,15 +89,15 @@ public class EvenDivisionActivity extends DrawerActivity implements com.ericliu.
 			}
 		}
 		
-		public void onFinishSelectBills(long[] ids){
-			tvBillNumber.setText(String.valueOf(ids.length));
+		public void onFinishSelectBills(){
+			
 		}
 
 	}
 
 	@Override
-	public void onFinishSelectBills(long[] ids) {
-		frag.onFinishSelectBills(ids);
+	public void onFinishSelectBills(DialogFragment dialog) {
+		frag.onFinishSelectBills();
 	}
 
 
