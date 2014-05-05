@@ -13,11 +13,17 @@ public class DatabaseConstants {
 	// constants for table bill
 	public static final String TABLE_BILL = "table_bill";
 	public static final String VIEW_BILL = "view_bill";
+	public static final String VIEW_BILL_NAME_CREATE = "view_bill_name_create";
+	
 	public static final String COL_TYPE = "bill_type";
 	public static final String COL_BILLING_START = "billing_period_start_date";
 	public static final String COL_BILLING_END = "billing_period_end_date";
 	public static final String COL_DUE_DATE = "bill_due_date";
 	public static final String COL_UNPAID = "unpaid";
+	
+	
+	public static final String VIEW_BILL_NAME = "view_bill_name";
+	public static final String COL_BILL_NAME = "bill_name";
 
 	
 	// constants for table payment
