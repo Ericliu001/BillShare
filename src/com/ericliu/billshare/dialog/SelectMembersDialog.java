@@ -55,28 +55,16 @@ import com.ericliu.billshare.provider.DatabaseConstants;
 import static com.ericliu.billshare.provider.DatabaseConstants.*;
 
 public class SelectMembersDialog extends DialogFragment implements
-		OnClickListener, LoaderCallbacks<Cursor>, OnMultiChoiceClickListener {
+		OnClickListener,  OnMultiChoiceClickListener {
 
-	  private SimpleCursorAdapter adapter;
 	private static final String[] PROJECTION = new String[] {
-			DatabaseConstants.COL_ROWID, COL_FIRSTNAME, COL_LASTNAME
+			DatabaseConstants.COL_ROWID,  COL_CHECKED, COL_FULL_NAME
 
 	};
-	
-	private int loaderID = 22;
-	
-	
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		
-		super.onCreate(savedInstanceState);
-		getActivity().getLoaderManager().initLoader(loaderID, null, this);
-	}
 
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
 		LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -85,10 +73,11 @@ public class SelectMembersDialog extends DialogFragment implements
 
 		builder.setTitle(R.string.select_members);
 
-		
-		int[] to = new int[] { R.id.tvId, R.id.tvFristName, R.id.tvLastName };
-		adapter = new SimpleCursorAdapter(getActivity(), R.layout.member_row, null, PROJECTION, to, 0);
-		builder.setAdapter(adapter, this);
+
+		 Cursor cursor = getActivity().managedQuery(BillProvider.DIALOG_URI_MEMBER,
+				PROJECTION, null, null, null);
+
+		builder.setMultiChoiceItems(cursor, COL_CHECKED, COL_FULL_NAME, this);
 
 		builder.setPositiveButton(R.string.done, this);
 
@@ -97,11 +86,10 @@ public class SelectMembersDialog extends DialogFragment implements
 
 	@Override
 	public void onClick(DialogInterface dialog, int which) {
+		// respond to action button click: positive, neutral, negative
 		switch (which) {
-		// respind to action buttons click
 		case DialogInterface.BUTTON_POSITIVE:
-			//It's extremely important to destroy loader at this step!!
-			getActivity().getLoaderManager().destroyLoader(loaderID);
+
 			break;
 
 		default:
@@ -110,25 +98,9 @@ public class SelectMembersDialog extends DialogFragment implements
 	}
 
 	@Override
-	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-
-		return new CursorLoader(getActivity(), BillProvider.HOUSEMATE_URI,
-				PROJECTION, null, null, null);
-	}
-
-	@Override
-	public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-		adapter.swapCursor(data);
-	}
-
-	@Override
-	public void onLoaderReset(Loader<Cursor> loader) {
-		adapter.swapCursor(null);
-	}
-
-	@Override
 	public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-		// respond to list item click
+		// respond to item clicks.
 	}
+
 
 }

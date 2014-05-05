@@ -329,7 +329,7 @@ public class BillEditActivity extends EditActivity implements
 	@Override
 	public void onFinishPicking() {
 		BillEditFragment fragment = (BillEditFragment) getFragmentManager()
-				.findFragmentByTag("saved");
+				.findFragmentByTag(TAG);
 		fragment.onFinishPicking();
 	}
 

@@ -54,6 +54,8 @@ public class BillActivity extends DrawerActivity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.create) {
+			Intent i = new Intent(this, BillEditActivity.class);
+			startActivity(i);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

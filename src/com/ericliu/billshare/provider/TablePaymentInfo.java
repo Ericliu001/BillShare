@@ -16,7 +16,7 @@ public class TablePaymentInfo {
 			+ COL_NUMBER_OF_BILLS_PAID + " integer, "
 			+ COL_PAID_TIME + " datetime "
 			
-			+";"
+			+");"
 			;
 	
 	public static void onCreate(SQLiteDatabase db){
