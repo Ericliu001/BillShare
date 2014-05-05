@@ -43,5 +43,7 @@
     <string name="description">Description</string>
     <string name="save">Save</string>
     <string name="calculate">Calculate</string>
+    <string name="ok">OK</string>
+    <string name="done">Done</string>
 
 </resources>
