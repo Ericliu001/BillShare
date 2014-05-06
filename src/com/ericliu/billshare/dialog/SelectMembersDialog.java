@@ -58,7 +58,12 @@ public class SelectMembersDialog extends DialogFragment implements OnClickListen
 	}
 	
 	
-	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		
+		super.onCreate(savedInstanceState);
+		setRetainInstance(true);
+	}
 	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {

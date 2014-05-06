@@ -115,6 +115,14 @@ public class SelectBillsDialog extends DialogFragment implements OnClickListener
 		private TextView tvChecked;
 	}
 	
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		
+		super.onCreate(savedInstanceState);
+		setRetainInstance(true);
+	}
+	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		
@@ -185,9 +193,9 @@ public class SelectBillsDialog extends DialogFragment implements OnClickListener
 
 	
 	@Override
-	public void onDismiss(DialogInterface dialog) {
+	public void onDetach() {
 		getActivity().getLoaderManager().destroyLoader(loaderID);
-		super.onDismiss(dialog);
+		super.onDetach();
 	}
 
 }
