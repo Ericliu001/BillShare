@@ -1326,6 +1326,7 @@ containing a value of this type.
         public static final int number_of_selected_members=0x7f0a002f;
         public static final int ok=0x7f0a0037;
         public static final int paid=0x7f0a0026;
+        public static final int paid_bill_not_display=0x7f0a0039;
         public static final int payment_name=0x7f0a002d;
         public static final int phone_number=0x7f0a0019;
         public static final int pick_date=0x7f0a0029;

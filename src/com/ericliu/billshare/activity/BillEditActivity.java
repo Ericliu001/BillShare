@@ -4,7 +4,7 @@ import static com.ericliu.billshare.provider.DatabaseConstants.COL_AMOUNT;
 import static com.ericliu.billshare.provider.DatabaseConstants.COL_BILLING_END;
 import static com.ericliu.billshare.provider.DatabaseConstants.COL_BILLING_START;
 import static com.ericliu.billshare.provider.DatabaseConstants.COL_DUE_DATE;
-import static com.ericliu.billshare.provider.DatabaseConstants.COL_UNPAID;
+import static com.ericliu.billshare.provider.DatabaseConstants.COL_PAID;
 import static com.ericliu.billshare.provider.DatabaseConstants.COL_ROWID;
 import static com.ericliu.billshare.provider.DatabaseConstants.COL_TYPE;
 
@@ -97,7 +97,7 @@ public class BillEditActivity extends EditActivity implements
 
 		private static final String[] PROJECTION = { COL_ROWID, COL_TYPE,
 				COL_AMOUNT, COL_BILLING_START, COL_BILLING_END, COL_DUE_DATE,
-				COL_UNPAID };
+				COL_PAID };
 
 		private  String undefined;
 
@@ -203,7 +203,7 @@ public class BillEditActivity extends EditActivity implements
 				
 				
 
-				cbPaid.setChecked(c.getInt(c.getColumnIndex(COL_UNPAID)) > 0 ? true
+				cbPaid.setChecked(c.getInt(c.getColumnIndex(COL_PAID)) > 0 ? true
 						: false);
 
 			} catch (Exception e) {
@@ -259,7 +259,7 @@ public class BillEditActivity extends EditActivity implements
 				
 				bill.setDueDate(tvDueDate.getText().toString());
 			
-			bill.setPaid(cbPaid.isChecked() ? 0 : 1);
+			bill.setPaid(cbPaid.isChecked() ? 1 : 0);
 
 			mCallBack.setBill(bill);
 			mCallBack.saveToDb();

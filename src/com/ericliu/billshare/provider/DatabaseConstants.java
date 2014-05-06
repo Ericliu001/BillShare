@@ -20,7 +20,7 @@ public class DatabaseConstants {
 	public static final String COL_BILLING_START = "billing_period_start_date";
 	public static final String COL_BILLING_END = "billing_period_end_date";
 	public static final String COL_DUE_DATE = "bill_due_date";
-	public static final String COL_UNPAID = "unpaid";
+	public static final String COL_PAID = "paid";
 	
 	
 	public static final String VIEW_BILL_NAME = "view_bill_name";

@@ -30,7 +30,7 @@ public class Bill extends Model {
 		values.put(COL_BILLING_START, startDate);
 		values.put(COL_BILLING_END, endDate);
 		values.put(COL_DUE_DATE, dueDate);
-		values.put(COL_UNPAID, paid);
+		values.put(COL_PAID, paid);
 		
 		if (id > 0) {
 		uri = Uri.withAppendedPath(BillProvider.BILL_URI, String.valueOf(id));

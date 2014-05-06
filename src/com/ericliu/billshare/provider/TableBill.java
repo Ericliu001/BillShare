@@ -16,7 +16,7 @@ public class TableBill {
 			+ COL_BILLING_START + " datetime, "
 			+ COL_BILLING_END + " datetime, "
 			+ COL_DUE_DATE + " datetime,  "
-			+ COL_UNPAID + " boolean default 1, "
+			+ COL_PAID + " boolean default 0, "
 			+ COL_DELETED + " boolean not null default 0 "
 			+ " ); "
 			;
@@ -31,7 +31,7 @@ public class TableBill {
 			+ COL_BILLING_START + " , "
 			+ COL_BILLING_END + " , "
 			+ COL_DUE_DATE + " ,  "
-			+ COL_UNPAID 
+			+ COL_PAID 
 			+ " from  "
 			+ TABLE_BILL
 			+ " where  " + COL_DELETED + " = 0"
@@ -42,11 +42,12 @@ public class TableBill {
 			+ VIEW_BILL_NAME
 			+ " as select "
 			+ COL_ROWID + " , "
-			+ COL_UNPAID +  " , "
+			+ COL_PAID +  " , "
 			+ COL_TYPE + "||' '||" + COL_AMOUNT  + " as  " + COL_BILL_NAME
 			+ " from  "
 			+ TABLE_BILL
 			+ " where  " + COL_DELETED + " = 0"
+			+ " and  " + COL_PAID + " = 0 "
 			+ ";";
 	
 

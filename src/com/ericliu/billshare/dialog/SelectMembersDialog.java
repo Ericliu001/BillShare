@@ -94,10 +94,11 @@ case DialogInterface.BUTTON_NEGATIVE:
 		
 	}
 	
+	
 	@Override
-	public void onDismiss(DialogInterface dialog) {
+	public void onDetach() {
 		getActivity().getLoaderManager().destroyLoader(loaderId);
-		super.onDismiss(dialog);
+		super.onDetach();
 	}
 
 

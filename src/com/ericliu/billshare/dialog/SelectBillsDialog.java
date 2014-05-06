@@ -3,7 +3,7 @@ package com.ericliu.billshare.dialog;
 import static com.ericliu.billshare.provider.DatabaseConstants.*;
 import static com.ericliu.billshare.provider.DatabaseConstants.COL_ROWID;
 import static com.ericliu.billshare.provider.DatabaseConstants.COL_TYPE;
-import static com.ericliu.billshare.provider.DatabaseConstants.COL_UNPAID;
+import static com.ericliu.billshare.provider.DatabaseConstants.COL_PAID;
 import android.app.Activity;
 import com.ericliu.billshare.R;
 import com.ericliu.billshare.provider.BillProvider;
@@ -61,7 +61,7 @@ public class SelectBillsDialog extends DialogFragment implements OnClickListener
 	
 	private static final String[] PROJECTION = {
 		COL_ROWID,
-		COL_UNPAID,
+		COL_PAID,
 		COL_BILL_NAME
 	};
 	
@@ -122,7 +122,7 @@ public class SelectBillsDialog extends DialogFragment implements OnClickListener
 		builder.setTitle(R.string.select_bills).setPositiveButton(R.string.done, this).setNegativeButton(R.string.cancel, this);
 		
 		View dialogView = getActivity().getLayoutInflater().inflate(R.layout.multi_choice_listview, null);
-		builder.setView(dialogView);
+		builder.setView(dialogView).setMessage(R.string.paid_bill_not_display);
 		
 		lv = (ListView) dialogView.findViewById(R.id.lvMulti);
 		lv.setAdapter(adapter);
