@@ -27,6 +27,7 @@ public class EvenDivisionActivity extends DrawerActivity implements
 	public static final String CHECKED_BILL_IDS = "checked_bill_ids";
 	public static final String CHECKED_MEMBER_IDS = "checked_member_ids";
 	public static final String SELECTION = "selection";
+	public static final String ACTION_EVEN_DIV = null;
 	private EvenDivisionFragment frag;
 
 	@Override
@@ -107,6 +108,7 @@ public class EvenDivisionActivity extends DrawerActivity implements
 				if (checkedBillIds.length > 0  && checkedMemberIds.length > 0) {
 					
 					Intent intent = new Intent(getActivity(), PaymentActivity.class);
+					intent.setAction(ACTION_EVEN_DIV);
 					Bundle data = new Bundle();
 					data.putLongArray(CHECKED_BILL_IDS, checkedBillIds);
 					data.putLongArray(CHECKED_MEMBER_IDS, checkedMemberIds);
