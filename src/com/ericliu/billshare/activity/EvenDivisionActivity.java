@@ -1,6 +1,7 @@
 package com.ericliu.billshare.activity;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,15 +13,20 @@ import android.widget.TextView;
 
 import com.ericliu.billshare.MyApplication;
 import com.ericliu.billshare.R;
+import com.ericliu.billshare.dialog.MustChooseFragment;
 import com.ericliu.billshare.dialog.SelectBillsDialog;
 import com.ericliu.billshare.dialog.SelectBillsDialog.SelectBillsDialogListener;
 import com.ericliu.billshare.dialog.SelectMembersDialog;
 import com.ericliu.billshare.dialog.SelectMembersDialog.SelectMemberDialogListener;
+import com.ericliu.billshare.util.EvenDivAsyncCalculator;
 
 public class EvenDivisionActivity extends DrawerActivity implements
 		SelectBillsDialogListener, SelectMemberDialogListener {
 
 	private static final String TAG = "EvenDivisionFragment";
+	public static final String CHECKED_BILL_IDS = "checked_bill_ids";
+	public static final String CHECKED_MEMBER_IDS = "checked_member_ids";
+	public static final String SELECTION = "selection";
 	private EvenDivisionFragment frag;
 
 	@Override
@@ -100,9 +106,12 @@ public class EvenDivisionActivity extends DrawerActivity implements
 			case R.id.btCalculate:
 				if (checkedBillIds.length > 0  && checkedMemberIds.length > 0) {
 					
-					
-					
-					
+					Intent intent = new Intent(getActivity(), PaymentActivity.class);
+					Bundle data = new Bundle();
+					data.putLongArray(CHECKED_BILL_IDS, checkedBillIds);
+					data.putLongArray(CHECKED_MEMBER_IDS, checkedMemberIds);
+					intent.putExtra(SELECTION, data);
+					startActivity(intent);
 					
 					if (MyApplication.isTesting) {
 						for (int i = 0; i < checkedBillIds.length; i++) {
@@ -113,6 +122,9 @@ public class EvenDivisionActivity extends DrawerActivity implements
 							Log.i("eric", "Id of member selected: " + checkedMemberIds[i]);
 						}
 					}
+				}else {
+					MustChooseFragment mustChooseFragment = new MustChooseFragment();
+					mustChooseFragment.show(getFragmentManager(), "mustChooseSth");
 				}
 				
 				break;

@@ -6,44 +6,42 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.billshare.BillEditActivity$PlaceholderFragment"
-    android:layout_margin="10dp"
-     >
+    tools:context="com.billshare.BillEditActivity$PlaceholderFragment" >
 
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="@string/bill_type" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/bill_type"
+            android:textSize="15sp" />
 
         <Spinner
             android:id="@+id/spType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_span="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </TableRow>
 
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-         >
+        android:layout_margin="10dp" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30sp"
-            
-            android:text="@string/amount" />
+            android:text="@string/amount"
+            android:textSize="30sp" />
+        
 
         <EditText
             android:id="@+id/etAmount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
+            android:layout_span="2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:imeOptions="actionDone"
             android:inputType="numberDecimal" >
 
@@ -56,12 +54,14 @@
         android:layout_height="wrap_content" >
 
         <TextView
+            android:layout_column="0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/billing_start_date" />
 
         <TextView
             android:id="@+id/tvStartDate"
+            android:layout_column="2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/undefined" />
@@ -72,8 +72,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:textSize="15sp"
-        android:text="@string/pick_date" />
+        android:text="@string/pick_date"
+        android:textSize="15sp" />
+
+    <View
+        android:layout_height="5dip"
+        android:background="@android:color/white" />
 
     <TableRow
         android:layout_width="match_parent"
@@ -86,10 +90,10 @@
 
         <TextView
             android:id="@+id/tvEndDate"
+            android:layout_column="2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/undefined" />
-
     </TableRow>
 
     <Button
@@ -97,8 +101,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:textSize="15sp"
-        android:text="@string/pick_date" />
+        android:text="@string/pick_date"
+        android:textSize="15sp" />
+    
+    <View
+        android:layout_height="10dip"
+        android:background="@android:color/background_light" />
 
     <TableRow
         android:layout_width="match_parent"
@@ -111,10 +119,10 @@
 
         <TextView
             android:id="@+id/tvDueDate"
+            android:layout_column="2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/undefined" />
-
     </TableRow>
 
     <Button
@@ -122,8 +130,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:textSize="15sp"
-        android:text="@string/pick_date" />
+        android:text="@string/pick_date"
+        android:textSize="15sp" />
+    <View
+        android:layout_height="10dip"
+        android:background="@android:color/background_light" />
 
     <CheckBox
         android:id="@+id/cbPaid"

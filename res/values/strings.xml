@@ -47,5 +47,12 @@
     <string name="done">Done</string>
     <string name="paid_bill_not_display">Bill that are checked as paid will not be displayed in this list.</string>
     <string name="title_activity_payment">PaymentActivity</string>
+    <string name="sum">Sum</string>
+    <string name="total_amount_in_bills">Total Amount in Bills</string>
+    <string name="paid_by_members">Paid by Members</string>
+    <string name="number_of_members_paying">Number of Members Paying</string>
+    <string name="number_of_bills">Number of Bills</string>
+    <string name="no_member_and_bill_selected">No Member and Bill is Selected</string>
+    <string name="you_must_select_member_bill">You must select at least one member and one bill.</string>
 
 </resources>

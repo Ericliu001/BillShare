@@ -1082,15 +1082,15 @@ containing a value of this type.
         public static final int abc_textfield_searchview_right_holo_dark=0x7f020055;
         public static final int abc_textfield_searchview_right_holo_light=0x7f020056;
         public static final int drawer_shadow=0x7f020057;
-        public static final int ic_action_edit=0x7f020058;
-        public static final int ic_action_new=0x7f020059;
-        public static final int ic_action_save=0x7f02005a;
-        public static final int ic_drawer=0x7f02005b;
-        public static final int ic_launcher=0x7f02005c;
+        public static final int ic_action_cancel=0x7f020058;
+        public static final int ic_action_edit=0x7f020059;
+        public static final int ic_action_new=0x7f02005a;
+        public static final int ic_action_save=0x7f02005b;
+        public static final int ic_drawer=0x7f02005c;
+        public static final int ic_launcher=0x7f02005d;
     }
     public static final class id {
-        public static final int GridLayout1=0x7f050060;
-        public static final int LinearLayout1=0x7f05005b;
+        public static final int GridLayout1=0x7f05005b;
         public static final int action_bar=0x7f05001c;
         public static final int action_bar_activity_content=0x7f050015;
         public static final int action_bar_container=0x7f05001b;
@@ -1102,7 +1102,7 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f050016;
         public static final int action_menu_presenter=0x7f050017;
         public static final int action_mode_close_button=0x7f050024;
-        public static final int action_settings=0x7f050061;
+        public static final int action_settings=0x7f050064;
         public static final int activity_chooser_view_content=0x7f050025;
         public static final int always=0x7f05000b;
         public static final int beginning=0x7f050011;
@@ -1112,11 +1112,12 @@ containing a value of this type.
         public static final int btSelectBills=0x7f050054;
         public static final int btSelectMember=0x7f050051;
         public static final int btStartDate=0x7f050048;
+        public static final int cancel=0x7f050067;
         public static final int cbPaid=0x7f05004d;
         public static final int checkbox=0x7f05002d;
         public static final int collapseActionView=0x7f05000d;
         public static final int container=0x7f05003d;
-        public static final int create=0x7f050062;
+        public static final int create=0x7f050065;
         public static final int default_activity_button=0x7f050028;
         public static final int dialog=0x7f05000e;
         public static final int disableHome=0x7f050008;
@@ -1142,7 +1143,8 @@ containing a value of this type.
         public static final int image=0x7f050027;
         public static final int listMode=0x7f050001;
         public static final int list_item=0x7f050029;
-        public static final int lvMulti=0x7f05005f;
+        public static final int lvMulti=0x7f050063;
+        public static final int lvPayment=0x7f05005f;
         public static final int middle=0x7f050012;
         public static final int never=0x7f050009;
         public static final int none=0x7f050010;
@@ -1150,7 +1152,7 @@ containing a value of this type.
         public static final int progress_circular=0x7f050018;
         public static final int progress_horizontal=0x7f050019;
         public static final int radio=0x7f05002f;
-        public static final int save=0x7f050063;
+        public static final int save=0x7f050066;
         public static final int search_badge=0x7f050032;
         public static final int search_bar=0x7f050031;
         public static final int search_button=0x7f050033;
@@ -1178,12 +1180,15 @@ containing a value of this type.
         public static final int tvDueDate=0x7f05004b;
         public static final int tvDueDay=0x7f050042;
         public static final int tvEndDate=0x7f050049;
-        public static final int tvFristName=0x7f05005d;
-        public static final int tvId=0x7f05005c;
-        public static final int tvLastName=0x7f05005e;
+        public static final int tvFristName=0x7f050061;
+        public static final int tvId=0x7f050060;
+        public static final int tvLastName=0x7f050062;
         public static final int tvMemberSelected=0x7f050050;
+        public static final int tvNumBill=0x7f05005e;
+        public static final int tvNumMember=0x7f05005d;
         public static final int tvPaid=0x7f050041;
         public static final int tvStartDate=0x7f050047;
+        public static final int tvSum=0x7f05005c;
         public static final int tvTotalAmount=0x7f050053;
         public static final int tvType=0x7f05003f;
         public static final int up=0x7f050021;
@@ -1325,12 +1330,16 @@ containing a value of this type.
         public static final int first_name=0x7f0a0017;
         public static final int hello_world=0x7f0a000e;
         public static final int last_name=0x7f0a0018;
+        public static final int no_member_and_bill_selected=0x7f0a0040;
+        public static final int number_of_bills=0x7f0a003f;
         public static final int number_of_chosen_members=0x7f0a002e;
+        public static final int number_of_members_paying=0x7f0a003e;
         public static final int number_of_selected_bills=0x7f0a0031;
         public static final int number_of_selected_members=0x7f0a002f;
         public static final int ok=0x7f0a0037;
         public static final int paid=0x7f0a0026;
         public static final int paid_bill_not_display=0x7f0a0039;
+        public static final int paid_by_members=0x7f0a003d;
         public static final int payment_name=0x7f0a002d;
         public static final int phone_number=0x7f0a0019;
         public static final int pick_date=0x7f0a0029;
@@ -1339,6 +1348,7 @@ containing a value of this type.
         public static final int save_member=0x7f0a001c;
         public static final int select_bills=0x7f0a0033;
         public static final int select_members=0x7f0a0030;
+        public static final int sum=0x7f0a003b;
         public static final int title_activity_bill=0x7f0a001e;
         public static final int title_activity_bill_edit=0x7f0a0020;
         public static final int title_activity_even_division=0x7f0a002b;
@@ -1346,7 +1356,9 @@ containing a value of this type.
         public static final int title_activity_memeber=0x7f0a0012;
         public static final int title_activity_payment=0x7f0a003a;
         public static final int total_amount=0x7f0a0032;
+        public static final int total_amount_in_bills=0x7f0a003c;
         public static final int undefined=0x7f0a002a;
+        public static final int you_must_select_member_bill=0x7f0a0041;
     }
     public static final class style {
         /** 

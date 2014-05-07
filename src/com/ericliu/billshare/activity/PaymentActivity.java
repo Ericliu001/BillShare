@@ -11,14 +11,20 @@ import android.view.ViewGroup;
 import com.ericliu.billshare.R;
 
 public class PaymentActivity extends DrawerActivity {
+	
+	private static final String TAG = "paymentfragment";
+	private PaymentFragment frag;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		if (savedInstanceState == null) {
+		
+		frag = (PaymentFragment) getFragmentManager().findFragmentByTag(TAG);
+		if (frag == null) {
+			frag = new PaymentFragment();
 			getFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
+					.add(R.id.container, frag, TAG).commit();
 		}
 	}
 
@@ -45,9 +51,9 @@ public class PaymentActivity extends DrawerActivity {
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
-	public static class PlaceholderFragment extends Fragment {
+	public static class PaymentFragment extends Fragment {
 
-		public PlaceholderFragment() {
+		public PaymentFragment() {
 		}
 
 		@Override
