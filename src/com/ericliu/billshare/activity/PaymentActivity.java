@@ -74,9 +74,10 @@ public class PaymentActivity extends DrawerActivity {
 		private TextView tvNumBill;
 		private TextView tvNumMember;
 		private ListView lvPayment;
-		private ArrayList<Payment> paymentList;
+
 		
-		
+		private long[] memberIds;
+		private long[] billIds;
 		
 		private SimpleCursorAdapter adapter;
 		private static final String[] PROJECTION = {COL_ROWID, COL_MEMBER_FULLNAME};
@@ -99,8 +100,8 @@ public class PaymentActivity extends DrawerActivity {
 			
 			super.onAttach(activity);
 			receivedIntent = activity.getIntent();
-			long[] memberIds = receivedIntent.getLongArrayExtra(EvenDivisionActivity.CHECKED_MEMBER_IDS);
-			long[] billIds = receivedIntent.getLongArrayExtra(EvenDivisionActivity.CHECKED_BILL_IDS);
+			 memberIds = receivedIntent.getLongArrayExtra(EvenDivisionActivity.CHECKED_MEMBER_IDS);
+			 billIds = receivedIntent.getLongArrayExtra(EvenDivisionActivity.CHECKED_BILL_IDS);
 			
 			if (memberIds != null) {
 				selectionArgs = new String[memberIds.length];
@@ -114,12 +115,27 @@ public class PaymentActivity extends DrawerActivity {
 				}
 			}
 			
+			calculateAndSaveToDB();
+			
 			
 			
 			
 			activity.getLoaderManager().initLoader(LOADER_ID, null, this);
 			
 			
+		}
+
+
+		public void calculateAndSaveToDB() {
+			for (int i = 0; i < billIds.length; i++) {
+				for (int j = 0; j < memberIds.length; j++) {
+					Payment payment = new Payment();
+					
+					
+					
+					payment.save();
+				}
+			}
 		}
 		
 		
