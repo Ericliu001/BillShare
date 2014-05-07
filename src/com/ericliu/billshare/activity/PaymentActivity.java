@@ -26,6 +26,7 @@ import android.widget.TextView;
 import com.ericliu.billshare.R;
 import com.ericliu.billshare.model.Payment;
 import com.ericliu.billshare.model.PaymentInfo;
+import com.ericliu.billshare.model.PaymentListEntry;
 import com.ericliu.billshare.provider.BillProvider;
 import com.ericliu.billshare.util.EvenDivAsyncCalculator;
 import com.ericliu.billshare.util.EvenDivAsyncCalculator.EvenDivListener;
@@ -86,9 +87,11 @@ public class PaymentActivity extends DrawerActivity {
 		private String[] memberNames;
 		
 		
-		private ArrayList<Payment> paymentList;
 		
-		private ArrayAdapter<Payment> adapter;
+		private ArrayList<Payment> paymentList;
+		private ArrayList<PaymentListEntry> entryList;
+		
+		private ArrayAdapter<PaymentListEntry> adapter;
 		private static final String[] PROJECTION = {COL_ROWID, COL_MEMBER_FULLNAME};
 		private  String selection = COL_ROWID + " =? ";
 		private String[] selectionArgs = null;
@@ -128,7 +131,7 @@ public class PaymentActivity extends DrawerActivity {
 			
 			
 			paymentList = new ArrayList<Payment>();
-			
+			entryList = new ArrayList<PaymentListEntry>();
 			
 			activity.getLoaderManager().initLoader(0, null, this);
 			
@@ -156,6 +159,8 @@ public class PaymentActivity extends DrawerActivity {
 			tvNumMember = (TextView) rootView.findViewById(R.id.tvNumMember);
 			lvPayment = (ListView) rootView.findViewById(R.id.lvPayment);
 			
+			fillTheForm();
+			
 			
 			class ViewHolder{
 				private TextView tvPayeeFullName;
@@ -169,7 +174,7 @@ public class PaymentActivity extends DrawerActivity {
 				}
 			}
 			
-			adapter = new ArrayAdapter<Payment>(getActivity(), R.layout.payment_row, R.id.tvPayeeFullName, paymentList){
+			adapter = new ArrayAdapter<PaymentListEntry>(getActivity(), R.layout.payment_row, R.id.tvPayeeFullName, entryList){
 				@Override
 				public View getView(int position, View convertView,
 						ViewGroup parent) {
@@ -180,10 +185,10 @@ public class PaymentActivity extends DrawerActivity {
 						viewHolder = new ViewHolder(result);
 						result.setTag(viewHolder);
 					}
-					Payment payment = getItem(position);
-					viewHolder.tvPayeeFullName.setText(payment.getPayee_name());
+					PaymentListEntry entry = getItem(position);
+					viewHolder.tvPayeeFullName.setText(entry.getPayeeName());
 					viewHolder.pbPercentage.setProgress(100);
-					viewHolder.tvPayeeAmount.setText(String.valueOf(payment.getPayee_amount()));
+					viewHolder.tvPayeeAmount.setText(String.valueOf(entry.getPayeeAmount()));
 					
 					
 					return result;
@@ -199,29 +204,42 @@ public class PaymentActivity extends DrawerActivity {
 
 
 
+		private void fillTheForm() {
+			
+			tvNumBill.setText(String.valueOf(billIds.length));
+			tvNumMember.setText(String.valueOf(memberIds.length));
+		}
+
+
 		@Override
-		public void setEvenDivResult(double result) {
+		public void setEvenDivResult(ArrayList<Double> payeeAmountForEachBill, double totalAmount, double payeeAmountForTotal) {
 			
 
 //			PaymentInfo paymentInfo = new PaymentInfo();
 //			Uri uri = paymentInfo.save();
 //			long paymentInfoID = Long.valueOf(uri.getLastPathSegment());
 			
-			for (int i = 0; i < billIds.length; i++) {
-				for (int j = 0; j < memberIds.length; j++) {
+			for (int j = 0; j < memberIds.length; j++) {
+				for (int i = 0; i < billIds.length; i++) {
 					Payment payment = new Payment();
 //					payment.setPayment_info_id(paymentInfoID);
 					payment.setBill_id(billIds[i]);
 					payment.setPayee_id(memberIds[j]);
-					payment.setPayee_name(memberNames[j]);
-					payment.setPayee_amount(result);
+					payment.setPayee_amount(payeeAmountForEachBill.get(i));
 					// more fields need to be set here
 					
 					paymentList.add(payment);
 				}
+				
+				PaymentListEntry entry = new PaymentListEntry();
+				entry.setPayeeName(memberNames[j]);
+				entry.setPayeePercentage(100);
+				entry.setPayeeAmount(payeeAmountForTotal);
+				entryList.add(entry);
 			}
 			
 			adapter.notifyDataSetChanged();
+			tvSum.setText(String.valueOf(totalAmount));
 		}
 
 

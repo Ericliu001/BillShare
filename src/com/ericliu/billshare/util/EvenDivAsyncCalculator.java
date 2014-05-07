@@ -1,5 +1,7 @@
 package com.ericliu.billshare.util;
 
+import java.util.ArrayList;
+
 import com.ericliu.billshare.MyApplication;
 import com.ericliu.billshare.provider.BillProvider;
 
@@ -12,7 +14,7 @@ import static com.ericliu.billshare.provider.DatabaseConstants.*;
 public class EvenDivAsyncCalculator {
 
 	public interface EvenDivListener {
-		void setEvenDivResult(double result);
+		void setEvenDivResult(ArrayList<Double> payeeAmountForEachBill, double totalAmount, double payeeAmountForTotal);
 	}
 
 	public static void evenDivAsync(long[] billIds, long[] memberIds,
@@ -21,12 +23,16 @@ public class EvenDivAsyncCalculator {
 
 	}
 
-	private static class EvenDivTask extends AsyncTask<Void, Void, Double> {
+	private static class EvenDivTask extends AsyncTask<Void, Void, ArrayList<Double>> {
 
 		EvenDivListener listener = null;
 
 		private long[] billIds;
 		private long[] memberIds;
+		
+		private double amountInOneBill = 0d;
+		private double totalAmount = 0d;
+		private double payeeAmountForTotal = 0d;
 
 		public EvenDivTask(long[] billIds, long[] memberIds,
 				EvenDivListener listener) {
@@ -36,8 +42,8 @@ public class EvenDivAsyncCalculator {
 		}
 
 		@Override
-		protected Double doInBackground(Void... params) {
-			double result = 0;
+		protected ArrayList<Double> doInBackground(Void... params) {
+			ArrayList<Double> payeeAmountForEachBill = new ArrayList<Double>();
 			
 			String selection = COL_ROWID + " =? ";
 			String[] selectionArgs = new String[billIds.length];
@@ -56,14 +62,18 @@ public class EvenDivAsyncCalculator {
 				cursorBill = MyApplication.getInstance().getContentResolver()
 						.query(BillProvider.BILL_URI, projectionForBill, selection, selectionArgs, null);
 				cursorBill.moveToPosition(-1);
-				double amount = 0d;
+				
 				while(cursorBill.moveToNext()){
-					amount += cursorBill.getDouble(cursorBill
+					amountInOneBill = cursorBill.getDouble(cursorBill
 							.getColumnIndexOrThrow(COL_AMOUNT));
+					totalAmount += amountInOneBill;
+					payeeAmountForEachBill.add(amountInOneBill / memberIds.length);
 				}
 				
+					
+					payeeAmountForTotal = totalAmount/ memberIds.length;
 				
-				result = amount / (memberIds.length);
+				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -73,15 +83,15 @@ public class EvenDivAsyncCalculator {
 				}
 			}
 
-			return result;
+			return payeeAmountForEachBill;
 		}
 
 		@Override
-		protected void onPostExecute(Double result) {
+		protected void onPostExecute(ArrayList<Double> payeeAmountForEachBill) {
 
-			super.onPostExecute(result);
+			super.onPostExecute(payeeAmountForEachBill);
 
-			listener.setEvenDivResult(result);
+			listener.setEvenDivResult(payeeAmountForEachBill, totalAmount, payeeAmountForTotal);
 		}
 	}
 }
