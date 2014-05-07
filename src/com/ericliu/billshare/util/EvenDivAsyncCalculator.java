@@ -15,9 +15,9 @@ public class EvenDivAsyncCalculator {
 		void setEvenDivResult(double result);
 	}
 
-	public static void evenDivAsync(long billId, long[] memberIds,
+	public static void evenDivAsync(long[] billIds, long[] memberIds,
 			EvenDivListener listener) {
-		new EvenDivTask(billId, memberIds, listener).execute();
+		new EvenDivTask(billIds, memberIds, listener).execute();
 
 	}
 
@@ -25,12 +25,12 @@ public class EvenDivAsyncCalculator {
 
 		EvenDivListener listener = null;
 
-		private long billId;
+		private long[] billIds;
 		private long[] memberIds;
 
-		public EvenDivTask(long billId, long[] memberIds,
+		public EvenDivTask(long[] billIds, long[] memberIds,
 				EvenDivListener listener) {
-			this.billId = billId;
+			this.billIds = billIds;
 			this.memberIds = memberIds;
 			this.listener = listener;
 		}
@@ -39,7 +39,7 @@ public class EvenDivAsyncCalculator {
 		protected Double doInBackground(Void... params) {
 			double result = 0;
 			Uri uriBill = Uri.withAppendedPath(BillProvider.BILL_URI,
-					String.valueOf(billId));
+					String.valueOf(""));
 			String[] projectionForBill = { COL_ROWID, COL_AMOUNT };
 			Cursor cursorBill = null;
 

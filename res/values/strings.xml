@@ -46,5 +46,6 @@
     <string name="ok">OK</string>
     <string name="done">Done</string>
     <string name="paid_bill_not_display">Bill that are checked as paid will not be displayed in this list.</string>
+    <string name="title_activity_payment">PaymentActivity</string>
 
 </resources>
