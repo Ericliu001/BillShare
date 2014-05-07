@@ -12,6 +12,7 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.Fragment;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
@@ -46,7 +47,7 @@ import static com.ericliu.billshare.provider.DatabaseConstants.*;
  * Try to use Loader to load data into Dialog but failed
  */
 import static com.ericliu.billshare.provider.DatabaseConstants.*;
-public class SelectBillsDialog extends DialogFragment implements OnClickListener, LoaderCallbacks<Cursor>, OnItemSelectedListener {
+public class SelectBillsDialog extends DialogFragment implements OnClickListener, LoaderCallbacks<Cursor> {
 	
 	
 	
@@ -64,6 +65,13 @@ public class SelectBillsDialog extends DialogFragment implements OnClickListener
 		COL_PAID,
 		COL_BILL_NAME
 	};
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		
+		super.onCreate(savedInstanceState);
+	}
+	
 	
 	@Override
 	public void onAttach(Activity activity) {
@@ -116,12 +124,7 @@ public class SelectBillsDialog extends DialogFragment implements OnClickListener
 	}
 	
 	
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		
-		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
-	}
+	
 	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -135,7 +138,6 @@ public class SelectBillsDialog extends DialogFragment implements OnClickListener
 		lv = (ListView) dialogView.findViewById(R.id.lvMulti);
 		lv.setAdapter(adapter);
 		lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-		lv.setOnItemSelectedListener(this);
 		
 		return builder.create();
 	}
@@ -159,6 +161,8 @@ public class SelectBillsDialog extends DialogFragment implements OnClickListener
 		
 		
 	}
+	
+	
 
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
@@ -180,22 +184,21 @@ public class SelectBillsDialog extends DialogFragment implements OnClickListener
 
 
 
+
+	
 	@Override
-	public void onItemSelected(AdapterView<?> parent, View view, int position,
-			long id) {
+	public void onSaveInstanceState(Bundle outState) {
+		
+		super.onSaveInstanceState(outState);
+		Bundle data = new Bundle();
 	}
-
-
-
-	@Override
-	public void onNothingSelected(AdapterView<?> parent) {
-	}
-
 	
 	@Override
 	public void onDetach() {
 		getActivity().getLoaderManager().destroyLoader(loaderID);
 		super.onDetach();
 	}
+	
+	
 
 }

@@ -1,6 +1,5 @@
 package com.ericliu.billshare.activity;
 
-import android.app.DialogFragment;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,22 +16,29 @@ import com.ericliu.billshare.dialog.SelectBillsDialog.SelectBillsDialogListener;
 import com.ericliu.billshare.dialog.SelectMembersDialog;
 import com.ericliu.billshare.dialog.SelectMembersDialog.SelectMemberDialogListener;
 
-public class EvenDivisionActivity extends DrawerActivity implements SelectBillsDialogListener, SelectMemberDialogListener {
-	
+public class EvenDivisionActivity extends DrawerActivity implements
+		SelectBillsDialogListener, SelectMemberDialogListener
+		 {
+
 	private static final String TAG = "EvenDivisionFragment";
 	private EvenDivisionFragment frag;
-
+	
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		frag = (EvenDivisionFragment) getFragmentManager().findFragmentByTag(TAG);
+		frag = (EvenDivisionFragment) getFragmentManager().findFragmentByTag(
+				TAG);
 		if (frag == null) {
 			frag = new EvenDivisionFragment();
 			getFragmentManager().beginTransaction()
-					.add(R.id.container, frag , TAG)
-					.commit();
+					.add(R.id.container, frag, TAG).commit();
 		}
+
+		
+		
 	}
 
 	/**
@@ -85,18 +91,18 @@ public class EvenDivisionActivity extends DrawerActivity implements SelectBillsD
 
 				break;
 			case R.id.btCalculate:
-				
+
 				break;
 
 			default:
 				break;
 			}
 		}
-		
-		public void onFinishSelectBills(long[] ids){
+
+		public void onFinishSelectBills(long[] ids) {
 			if (MyApplication.isTesting) {
 				for (int i = 0; i < ids.length; i++) {
-					Log.i("eric",  "Id of bill selected: "+ids[i]);
+					Log.i("eric", "Id of bill selected: " + ids[i]);
 				}
 			}
 		}
@@ -104,7 +110,7 @@ public class EvenDivisionActivity extends DrawerActivity implements SelectBillsD
 		public void onFinishSelectMembers(long[] ids) {
 			if (MyApplication.isTesting) {
 				for (int i = 0; i < ids.length; i++) {
-					Log.i("eric",  "Id of member selected: "+ids[i]);
+					Log.i("eric", "Id of member selected: " + ids[i]);
 				}
 			}
 		}
