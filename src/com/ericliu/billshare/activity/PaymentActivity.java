@@ -1,8 +1,14 @@
 package com.ericliu.billshare.activity;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.LoaderManager.LoaderCallbacks;
+import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.Loader;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,10 +21,14 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import com.ericliu.billshare.R;
+import com.ericliu.billshare.model.Payment;
+import com.ericliu.billshare.provider.BillProvider;
 
+import static com.ericliu.billshare.provider.DatabaseConstants.*;
 public class PaymentActivity extends DrawerActivity {
 	
 	private static final String TAG = "paymentfragment";
+	public static final int LOADER_ID = 0;
 	private PaymentFragment frag;
 
 	@Override
@@ -57,18 +67,21 @@ public class PaymentActivity extends DrawerActivity {
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
-	public static class PaymentFragment extends Fragment {
+	public static class PaymentFragment extends Fragment implements LoaderCallbacks<Cursor> {
 		private Intent receivedIntent = null;
 		
 		private TextView tvSum;
 		private TextView tvNumBill;
 		private TextView tvNumMember;
 		private ListView lvPayment;
+		private ArrayList<Payment> paymentList;
 		
 		
 		
 		private SimpleCursorAdapter adapter;
-
+		private static final String[] PROJECTION = {COL_ROWID, COL_MEMBER_FULLNAME};
+		private  String selection = COL_ROWID + "=?";
+		private String[] selectionArgs = null;
 		
 		public PaymentFragment() {
 		}
@@ -86,6 +99,26 @@ public class PaymentActivity extends DrawerActivity {
 			
 			super.onAttach(activity);
 			receivedIntent = activity.getIntent();
+			long[] memberIds = receivedIntent.getLongArrayExtra(EvenDivisionActivity.CHECKED_MEMBER_IDS);
+			long[] billIds = receivedIntent.getLongArrayExtra(EvenDivisionActivity.CHECKED_BILL_IDS);
+			
+			if (memberIds != null) {
+				selectionArgs = new String[memberIds.length];
+				for (int i = 0; i < memberIds.length; i++) {
+					selectionArgs[i] = String.valueOf(memberIds[i]);
+					
+				}
+				
+				for (int i = 0; i < selectionArgs.length - 1; i++) {
+					selection = selection + " OR " + COL_ROWID +"=?";
+				}
+			}
+			
+			
+			
+			
+			activity.getLoaderManager().initLoader(LOADER_ID, null, this);
+			
 			
 		}
 		
@@ -102,11 +135,31 @@ public class PaymentActivity extends DrawerActivity {
 			tvNumMember = (TextView) rootView.findViewById(R.id.tvNumMember);
 			lvPayment = (ListView) rootView.findViewById(R.id.lvPayment);
 			
-			String[] from = {};
-			int[] to = {};
+			String[] from = {COL_MEMBER_FULLNAME};
+			int[] to = {R.id.tvPayeeFullName};
 			adapter = new SimpleCursorAdapter(getActivity(), R.layout.payment_row, null, from, to, 0);
+			lvPayment.setAdapter(adapter);
 			
 			return rootView;
+		}
+
+
+		@Override
+		public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+			
+			return new CursorLoader(getActivity(), BillProvider.DIALOG_MEMBER_URI, PROJECTION, selection, selectionArgs, null);
+		}
+
+
+		@Override
+		public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+			adapter.swapCursor(data);
+		}
+
+
+		@Override
+		public void onLoaderReset(Loader<Cursor> loader) {
+			adapter.swapCursor(null);
 		}
 	}
 

@@ -1149,7 +1149,7 @@ containing a value of this type.
         public static final int never=0x7f050009;
         public static final int none=0x7f050010;
         public static final int normal=0x7f050000;
-        public static final int progressBar1=0x7f050065;
+        public static final int pbPercentage=0x7f050065;
         public static final int progress_circular=0x7f050018;
         public static final int progress_horizontal=0x7f050019;
         public static final int radio=0x7f05002f;
@@ -1173,8 +1173,6 @@ containing a value of this type.
         public static final int submit_area=0x7f050039;
         public static final int tabMode=0x7f050002;
         public static final int text1=0x7f050043;
-        public static final int textView1=0x7f050064;
-        public static final int textView2=0x7f050066;
         public static final int title=0x7f05002b;
         public static final int top_action_bar=0x7f050020;
         public static final int tvAmount=0x7f050040;
@@ -1190,6 +1188,8 @@ containing a value of this type.
         public static final int tvNumBill=0x7f05005e;
         public static final int tvNumMember=0x7f05005d;
         public static final int tvPaid=0x7f050041;
+        public static final int tvPayeeAmout=0x7f050066;
+        public static final int tvPayeeFullName=0x7f050064;
         public static final int tvStartDate=0x7f050047;
         public static final int tvSum=0x7f05005c;
         public static final int tvTotalAmount=0x7f050053;

@@ -26,7 +26,7 @@ public class EvenDivisionActivity extends DrawerActivity implements
 	private static final String TAG = "EvenDivisionFragment";
 	public static final String CHECKED_BILL_IDS = "checked_bill_ids";
 	public static final String CHECKED_MEMBER_IDS = "checked_member_ids";
-	public static final String SELECTION = "selection";
+	public static final String CHECKED_RESULT = "checked_result";
 	public static final String ACTION_EVEN_DIV = null;
 	private EvenDivisionFragment frag;
 
@@ -109,15 +109,13 @@ public class EvenDivisionActivity extends DrawerActivity implements
 					
 					Intent intent = new Intent(getActivity(), PaymentActivity.class);
 					intent.setAction(ACTION_EVEN_DIV);
-					Bundle data = new Bundle();
-					data.putLongArray(CHECKED_BILL_IDS, checkedBillIds);
-					data.putLongArray(CHECKED_MEMBER_IDS, checkedMemberIds);
-					intent.putExtra(SELECTION, data);
+					intent.putExtra(CHECKED_BILL_IDS, checkedBillIds);
+					intent.putExtra(CHECKED_MEMBER_IDS, checkedMemberIds);
 					startActivity(intent);
 					
 					if (MyApplication.isTesting) {
 						for (int i = 0; i < checkedBillIds.length; i++) {
-							Log.i("eric", "Id of member selected: " + checkedBillIds[i]);
+							Log.i("eric", "Id of bill selected: " + checkedBillIds[i]);
 						
 						}
 						for (int i = 0; i < checkedMemberIds.length; i++) {
