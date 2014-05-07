@@ -46,13 +46,38 @@ public class BillDatabaseHelper extends SQLiteOpenHelper {
 		db.insert(TABLE_MEMBER, null, values);
 		
 		values = new ContentValues();
-		values.put(COL_FIRSTNAME, "Simon");
-		values.put(COL_LASTNAME, "Zac");
+		values.put(COL_FIRSTNAME, "Steven");
+		values.put(COL_LASTNAME, "Cao");
 		db.insert(TABLE_MEMBER, null, values);
 		
 		values = new ContentValues();
-		values.put(COL_FIRSTNAME, "Ellis");
-		values.put(COL_LASTNAME, "Ally");
+		values.put(COL_FIRSTNAME, "Peng");
+		values.put(COL_LASTNAME, "Du");
+		db.insert(TABLE_MEMBER, null, values);
+		
+		values = new ContentValues();
+		values.put(COL_FIRSTNAME, "Baofang");
+		values.put(COL_LASTNAME, "Ji");
+		db.insert(TABLE_MEMBER, null, values);
+		
+		values = new ContentValues();
+		values.put(COL_FIRSTNAME, "Mother");
+		values.put(COL_LASTNAME, "Ji");
+		db.insert(TABLE_MEMBER, null, values);
+		
+		values = new ContentValues();
+		values.put(COL_FIRSTNAME, "Father");
+		values.put(COL_LASTNAME, "Ji");
+		db.insert(TABLE_MEMBER, null, values);
+		
+		values = new ContentValues();
+		values.put(COL_FIRSTNAME, "Mother");
+		values.put(COL_LASTNAME, "Du");
+		db.insert(TABLE_MEMBER, null, values);
+		
+		values = new ContentValues();
+		values.put(COL_FIRSTNAME, "Father");
+		values.put(COL_LASTNAME, "Du");
 		db.insert(TABLE_MEMBER, null, values);
 		
 		

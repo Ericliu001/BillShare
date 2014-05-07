@@ -139,6 +139,7 @@ public class SelectBillsDialog extends DialogFragment implements OnClickListener
 		lv.setAdapter(adapter);
 		lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 		
+		
 		return builder.create();
 	}
 	
@@ -174,7 +175,9 @@ public class SelectBillsDialog extends DialogFragment implements OnClickListener
 	@Override
 	public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
 		adapter.swapCursor(cursor);
-		
+		for (int i = 0; i < lv.getCount(); i++) {
+			lv.setItemChecked(i, true);
+		}
 	}
 
 	@Override
