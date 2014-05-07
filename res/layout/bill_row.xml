@@ -12,14 +12,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:gravity="center" />
+            android:gravity="center_vertical|left" />
 
         <TextView
             android:id="@+id/tvAmount"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="8dp"
             android:layout_weight="4"
             android:gravity="center"
             android:textSize="25sp" />
@@ -28,21 +26,17 @@
             android:id="@+id/tvPaid"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
             android:layout_weight="2"
             android:gravity="center" />
     </TableRow>
 
-    <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
-
-        <TextView
-            android:id="@+id/tvDueDay"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:gravity="center" />
-    </TableRow>
+    <TextView
+        android:id="@+id/tvDueDay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center" />
+    <View
+        android:layout_height="10dip"
+        android:background="@android:color/background_light" />
 
 </TableLayout>

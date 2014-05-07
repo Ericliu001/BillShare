@@ -77,7 +77,7 @@
 
     <View
         android:layout_height="5dip"
-        android:background="@android:color/white" />
+        android:background="@android:color/background_light" />
 
     <TableRow
         android:layout_width="match_parent"

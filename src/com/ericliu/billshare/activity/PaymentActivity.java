@@ -1,5 +1,6 @@
 package com.ericliu.billshare.activity;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -97,6 +98,9 @@ public class PaymentActivity extends DrawerActivity {
 		private String[] selectionArgs = null;
 		
 		
+		private DecimalFormat dollarForum;
+		
+		
 		public PaymentFragment() {
 		}
 		
@@ -106,6 +110,9 @@ public class PaymentActivity extends DrawerActivity {
 			
 			super.onCreate(savedInstanceState);
 			setRetainInstance(true);
+			
+			dollarForum = new DecimalFormat("$###,###,###,###.##");
+			
 		}
 		
 		@Override
@@ -188,7 +195,7 @@ public class PaymentActivity extends DrawerActivity {
 					PaymentListEntry entry = getItem(position);
 					viewHolder.tvPayeeFullName.setText(entry.getPayeeName());
 					viewHolder.pbPercentage.setProgress(100);
-					viewHolder.tvPayeeAmount.setText(String.valueOf(entry.getPayeeAmount()));
+					viewHolder.tvPayeeAmount.setText(dollarForum.format(entry.getPayeeAmount()));
 					
 					
 					return result;
@@ -239,7 +246,7 @@ public class PaymentActivity extends DrawerActivity {
 			}
 			
 			adapter.notifyDataSetChanged();
-			tvSum.setText(String.valueOf(totalAmount));
+			tvSum.setText(dollarForum.format(totalAmount));
 		}
 
 

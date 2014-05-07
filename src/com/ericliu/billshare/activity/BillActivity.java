@@ -1,5 +1,7 @@
 package com.ericliu.billshare.activity;
 
+import java.text.DecimalFormat;
+
 import android.app.Activity;
 
 import android.app.ListFragment;
@@ -9,6 +11,7 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -71,6 +74,7 @@ public class BillActivity extends DrawerActivity {
 				COL_TYPE, COL_AMOUNT, COL_PAID, COL_DUE_DATE };
 
 		private SimpleCursorAdapter adapter;
+		private DecimalFormat dollarForum;		
 
 		public BillFragment() {
 		}
@@ -87,31 +91,56 @@ public class BillActivity extends DrawerActivity {
 
 			super.onCreate(savedInstanceState);
 			setRetainInstance(true);
+			dollarForum = new DecimalFormat("$###,###,###,###.##");
 
 			String[] from = {COL_TYPE, COL_AMOUNT, COL_PAID, COL_DUE_DATE };
 			int[] to = { R.id.tvType, R.id.tvAmount, R.id.tvPaid, R.id.tvDueDay };
+			
+			
+			class ViewHolder{
+				private TextView tvAmount;
+				private TextView tvPaid;
+				private TextView tvDueDay;
+				
+				public ViewHolder(View view) {
+					
+					tvAmount = (TextView) view.findViewById(R.id.tvAmount);
+					tvPaid = (TextView) view.findViewById(R.id.tvPaid);
+					tvDueDay = (TextView) view.findViewById(R.id.tvDueDay);
+				}
+			}
 
 			adapter = new SimpleCursorAdapter(getActivity(), R.layout.bill_row,
 					null, from, to, 0) {
-				TextView tvPaid;
 
 				@Override
 				public View getView(int position, View convertView,
 						ViewGroup parent) {
 
 					View result = super.getView(position, convertView, parent);
-					tvPaid = (TextView) result.getTag();
+					ViewHolder viewHolder = (ViewHolder) result.getTag();
 
-					if (tvPaid == null) {
-						tvPaid = (TextView) result.findViewById(R.id.tvPaid);
+					if (viewHolder == null) {
+						viewHolder = new ViewHolder(result);
+						
+						result.setTag(viewHolder);
 					}
-					String paid = tvPaid.getText().toString();
+					
+					viewHolder.tvAmount.setText(dollarForum.format(Double.valueOf(viewHolder.tvAmount.getText().toString())));
+					
+					String dueDayStr = viewHolder.tvDueDay.getText().toString();
+					if (! TextUtils.isEmpty(dueDayStr)) {
+						viewHolder.tvDueDay.setText("Due "
+								+ dueDayStr);
+					}
+					String paid = viewHolder.tvPaid.getText().toString();
 					if (paid != null) {
 
 						if (Integer.valueOf(paid) > 0) {
-							tvPaid.setText("Paid");
+							viewHolder.tvPaid.setText("Paid");
+							viewHolder.tvDueDay.setVisibility(View.GONE);
 						} else {
-							tvPaid.setText("Unpaid");
+							viewHolder.tvPaid.setText("Unpaid");
 						}
 					}
 
