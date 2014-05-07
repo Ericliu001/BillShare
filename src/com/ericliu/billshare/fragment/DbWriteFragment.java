@@ -15,7 +15,6 @@ public class DbWriteFragment extends Fragment {
 	public static interface DbFragCallBack{
 		
 		Model getModel();
-		void onPostExecute(Object result);
 	}
 	
 	
@@ -66,12 +65,6 @@ public class DbWriteFragment extends Fragment {
 			return null;
 		}
 		
-		@Override
-		protected void onPostExecute(Void result) {
-			
-			super.onPostExecute(result);
-			mCallBack.onPostExecute(result);
-		}
 	}
 	
 }

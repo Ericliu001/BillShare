@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.SimpleCursorAdapter;
@@ -71,7 +72,7 @@ public class PaymentActivity extends DrawerActivity {
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
-	public static class PaymentFragment extends Fragment implements LoaderCallbacks<Cursor>, EvenDivListener {
+	public static class PaymentFragment extends Fragment implements  EvenDivListener {
 		private Intent receivedIntent = null;
 		
 		private TextView tvSum;
@@ -83,10 +84,14 @@ public class PaymentActivity extends DrawerActivity {
 		private long[] memberIds;
 		private long[] billIds;
 		
-		private SimpleCursorAdapter adapter;
+		
+		private ArrayList<Payment> paymentList;
+		
+		private ArrayAdapter<Payment> adapter;
 		private static final String[] PROJECTION = {COL_ROWID, COL_MEMBER_FULLNAME};
 		private  String selection = COL_ROWID + " =? ";
 		private String[] selectionArgs = null;
+		
 		
 		public PaymentFragment() {
 		}
@@ -118,12 +123,13 @@ public class PaymentActivity extends DrawerActivity {
 				
 			}
 			
+			
+			paymentList = new ArrayList<Payment>();
 			calculateAndSaveToDB();
 			
 			
 			
 			
-			activity.getLoaderManager().initLoader(LOADER_ID, null, this);
 			
 			
 		}
@@ -150,30 +156,13 @@ public class PaymentActivity extends DrawerActivity {
 			
 			String[] from = {COL_MEMBER_FULLNAME};
 			int[] to = {R.id.tvPayeeFullName};
-			adapter = new SimpleCursorAdapter(getActivity(), R.layout.payment_row, null, from, to, 0);
+			adapter = new ArrayAdapter<Payment>(getActivity(), R.layout.payment_row, R.id.tvPayeeFullName, paymentList);
 			lvPayment.setAdapter(adapter);
 			
 			return rootView;
 		}
 
 
-		@Override
-		public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-			
-			return new CursorLoader(getActivity(), BillProvider.DIALOG_MEMBER_URI, PROJECTION, selection, selectionArgs, null);
-		}
-
-
-		@Override
-		public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-			adapter.swapCursor(data);
-		}
-
-
-		@Override
-		public void onLoaderReset(Loader<Cursor> loader) {
-			adapter.swapCursor(null);
-		}
 
 
 		@Override
@@ -192,9 +181,11 @@ public class PaymentActivity extends DrawerActivity {
 					payment.setPayee_id(memberIds[j]);
 					payment.setPayee_amount(result);
 					// more fields need to be set here
-					payment.save();
+					
+					paymentList.add(payment);
 				}
 			}
+			
 		}
 	}
 

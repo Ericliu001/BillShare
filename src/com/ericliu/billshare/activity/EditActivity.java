@@ -11,7 +11,6 @@ public abstract class EditActivity extends Activity implements DbFragCallBack {
 
 	
 	
-	private boolean isSaving = false;
 	private DbWriteFragment dbWriteFrag;
 
 	@Override
@@ -30,19 +29,12 @@ public abstract class EditActivity extends Activity implements DbFragCallBack {
 	}
 
 	public void saveToDb() {
-		if (! isSaving) {
 
-			isSaving = true;
 			dbWriteFrag.writeToDB();
-		}
 	}
 
 	@Override
 	public abstract Model getModel();
 
-	@Override
-	public void onPostExecute(Object result) {
-		isSaving = false;
-	}
 
 }
