@@ -38,17 +38,31 @@ public class EvenDivAsyncCalculator {
 		@Override
 		protected Double doInBackground(Void... params) {
 			double result = 0;
-			Uri uriBill = Uri.withAppendedPath(BillProvider.BILL_URI,
-					String.valueOf(""));
+			
+			String selection = COL_ROWID + " =? ";
+			String[] selectionArgs = new String[params.length];
+			for (int i = 0; i < params.length; i++) {
+				selectionArgs[i] = String.valueOf(params[i]);
+				if (i < params.length - 1) {
+					selection = selection + " OR  " + COL_ROWID + " =? ";
+				}
+			}
+			
+			
 			String[] projectionForBill = { COL_ROWID, COL_AMOUNT };
 			Cursor cursorBill = null;
 
 			try {
 				cursorBill = MyApplication.getInstance().getContentResolver()
-						.query(uriBill, projectionForBill, null, null, null);
-				cursorBill.moveToFirst();
-				double amount = cursorBill.getDouble(cursorBill
-						.getColumnIndexOrThrow(COL_AMOUNT));
+						.query(BillProvider.BILL_URI, projectionForBill, selection, selectionArgs, null);
+				cursorBill.moveToPosition(-1);
+				double amount = 0d;
+				while(cursorBill.moveToNext()){
+					amount += cursorBill.getDouble(cursorBill
+							.getColumnIndexOrThrow(COL_AMOUNT));
+				}
+				
+				
 				result = amount / (memberIds.length);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
