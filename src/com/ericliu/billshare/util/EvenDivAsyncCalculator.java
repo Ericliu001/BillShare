@@ -40,10 +40,10 @@ public class EvenDivAsyncCalculator {
 			double result = 0;
 			
 			String selection = COL_ROWID + " =? ";
-			String[] selectionArgs = new String[params.length];
-			for (int i = 0; i < params.length; i++) {
-				selectionArgs[i] = String.valueOf(params[i]);
-				if (i < params.length - 1) {
+			String[] selectionArgs = new String[billIds.length];
+			for (int i = 0; i < billIds.length; i++) {
+				selectionArgs[i] = String.valueOf(billIds[i]);
+				if (i < billIds.length - 1) {
 					selection = selection + " OR  " + COL_ROWID + " =? ";
 				}
 			}

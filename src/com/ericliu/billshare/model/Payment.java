@@ -8,6 +8,7 @@ public class Payment extends Model {
 	private long payment_info_id;
 	private long bill_id;
 	private long payee_id;
+	private String payee_name;
 	private int payee_days;
 	private String payee_start_date;
 	private String payee_end_date;
@@ -50,6 +51,46 @@ public class Payment extends Model {
 
 	public void setPayee_amount(double payee_amount) {
 		this.payee_amount = payee_amount;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public long getPayment_info_id() {
+		return payment_info_id;
+	}
+
+	public long getBill_id() {
+		return bill_id;
+	}
+
+	public long getPayee_id() {
+		return payee_id;
+	}
+
+	public int getPayee_days() {
+		return payee_days;
+	}
+
+	public String getPayee_start_date() {
+		return payee_start_date;
+	}
+
+	public String getPayee_end_date() {
+		return payee_end_date;
+	}
+
+	public double getPayee_amount() {
+		return payee_amount;
+	}
+
+	public String getPayee_name() {
+		return payee_name;
+	}
+
+	public void setPayee_name(String payee_name) {
+		this.payee_name = payee_name;
 	}
 
 

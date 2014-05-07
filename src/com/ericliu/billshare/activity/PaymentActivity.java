@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
@@ -33,7 +34,6 @@ import static com.ericliu.billshare.provider.DatabaseConstants.*;
 public class PaymentActivity extends DrawerActivity {
 	
 	private static final String TAG = "paymentfragment";
-	public static final int LOADER_ID = 0;
 	private PaymentFragment frag;
 
 	@Override
@@ -72,7 +72,7 @@ public class PaymentActivity extends DrawerActivity {
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
-	public static class PaymentFragment extends Fragment implements  EvenDivListener {
+	public static class PaymentFragment extends Fragment implements  EvenDivListener, LoaderCallbacks<Cursor> {
 		private Intent receivedIntent = null;
 		
 		private TextView tvSum;
@@ -83,6 +83,7 @@ public class PaymentActivity extends DrawerActivity {
 		
 		private long[] memberIds;
 		private long[] billIds;
+		private String[] memberNames;
 		
 		
 		private ArrayList<Payment> paymentList;
@@ -111,6 +112,8 @@ public class PaymentActivity extends DrawerActivity {
 			receivedIntent = activity.getIntent();
 			 memberIds = receivedIntent.getLongArrayExtra(EvenDivisionActivity.CHECKED_MEMBER_IDS);
 			 billIds = receivedIntent.getLongArrayExtra(EvenDivisionActivity.CHECKED_BILL_IDS);
+			 
+			 memberNames = new String[memberIds.length];
 			
 			if (memberIds != null) {
 				selectionArgs = new String[memberIds.length];
@@ -125,17 +128,16 @@ public class PaymentActivity extends DrawerActivity {
 			
 			
 			paymentList = new ArrayList<Payment>();
-			calculateAndSaveToDB();
 			
 			
-			
+			activity.getLoaderManager().initLoader(0, null, this);
 			
 			
 			
 		}
 
 
-		public void calculateAndSaveToDB() {
+		public void calculateAndSave() {
 			EvenDivAsyncCalculator.evenDivAsync(billIds, memberIds, this);
 			
 			
@@ -154,9 +156,41 @@ public class PaymentActivity extends DrawerActivity {
 			tvNumMember = (TextView) rootView.findViewById(R.id.tvNumMember);
 			lvPayment = (ListView) rootView.findViewById(R.id.lvPayment);
 			
-			String[] from = {COL_MEMBER_FULLNAME};
-			int[] to = {R.id.tvPayeeFullName};
-			adapter = new ArrayAdapter<Payment>(getActivity(), R.layout.payment_row, R.id.tvPayeeFullName, paymentList);
+			
+			class ViewHolder{
+				private TextView tvPayeeFullName;
+				private ProgressBar pbPercentage;
+				private TextView tvPayeeAmount;
+				
+				public ViewHolder(View view) {
+					tvPayeeFullName = (TextView) view.findViewById(R.id.tvPayeeFullName);
+					pbPercentage = (ProgressBar) view.findViewById(R.id.pbPercentage);
+					tvPayeeAmount = (TextView) view.findViewById(R.id.tvPayeeAmout);
+				}
+			}
+			
+			adapter = new ArrayAdapter<Payment>(getActivity(), R.layout.payment_row, R.id.tvPayeeFullName, paymentList){
+				@Override
+				public View getView(int position, View convertView,
+						ViewGroup parent) {
+					
+					View result = super.getView(position, convertView, parent);
+					ViewHolder viewHolder = (ViewHolder) result.getTag();
+					if (viewHolder == null) {
+						viewHolder = new ViewHolder(result);
+						result.setTag(viewHolder);
+					}
+					Payment payment = getItem(position);
+					viewHolder.tvPayeeFullName.setText(payment.getPayee_name());
+					viewHolder.pbPercentage.setProgress(100);
+					viewHolder.tvPayeeAmount.setText(String.valueOf(payment.getPayee_amount()));
+					
+					
+					return result;
+				}
+			};
+			
+			
 			lvPayment.setAdapter(adapter);
 			
 			return rootView;
@@ -169,16 +203,17 @@ public class PaymentActivity extends DrawerActivity {
 		public void setEvenDivResult(double result) {
 			
 
-			PaymentInfo paymentInfo = new PaymentInfo();
-			Uri uri = paymentInfo.save();
-			long paymentInfoID = Long.valueOf(uri.getLastPathSegment());
+//			PaymentInfo paymentInfo = new PaymentInfo();
+//			Uri uri = paymentInfo.save();
+//			long paymentInfoID = Long.valueOf(uri.getLastPathSegment());
 			
 			for (int i = 0; i < billIds.length; i++) {
 				for (int j = 0; j < memberIds.length; j++) {
 					Payment payment = new Payment();
-					payment.setPayment_info_id(paymentInfoID);
+//					payment.setPayment_info_id(paymentInfoID);
 					payment.setBill_id(billIds[i]);
 					payment.setPayee_id(memberIds[j]);
+					payment.setPayee_name(memberNames[j]);
 					payment.setPayee_amount(result);
 					// more fields need to be set here
 					
@@ -186,6 +221,31 @@ public class PaymentActivity extends DrawerActivity {
 				}
 			}
 			
+			adapter.notifyDataSetChanged();
+		}
+
+
+		@Override
+		public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+			
+			return new CursorLoader(getActivity(), BillProvider.DIALOG_MEMBER_URI, PROJECTION, selection, selectionArgs, null);
+		}
+
+
+		@Override
+		public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+			cursor.moveToPosition(-1);
+			
+			for (int i = 0; cursor.moveToNext(); i++) {
+				memberNames[i] = cursor.getString(cursor.getColumnIndexOrThrow(COL_MEMBER_FULLNAME));
+			}
+			
+			calculateAndSave();
+		}
+
+
+		@Override
+		public void onLoaderReset(Loader<Cursor> loader) {
 		}
 	}
 
