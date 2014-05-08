@@ -29,8 +29,8 @@ import com.ericliu.billshare.model.Payment;
 import com.ericliu.billshare.model.PaymentInfo;
 import com.ericliu.billshare.model.PaymentListEntry;
 import com.ericliu.billshare.provider.BillProvider;
-import com.ericliu.billshare.util.EvenDivAsyncCalculator;
-import com.ericliu.billshare.util.EvenDivAsyncCalculator.EvenDivListener;
+import com.ericliu.billshare.util.CalculatorEvenDivAsync;
+import com.ericliu.billshare.util.CalculatorEvenDivAsync.EvenDivListener;
 
 import static com.ericliu.billshare.provider.DatabaseConstants.*;
 
@@ -115,9 +115,9 @@ public class PaymentActivity extends DrawerActivity {
 		public void onAttach(Activity activity) {
 
 			super.onAttach(activity);
-			
+
 			receivedIntent = activity.getIntent();
-			
+
 			memberIds = receivedIntent
 					.getLongArrayExtra(CalculationParameterActivity.CHECKED_MEMBER_IDS);
 			billIds = receivedIntent
@@ -143,9 +143,12 @@ public class PaymentActivity extends DrawerActivity {
 
 		}
 
-		public void calculateAndSave() {
-			EvenDivAsyncCalculator.evenDivAsync(billIds, memberIds, this);
+		public void calculateEvenDiv() {
+			CalculatorEvenDivAsync.evenDivAsync(billIds, memberIds, this);
 
+		}
+		
+		private void calculateByDays() {
 		}
 
 		@Override
@@ -249,19 +252,22 @@ public class PaymentActivity extends DrawerActivity {
 
 		@Override
 		public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-			
-			
-				cursor.moveToPosition(-1);
-				for (int i = 0; cursor.moveToNext(); i++) {
-					memberNames[i] = cursor.getString(cursor
-							.getColumnIndexOrThrow(COL_MEMBER_FULLNAME));
-				}
-				
-				
-		if (receivedIntent.getAction().equals(CalculationParameterActivity.ACTION_EVEN_DIV)) {
-				calculateAndSave();
+
+			cursor.moveToPosition(-1);
+			for (int i = 0; cursor.moveToNext(); i++) {
+				memberNames[i] = cursor.getString(cursor
+						.getColumnIndexOrThrow(COL_MEMBER_FULLNAME));
+			}
+
+			if (receivedIntent.getAction().equals(
+					DrawerActivity.ACTION_EVEN_DIV)) {
+				calculateEvenDiv();
+			}else if (receivedIntent.getAction().equals(DrawerActivity.ACTION_CALCULATE_BY_DAYS)) {
+				calculateByDays();
+			}
 		}
-		}
+
+		
 
 		@Override
 		public void onLoaderReset(Loader<Cursor> loader) {

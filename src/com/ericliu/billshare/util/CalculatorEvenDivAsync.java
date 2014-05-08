@@ -11,7 +11,7 @@ import android.os.AsyncTask;
 
 import static com.ericliu.billshare.provider.DatabaseConstants.*;
 
-public class EvenDivAsyncCalculator {
+public class CalculatorEvenDivAsync {
 
 	public interface EvenDivListener {
 		void setEvenDivResult(ArrayList<Double> payeeAmountForEachBill, double totalAmount, double payeeAmountForTotal);

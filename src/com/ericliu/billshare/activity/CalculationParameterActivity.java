@@ -18,7 +18,7 @@ import com.ericliu.billshare.dialog.SelectBillsDialog;
 import com.ericliu.billshare.dialog.SelectBillsDialog.SelectBillsDialogListener;
 import com.ericliu.billshare.dialog.SelectMembersDialog;
 import com.ericliu.billshare.dialog.SelectMembersDialog.SelectMemberDialogListener;
-import com.ericliu.billshare.util.EvenDivAsyncCalculator;
+import com.ericliu.billshare.util.CalculatorEvenDivAsync;
 
 public class CalculationParameterActivity extends DrawerActivity implements
 		SelectBillsDialogListener, SelectMemberDialogListener {
