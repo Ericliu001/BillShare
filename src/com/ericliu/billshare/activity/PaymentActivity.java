@@ -115,11 +115,13 @@ public class PaymentActivity extends DrawerActivity {
 		public void onAttach(Activity activity) {
 
 			super.onAttach(activity);
+			
 			receivedIntent = activity.getIntent();
+			
 			memberIds = receivedIntent
-					.getLongArrayExtra(EvenDivisionActivity.CHECKED_MEMBER_IDS);
+					.getLongArrayExtra(CalculationParameterActivity.CHECKED_MEMBER_IDS);
 			billIds = receivedIntent
-					.getLongArrayExtra(EvenDivisionActivity.CHECKED_BILL_IDS);
+					.getLongArrayExtra(CalculationParameterActivity.CHECKED_BILL_IDS);
 
 			memberNames = new String[memberIds.length];
 
@@ -254,7 +256,11 @@ public class PaymentActivity extends DrawerActivity {
 					memberNames[i] = cursor.getString(cursor
 							.getColumnIndexOrThrow(COL_MEMBER_FULLNAME));
 				}
-			calculateAndSave();
+				
+				
+		if (receivedIntent.getAction().equals(CalculationParameterActivity.ACTION_EVEN_DIV)) {
+				calculateAndSave();
+		}
 		}
 
 		@Override

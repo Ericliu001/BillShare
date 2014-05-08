@@ -77,6 +77,8 @@ public class MemberEditActivity extends EditActivity implements
 		private TextView tvMoveOutDate;
 		private Button btPickMoveIndate;
 		private Button btPickMoveOutdate;
+		private String moveInDateToSave = null;
+		private String moveOutDateToSave = null;
 
 		private long id;
 
@@ -143,7 +145,7 @@ public class MemberEditActivity extends EditActivity implements
 			Uri uri = Uri.withAppendedPath(BillProvider.HOUSEMATE_URI,
 					String.valueOf(id));
 			String[] projection = { COL_ROWID, COL_FIRSTNAME, COL_LASTNAME,
-					COL_PHONE, COL_EMAIL
+					COL_PHONE, COL_EMAIL, COL_MOVE_IN_DATE, COL_MOVE_OUT_DATE
 
 			};
 
@@ -159,6 +161,16 @@ public class MemberEditActivity extends EditActivity implements
 						.getColumnIndexOrThrow(COL_LASTNAME)));
 				etPhone.setText(c.getString(c.getColumnIndexOrThrow(COL_PHONE)));
 				etEmail.setText(c.getString(c.getColumnIndexOrThrow(COL_EMAIL)));
+				
+				String moveInDateString = c.getString(c.getColumnIndexOrThrow(COL_MOVE_IN_DATE));
+				if (! moveInDateString.equals("1900-01-01")) {
+					tvMoveInDate.setText(moveInDateString);
+				}
+				
+				String moveOutDateString = c.getString(c.getColumnIndexOrThrow(COL_MOVE_OUT_DATE));
+				if (! moveOutDateString.equals("3000-01-01")) {
+					tvMoveOutDate.setText(moveOutDateString);
+				}
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -203,6 +215,14 @@ public class MemberEditActivity extends EditActivity implements
 			member.setLastName(etLastName.getText().toString());
 			member.setPhone(etPhone.getText().toString());
 			member.setEmail(etEmail.getText().toString());
+			if (moveInDateToSave != null) {
+				member.setMoveInDate(moveInDateToSave);
+			}
+			
+			if (moveOutDateToSave != null) {
+				member.setMoveOutDate(moveOutDateToSave);
+				
+			}
 
 			mCallBack.setMember(member);
 			mCallBack.saveToDb();
@@ -234,10 +254,12 @@ public class MemberEditActivity extends EditActivity implements
 			switch (chosenDateType) {
 			case DATE_TYPE_MOVE_IN:
 				tvMoveInDate.setText(dateString);
+				moveInDateToSave = dateString;
 				break;
 
 			case DATE_TYPE_MOVE_OUT:
 				tvMoveOutDate.setText(dateString);
+				moveOutDateToSave = dateString;
 				break;
 
 			default:

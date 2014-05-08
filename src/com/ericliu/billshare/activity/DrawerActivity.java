@@ -27,6 +27,9 @@ public class DrawerActivity extends Activity implements
 	private static final int HOUSEMATES = 3;
 	private static final int MANAGING_BILLS = 4;
 	
+	public static final String ACTION_EVEN_DIV = "action_even_division";
+	public static final String ACTION_CALCULATE_BY_DAYS = "action_calculate_by_days";
+	
 	
 	private DrawerLayout drawerLayout = null;
 	private ActionBarDrawerToggle toggle;
@@ -101,12 +104,16 @@ public class DrawerActivity extends Activity implements
 
 		switch (position) {
 		case QUICK_EVEN_DIVISION:
-			i = new Intent(this, EvenDivisionActivity.class);
+			i = new Intent(this, CalculationParameterActivity.class);
+			i.setAction(ACTION_EVEN_DIV);
+			
 			startActivity(i);
 			break;
 
 		case CALCULATE_BY_DAYS:
-
+			i = new Intent(this, CalculationParameterActivity.class);
+			i.setAction(ACTION_CALCULATE_BY_DAYS);
+			startActivity(i);
 			break;
 
 		case PAYMENT_HISTORY:

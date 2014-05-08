@@ -58,5 +58,8 @@
     <string name="move_out_date">Move Out Date</string>
     <string name="after_billing_end">After Billing End</string>
     <string name="before_billing_start">Before Billing Start</string>
+    <string name="even_division">Even Division</string>
+    <string name="calculate_by_days">Calculate by Days</string>
+    <string name="calculation_based_on_days_members_lived_in">Calculation based on days members have lived in</string>
 
 </resources>

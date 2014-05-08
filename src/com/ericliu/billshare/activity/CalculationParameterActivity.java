@@ -20,24 +20,23 @@ import com.ericliu.billshare.dialog.SelectMembersDialog;
 import com.ericliu.billshare.dialog.SelectMembersDialog.SelectMemberDialogListener;
 import com.ericliu.billshare.util.EvenDivAsyncCalculator;
 
-public class EvenDivisionActivity extends DrawerActivity implements
+public class CalculationParameterActivity extends DrawerActivity implements
 		SelectBillsDialogListener, SelectMemberDialogListener {
 
 	private static final String TAG = "EvenDivisionFragment";
 	public static final String CHECKED_BILL_IDS = "checked_bill_ids";
 	public static final String CHECKED_MEMBER_IDS = "checked_member_ids";
 	public static final String CHECKED_RESULT = "checked_result";
-	public static final String ACTION_EVEN_DIV = null;
-	private EvenDivisionFragment frag;
+	private CalculationParameterFragment frag;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		frag = (EvenDivisionFragment) getFragmentManager().findFragmentByTag(
+		frag = (CalculationParameterFragment) getFragmentManager().findFragmentByTag(
 				TAG);
 		if (frag == null) {
-			frag = new EvenDivisionFragment();
+			frag = new CalculationParameterFragment();
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, frag, TAG).commit();
 		}
@@ -47,7 +46,7 @@ public class EvenDivisionActivity extends DrawerActivity implements
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
-	public static class EvenDivisionFragment extends Fragment implements
+	public static class CalculationParameterFragment extends Fragment implements
 			OnClickListener {
 
 		private long[] checkedBillIds = {} ;
@@ -57,10 +56,13 @@ public class EvenDivisionActivity extends DrawerActivity implements
 		private Button btSelectBills;
 		private Button btCalculate;
 
+		private TextView tvCalculationTitle;
 		private TextView tvMemberSelected;
 		private TextView tvBillSelected;
+		
+		private String intentAction;
 
-		public EvenDivisionFragment() {
+		public CalculationParameterFragment() {
 		}
 
 		@Override
@@ -68,18 +70,21 @@ public class EvenDivisionActivity extends DrawerActivity implements
 
 			super.onCreate(savedInstanceState);
 			setRetainInstance(true);
+			intentAction = getActivity().getIntent().getAction();
 		}
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_even_division,
+			View rootView = inflater.inflate(R.layout.fragment_chose_member_bill,
 					container, false);
 
 			btSelectBills = (Button) rootView.findViewById(R.id.btSelectBills);
 			btSelectMembers = (Button) rootView
 					.findViewById(R.id.btSelectMember);
 			btCalculate = (Button) rootView.findViewById(R.id.btCalculate);
+			
+			tvCalculationTitle = (TextView) rootView.findViewById(R.id.tvCalculationTitle);
 			tvMemberSelected = (TextView) rootView
 					.findViewById(R.id.tvMemberSelected);
 			tvBillSelected = (TextView) rootView
@@ -89,6 +94,15 @@ public class EvenDivisionActivity extends DrawerActivity implements
 			btSelectMembers.setOnClickListener(this);
 			btCalculate.setOnClickListener(this);
 
+			if (intentAction.equals(DrawerActivity.ACTION_EVEN_DIV)) {
+				btCalculate.setText(R.string.even_division);
+				tvCalculationTitle.setText(R.string.even_division_calculation);
+				
+			}else if (intentAction.equals(DrawerActivity.ACTION_CALCULATE_BY_DAYS)) {
+				btCalculate.setText(R.string.calculate_by_days);
+				tvCalculationTitle.setText(R.string.calculation_based_on_days_members_lived_in);
+			}
+			
 			return rootView;
 		}
 
@@ -108,7 +122,7 @@ public class EvenDivisionActivity extends DrawerActivity implements
 				if (checkedBillIds.length > 0  && checkedMemberIds.length > 0) {
 					
 					Intent intent = new Intent(getActivity(), PaymentActivity.class);
-					intent.setAction(ACTION_EVEN_DIV);
+					intent.setAction(intentAction);
 					intent.putExtra(CHECKED_BILL_IDS, checkedBillIds);
 					intent.putExtra(CHECKED_MEMBER_IDS, checkedMemberIds);
 					startActivity(intent);

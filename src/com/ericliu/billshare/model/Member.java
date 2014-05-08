@@ -14,7 +14,8 @@ public class Member extends Model {
 	private String lastName;
 	private String phone;
 	private String email;
-	
+	private String moveInDate;
+	private String moveOutDate;
 	
 	
 	
@@ -27,6 +28,8 @@ public class Member extends Model {
 		values.put(COL_LASTNAME, lastName);
 		values.put(COL_PHONE, phone);
 		values.put(COL_EMAIL, email);
+		values.put(COL_MOVE_IN_DATE, moveInDate);
+		values.put(COL_MOVE_OUT_DATE, moveOutDate);
 		
 		
 		Uri uri = null;
@@ -80,6 +83,38 @@ public class Member extends Model {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+
+
+
+
+	public String getMoveInDate() {
+		return moveInDate;
+	}
+
+
+
+
+
+	public void setMoveInDate(String moveInDate) {
+		this.moveInDate = moveInDate;
+	}
+
+
+
+
+
+	public String getMoveOutDate() {
+		return moveOutDate;
+	}
+
+
+
+
+
+	public void setMoveOutDate(String moveOutDate) {
+		this.moveOutDate = moveOutDate;
 	}
 
 }
