@@ -48,7 +48,16 @@ public class TablePaymentInfo {
 			+ TABLE_BILL + "." + COL_AMOUNT + ","
 			+ TABLE_BILL + "." + COL_BILLING_START + ","
 			+ TABLE_BILL + "." + COL_DUE_DATE + ","
-			+ TABLE_BILL + "." + COL_PAID
+			+ TABLE_BILL + "." + COL_PAID + ","
+			
+			
+			+ TABLE_PAYMENT_INFO + "." + COL_ROWID + ","
+			+ TABLE_PAYMENT_INFO + "." + COL_NAME + ","
+			+ TABLE_PAYMENT_INFO + "." + COL_DESCRIPTION + ","
+			+ TABLE_PAYMENT_INFO + "." + COL_TOTAL_AMOUNT + ","
+			+ TABLE_PAYMENT_INFO + "." + COL_NUMBER_OF_MEMBERS_PAID + ","
+			+ TABLE_PAYMENT_INFO + "." + COL_NUMBER_OF_BILLS_PAID + ","
+			+ TABLE_PAYMENT_INFO + "." + COL_PAID_TIME
 			
 			+ " from  " + TABLE_PAYMENT + " left join  " + TABLE_MEMBER 
 			+ " on " + TABLE_PAYMENT + "." + COL_PAYEE_ID + "=" + TABLE_MEMBER + "." + COL_ROWID
@@ -59,6 +68,7 @@ public class TablePaymentInfo {
 	
 	public static void onCreate(SQLiteDatabase db){
 		db.execSQL(TABLE_CREATE);
+		db.execSQL(VIEW_PAYMENT_FULL_CREATE);
 	}
 	
 	public static void onUpdate(SQLiteDatabase db){
