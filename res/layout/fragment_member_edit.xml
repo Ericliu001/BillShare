@@ -90,18 +90,63 @@
 
     </TableRow>
 
-    <TextView
+     <View
+        android:layout_height="15dip"
+        android:background="@android:color/background_light" />
+    
+    <TableRow
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="@string/comment" />
+        android:layout_height="wrap_content" >
 
-    <EditText
-        android:id="@+id/etComment"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/move_in_date" />
+
+        <TextView
+            android:id="@+id/tvMoveInDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:hint="@string/before_billing_start" />
+
+    </TableRow>
+
+    <Button
+        android:id="@+id/btPickMoveInDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:imeOptions="actionDone"
-        android:inputType="textMultiLine" />
+        android:text="@string/pick_date" />
+    
+    
+     <View
+        android:layout_height="15dip"
+        android:background="@android:color/background_light" />
+
+    <TableRow
+        android:id="@+id/tableRow2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/move_out_date" />
+
+        <TextView
+            android:id="@+id/tvMoveOutDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:hint="@string/after_billing_end" />
+
+    </TableRow>
+
+    <Button
+        android:id="@+id/btPickMoveOutDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pick_date" />
 
 </TableLayout>

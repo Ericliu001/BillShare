@@ -54,5 +54,9 @@
     <string name="number_of_bills">Number of Bills</string>
     <string name="no_member_and_bill_selected">No Member and Bill is Selected</string>
     <string name="you_must_select_member_bill">You must select at least one member and one bill.</string>
+    <string name="move_in_date">Move In Date</string>
+    <string name="move_out_date">Move Out Date</string>
+    <string name="after_billing_end">After Billing End</string>
+    <string name="before_billing_start">Before Billing Start</string>
 
 </resources>

@@ -76,7 +76,7 @@
         android:textSize="15sp" />
 
     <View
-        android:layout_height="5dip"
+        android:layout_height="15dip"
         android:background="@android:color/background_light" />
 
     <TableRow
@@ -105,7 +105,7 @@
         android:textSize="15sp" />
     
     <View
-        android:layout_height="10dip"
+        android:layout_height="15dip"
         android:background="@android:color/background_light" />
 
     <TableRow
@@ -133,7 +133,7 @@
         android:text="@string/pick_date"
         android:textSize="15sp" />
     <View
-        android:layout_height="10dip"
+        android:layout_height="15dip"
         android:background="@android:color/background_light" />
 
     <CheckBox
