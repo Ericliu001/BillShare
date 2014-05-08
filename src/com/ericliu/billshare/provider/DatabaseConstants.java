@@ -8,6 +8,7 @@ public class DatabaseConstants {
 	public static final String COL_DESCRIPTION = "description";
 	public static final String COL_AMOUNT = "amount";
 	public static final String COL_CHECKED = "checked";
+	public static final String VIEW_PAYMENT_FULL = "view_payment_full";
 	
 
 	

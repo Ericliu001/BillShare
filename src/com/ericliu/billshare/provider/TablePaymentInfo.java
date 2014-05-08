@@ -19,6 +19,44 @@ public class TablePaymentInfo {
 			+");"
 			;
 	
+	
+	private static final String VIEW_PAYMENT_FULL_CREATE = " create view "
+			+ VIEW_PAYMENT_FULL
+			+ " as "
+			+ " select "
+			+ TABLE_PAYMENT + "." + COL_ROWID + ","
+			+ TABLE_PAYMENT + "." + COL_PAYMENT_INFO_ID + ","
+			+ TABLE_PAYMENT + "." + COL_BILL_ID + ","
+			+ TABLE_PAYMENT + "." + COL_PAYEE_ID + ","
+			+ TABLE_PAYMENT + "." + COL_PAYEE_DAYS + ","
+			+ TABLE_PAYMENT + "." + COL_PAYEE_START_DATE + ","
+			+ TABLE_PAYMENT + "." + COL_PAYEE_END_DATE + ","
+			+ TABLE_PAYMENT + "." + COL_PAYEE_AMOUNT + ","
+			
+			
+			+ TABLE_MEMBER + "." + COL_ROWID + ","
+			+ TABLE_MEMBER + "." + COL_FIRSTNAME + ","
+			+ TABLE_MEMBER + "." + COL_LASTNAME + ","
+			+ TABLE_MEMBER + "." + COL_PHONE + ","
+			+ TABLE_MEMBER + "." + COL_EMAIL + ","
+			+ TABLE_MEMBER + "." + COL_MOVE_IN_DATE + ","
+			+ TABLE_MEMBER + "." + COL_MOVE_OUT_DATE 
+			
+			
+			+ TABLE_BILL + "." + COL_ROWID + ","
+			+ TABLE_BILL + "." + COL_TYPE + ","
+			+ TABLE_BILL + "." + COL_AMOUNT + ","
+			+ TABLE_BILL + "." + COL_BILLING_START + ","
+			+ TABLE_BILL + "." + COL_DUE_DATE + ","
+			+ TABLE_BILL + "." + COL_PAID
+			
+			+ " from  " + TABLE_PAYMENT + " left join  " + TABLE_MEMBER 
+			+ " on " + TABLE_PAYMENT + "." + COL_PAYEE_ID + "=" + TABLE_MEMBER + "." + COL_ROWID
+			+ " left join  " + TABLE_BILL 
+			+ " on " + TABLE_PAYMENT + "." + COL_BILL_ID + "=" + TABLE_BILL + "." + COL_ROWID
+			
+			;
+	
 	public static void onCreate(SQLiteDatabase db){
 		db.execSQL(TABLE_CREATE);
 	}
