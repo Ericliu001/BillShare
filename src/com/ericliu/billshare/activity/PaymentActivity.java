@@ -253,7 +253,7 @@ public class PaymentActivity extends DrawerActivity {
 					// payment.setPayment_info_id(paymentInfoID);
 					payment.setBill_id(billIds[i]);
 					payment.setPayee_id(memberIds[j]);
-					payment.setPayee_amount(amountPayeeForEachBill.get(i));
+//					payment.setPayee_amount(amountPayeeForEachBill.get(i));// this is wrong here
 					// more fields need to be set here
 
 					paymentList.add(payment);

@@ -69,7 +69,8 @@ public class CalculatorDaysAsync {
 					COL_MOVE_OUT_DATE };
 			Cursor cursorMember = null;
 
-			String[] projectionForBill = { COL_ROWID, COL_AMOUNT, COL_BILLING_START, COL_BILLING_END };
+			String[] projectionForBill = { COL_ROWID, COL_AMOUNT,
+					COL_BILLING_START, COL_BILLING_END };
 			Cursor cursorBill = null;
 			try {
 				cursorBill = MyApplication
@@ -83,18 +84,21 @@ public class CalculatorDaysAsync {
 						.query(BillProvider.HOUSEMATE_URI, projectionForMember,
 								selectionMember, selectionMemberArgs, null);
 
-				for (cursorBill.moveToFirst(); !cursorBill.isAfterLast(); cursorBill.moveToNext()) {
+				for (cursorBill.moveToFirst(); !cursorBill.isAfterLast(); cursorBill
+						.moveToNext()) {
 					double amountInOneBill = cursorBill.getDouble(cursorBill
 							.getColumnIndexOrThrow(COL_AMOUNT));
 
 					amountForEachBill.add(amountInOneBill);
+					String billStartDate = cursorBill.getString(cursorBill
+							.getColumnIndex(COL_BILLING_START));
+					String billEndDate = cursorBill.getString(cursorBill
+							.getColumnIndex(COL_BILLING_END));
+
 					for (cursorMember.moveToFirst(); !cursorMember
 							.isAfterLast(); cursorMember.moveToNext()) {
 						// we need percentage of each member here
-						String billStartDate = cursorBill.getString(cursorBill
-								.getColumnIndex(COL_BILLING_START));
-						String billEndDate = cursorBill.getString(cursorBill
-								.getColumnIndex(COL_BILLING_END));
+
 						String memberStartDate = cursorMember
 								.getString(cursorMember
 										.getColumnIndex(COL_MOVE_IN_DATE));
@@ -111,10 +115,10 @@ public class CalculatorDaysAsync {
 							payeePayingDaysForEachBill.add(0);
 						}
 
-						int billingDays = UtilCompareDates.compareDates(
-								billStartDate, billEndDate);
-						billingDaysForEachBill.add(billingDays);
 					}
+					int billingDays = UtilCompareDates.compareDates(
+							billStartDate, billEndDate);
+					billingDaysForEachBill.add(billingDays);
 				}
 
 				// finish the loop
@@ -122,15 +126,15 @@ public class CalculatorDaysAsync {
 						amountForEachBill, billingDaysForEachBill,
 						payeePayingDaysForEachBill);
 
-				double[] tempTotalPayeeAmount = new double[cursorMember.getCount()];
-				for (int i = 0; i < cursorMember.getCount(); i++) {
-					for (int j = 0; j < cursorBill.getCount(); j++) {
+				double[] tempTotalPayeeAmount = new double[memberIds.length];
+				for (int i = 0; i < memberIds.length; i++) {
+					for (int j = 0; j < billIds.length; j++) {
 						tempTotalPayeeAmount[i] += (payeeAmountForEachBill
 								.get((i + 1) * (j + 1) - 1));
 					}
 
 				}
-				
+
 				for (int i = 0; i < tempTotalPayeeAmount.length; i++) {
 					totalPayeeAmount.add(tempTotalPayeeAmount[i]);
 				}
@@ -138,15 +142,15 @@ public class CalculatorDaysAsync {
 			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
-			}finally{
-				
+			} finally {
+
 				if (cursorBill != null) {
 					cursorBill.close();
 				}
-				
+
 				if (cursorMember != null) {
 					cursorMember.close();
-					
+
 				}
 			}
 
@@ -160,31 +164,33 @@ public class CalculatorDaysAsync {
 
 			ArrayList<Double> payeeAmountForEachBill = new ArrayList<Double>();
 
-			for (int i = 0; i < amountForEachBill.size(); i++) {
+			for (int i = 0; i < memberIds.length; i++) {
 				int totalPayeeLivingDays = 0;
-				double percentageOfPayeeForEachBill = 0d;
 
-				for (int j = 0; j < payeePayingDaysForEachBill.size(); j++) {
+				for (int j = 0; j < billIds.length; j++) {
 
 					totalPayeeLivingDays += payeePayingDaysForEachBill.get(j);
 				}
-				Log.i("eric", "totalPayeeLivingDays " + totalPayeeLivingDays);
 
-				for (int j = 0; j < payeePayingDaysForEachBill.size(); j++) {
-					percentageOfPayeeForEachBill = payeePayingDaysForEachBill
-							.get(j) / totalPayeeLivingDays;
+				for (int j = 0; j < billIds.length; j++) {
 					double amountEachPayeeForEachBill = amountForEachBill
-							.get(i) * payeePayingDaysForEachBill.get(j)/ totalPayeeLivingDays;
+							.get(j)
+							* payeePayingDaysForEachBill.get((i + 1) * (j + 1) - 1)
+							/ totalPayeeLivingDays;
 					payeeAmountForEachBill.add(amountEachPayeeForEachBill);
 				}
 
 			}
-			
+
 			if (MyApplication.isTesting) {
-				Log.i("eric", "payeeAmountForEachBill " + payeeAmountForEachBill.toString());
-				Log.i("eric", "amountForEachBill " + amountForEachBill.toString());
-				Log.i("eric", "billingDaysForEachBill " + billingDaysForEachBill.toString());
-				Log.i("eric", "payeePayingDaysForEachBill " + payeePayingDaysForEachBill.toString());
+				Log.i("eric", "payeeAmountForEachBill "
+						+ payeeAmountForEachBill.toString());
+				Log.i("eric",
+						"amountForEachBill " + amountForEachBill.toString());
+				Log.i("eric", "billingDaysForEachBill "
+						+ billingDaysForEachBill.toString());
+				Log.i("eric", "payeePayingDaysForEachBill "
+						+ payeePayingDaysForEachBill.toString());
 			}
 
 			return payeeAmountForEachBill;
@@ -195,7 +201,7 @@ public class CalculatorDaysAsync {
 
 			super.onPostExecute(result);
 
-			listener.setCalDaysResult(result,  totalPayeeAmount);
+			listener.setCalDaysResult(result, totalPayeeAmount);
 		}
 
 	}

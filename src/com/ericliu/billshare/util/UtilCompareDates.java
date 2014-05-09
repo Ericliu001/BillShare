@@ -1,6 +1,5 @@
 package com.ericliu.billshare.util;
 
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -16,7 +15,7 @@ public class UtilCompareDates {
 
 	public static int compareDates(String memberStartString,
 			String memberEndtring, String billStartString, String billEndString) {
-		
+
 		int interval = 0;
 
 		try {
@@ -34,7 +33,7 @@ public class UtilCompareDates {
 			if (startDate.after(endDate)) {
 				return -1;
 			}
-			
+
 			interval = compareDates(startDate, endDate);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -51,7 +50,8 @@ public class UtilCompareDates {
 				Locale.US);
 		try {
 			java.util.Date startDate = dateFormat.parse(startDateString);
-			java.util.Date endDate = dateFormat.parse(startDateString);
+			java.util.Date endDate = dateFormat.parse(endDateString);
+			
 			if (startDate.after(endDate)) {
 				return -1;
 			}
@@ -65,11 +65,11 @@ public class UtilCompareDates {
 
 		return interval;
 	}
-	
-	
-	public static int compareDates(java.util.Date startDate, java.util.Date endDate){
+
+	public static int compareDates(java.util.Date startDate,
+			java.util.Date endDate) {
 		int interval = 0;
-		
+
 		Calendar calendarStartDate = Calendar.getInstance();
 		calendarStartDate.set(Calendar.YEAR, startDate.getYear());
 		calendarStartDate.set(Calendar.MONTH, startDate.getMonth());
@@ -83,7 +83,7 @@ public class UtilCompareDates {
 		long diff = calendarEndDate.getTimeInMillis()
 				- calendarStartDate.getTimeInMillis();
 		interval = (int) (diff / (24 * 60 * 60 * 1000) + 1); // plus one day
-		
+
 		return interval;
 	}
 
