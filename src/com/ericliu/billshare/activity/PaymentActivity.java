@@ -29,6 +29,8 @@ import com.ericliu.billshare.model.Payment;
 import com.ericliu.billshare.model.PaymentInfo;
 import com.ericliu.billshare.model.PaymentListEntry;
 import com.ericliu.billshare.provider.BillProvider;
+import com.ericliu.billshare.util.CalculatorDaysAsync;
+import com.ericliu.billshare.util.CalculatorDaysAsync.CalculatorDaysListener;
 import com.ericliu.billshare.util.CalculatorEvenDivAsync;
 import com.ericliu.billshare.util.CalculatorEvenDivAsync.EvenDivListener;
 
@@ -75,7 +77,7 @@ public class PaymentActivity extends DrawerActivity {
 	 * A placeholder fragment containing a simple view.
 	 */
 	public static class PaymentFragment extends Fragment implements
-			EvenDivListener, LoaderCallbacks<Cursor> {
+			EvenDivListener, CalculatorDaysListener, LoaderCallbacks<Cursor> {
 		private Intent receivedIntent = null;
 
 		private TextView tvSum;
@@ -149,6 +151,8 @@ public class PaymentActivity extends DrawerActivity {
 		}
 		
 		private void calculateByDays() {
+			
+			CalculatorDaysAsync.calculateByDaysAsync(billIds, memberIds, this);
 		}
 
 		@Override
@@ -241,6 +245,29 @@ public class PaymentActivity extends DrawerActivity {
 			adapter.notifyDataSetChanged();
 			tvSum.setText(dollarForum.format(totalAmount));
 		}
+		@Override
+		public void setCalDaysResult(ArrayList<Double> amountPayeeForEachBill, ArrayList<Double> totalPayeeAmount) {
+			for (int j = 0; j < memberIds.length; j++) {
+				for (int i = 0; i < billIds.length; i++) {
+					Payment payment = new Payment();
+					// payment.setPayment_info_id(paymentInfoID);
+					payment.setBill_id(billIds[i]);
+					payment.setPayee_id(memberIds[j]);
+					payment.setPayee_amount(amountPayeeForEachBill.get(i));
+					// more fields need to be set here
+
+					paymentList.add(payment);
+				}
+
+				PaymentListEntry entry = new PaymentListEntry();
+				entry.setPayeeName(memberNames[j]);
+				entry.setPayeePercentage(100);
+				entry.setPayeeAmount( totalPayeeAmount.get(j));
+				entryList.add(entry);
+			}
+			adapter.notifyDataSetChanged();
+		}
+		
 
 		@Override
 		public Loader<Cursor> onCreateLoader(int id, Bundle args) {
@@ -272,6 +299,8 @@ public class PaymentActivity extends DrawerActivity {
 		@Override
 		public void onLoaderReset(Loader<Cursor> loader) {
 		}
+
+		
 	}
 
 }

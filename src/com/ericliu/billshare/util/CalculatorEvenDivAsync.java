@@ -30,7 +30,6 @@ public class CalculatorEvenDivAsync {
 		private long[] billIds;
 		private long[] memberIds;
 		
-		private double amountInOneBill = 0d;
 		private double totalAmount = 0d;
 		private double payeeAmountForTotal = 0d;
 
@@ -64,7 +63,7 @@ public class CalculatorEvenDivAsync {
 				cursorBill.moveToPosition(-1);
 				
 				while(cursorBill.moveToNext()){
-					amountInOneBill = cursorBill.getDouble(cursorBill
+					double amountInOneBill = cursorBill.getDouble(cursorBill
 							.getColumnIndexOrThrow(COL_AMOUNT));
 					totalAmount += amountInOneBill;
 					payeeAmountForEachBill.add(amountInOneBill / memberIds.length);
