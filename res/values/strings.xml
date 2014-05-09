@@ -45,7 +45,7 @@
     <string name="calculate">Calculate</string>
     <string name="ok">OK</string>
     <string name="done">Done</string>
-    <string name="paid_bill_not_display">Bill that are checked as paid will not be displayed in this list.</string>
+    <string name="paid_bill_not_display">Bills that are checked as paid will not show up in this list.</string>
     <string name="title_activity_payment">PaymentActivity</string>
     <string name="sum">Sum</string>
     <string name="total_amount_in_bills">Total Amount in Bills</string>
@@ -56,8 +56,8 @@
     <string name="you_must_select_member_bill">You must select at least one member and one bill.</string>
     <string name="move_in_date">Move In Date</string>
     <string name="move_out_date">Move Out Date</string>
-    <string name="after_billing_end">After Billing End</string>
-    <string name="before_billing_start">Before Billing Start</string>
+    <string name="after_billing_end">If not specified, assumed after Billing End</string>
+    <string name="before_billing_start">If not specified, asumed before Billing Start</string>
     <string name="even_division">Even Division</string>
     <string name="calculate_by_days">Calculate by Days</string>
     <string name="calculation_based_on_days_members_lived_in">Calculation based on days members have lived in</string>

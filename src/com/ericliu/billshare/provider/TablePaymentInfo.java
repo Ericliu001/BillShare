@@ -40,7 +40,7 @@ public class TablePaymentInfo {
 			+ TABLE_MEMBER + "." + COL_PHONE + ","
 			+ TABLE_MEMBER + "." + COL_EMAIL + ","
 			+ TABLE_MEMBER + "." + COL_MOVE_IN_DATE + ","
-			+ TABLE_MEMBER + "." + COL_MOVE_OUT_DATE 
+			+ TABLE_MEMBER + "." + COL_MOVE_OUT_DATE + ","
 			
 			
 			+ TABLE_BILL + "." + COL_ROWID + ","
@@ -63,7 +63,9 @@ public class TablePaymentInfo {
 			+ " on " + TABLE_PAYMENT + "." + COL_PAYEE_ID + "=" + TABLE_MEMBER + "." + COL_ROWID
 			+ " left join  " + TABLE_BILL 
 			+ " on " + TABLE_PAYMENT + "." + COL_BILL_ID + "=" + TABLE_BILL + "." + COL_ROWID
-			
+			+ " left join " + TABLE_PAYMENT_INFO 
+			+ " on " + TABLE_PAYMENT + "." + COL_PAYMENT_INFO_ID + "=" + TABLE_PAYMENT_INFO + "." + COL_ROWID
+			+";"
 			;
 	
 	public static void onCreate(SQLiteDatabase db){
