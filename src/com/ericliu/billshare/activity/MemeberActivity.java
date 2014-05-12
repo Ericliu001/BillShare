@@ -64,7 +64,7 @@ public class MemeberActivity extends DrawerActivity {
 	public static class MemberListFrag extends ListFragment implements
 			LoaderCallbacks<Cursor> {
 
-		private static final String[] PROJECTION = new String[] {
+		private static final String[] PROJECTION =  {
 				DatabaseConstants.COL_ROWID, COL_FIRSTNAME, COL_LASTNAME
 
 		};

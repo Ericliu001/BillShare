@@ -70,7 +70,7 @@ public class BillActivity extends DrawerActivity {
 	public static class BillFragment extends ListFragment implements
 			LoaderCallbacks<Cursor> {
 
-		private static final String[] PROJECTION = new String[] { COL_ROWID,
+		private static final String[] PROJECTION = { COL_ROWID,
 				COL_TYPE, COL_AMOUNT, COL_PAID, COL_DUE_DATE };
 
 		private SimpleCursorAdapter adapter;

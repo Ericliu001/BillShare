@@ -1,5 +1,8 @@
 package com.ericliu.billshare.activity;
 
+import static com.ericliu.billshare.provider.DatabaseConstants.COL_MEMBER_FULLNAME;
+import static com.ericliu.billshare.provider.DatabaseConstants.COL_ROWID;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -10,7 +13,6 @@ import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,21 +22,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.SimpleAdapter;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import com.ericliu.billshare.R;
 import com.ericliu.billshare.model.Payment;
-import com.ericliu.billshare.model.PaymentInfo;
 import com.ericliu.billshare.model.PaymentListEntry;
 import com.ericliu.billshare.provider.BillProvider;
 import com.ericliu.billshare.util.CalculatorDaysAsync;
-import com.ericliu.billshare.util.CalculatorDaysAsync.CalculatorDaysListener;
 import com.ericliu.billshare.util.CalculatorEvenDivAsync;
 import com.ericliu.billshare.util.CalculatorEvenDivAsync.EvenDivListener;
-
-import static com.ericliu.billshare.provider.DatabaseConstants.*;
 
 public class PaymentActivity extends DrawerActivity {
 
@@ -77,7 +73,7 @@ public class PaymentActivity extends DrawerActivity {
 	 * A placeholder fragment containing a simple view.
 	 */
 	public static class PaymentFragment extends Fragment implements
-			EvenDivListener, CalculatorDaysListener, LoaderCallbacks<Cursor> {
+			EvenDivListener, com.ericliu.billshare.util.CalculatorDaysAsync.CalculatorDaysListener, LoaderCallbacks<Cursor> {
 		private Intent receivedIntent = null;
 
 		private TextView tvSum;
@@ -196,7 +192,7 @@ public class PaymentActivity extends DrawerActivity {
 					}
 					PaymentListEntry entry = getItem(position);
 					viewHolder.tvPayeeFullName.setText(entry.getPayeeName());
-					viewHolder.pbPercentage.setProgress(100);
+					viewHolder.pbPercentage.setProgress(entry.getPayeePercentage());
 					viewHolder.tvPayeeAmount.setText(dollarForum.format(entry
 							.getPayeeAmount()));
 
@@ -245,27 +241,21 @@ public class PaymentActivity extends DrawerActivity {
 			adapter.notifyDataSetChanged();
 			tvSum.setText(dollarForum.format(totalAmount));
 		}
+		
 		@Override
-		public void setCalDaysResult(ArrayList<Double> amountPayeeForEachBill, ArrayList<Double> totalPayeeAmount) {
+		public void setCalDaysResult(double[][] payeeAmountBillPerMember,
+				double[] sumPayeeAmount, int[] payeePercentage) {
 			for (int j = 0; j < memberIds.length; j++) {
-				for (int i = 0; i < billIds.length; i++) {
-					Payment payment = new Payment();
-					// payment.setPayment_info_id(paymentInfoID);
-					payment.setBill_id(billIds[i]);
-					payment.setPayee_id(memberIds[j]);
-//					payment.setPayee_amount(amountPayeeForEachBill.get(i));// this is wrong here
-					// more fields need to be set here
-
-					paymentList.add(payment);
-				}
-
+				
 				PaymentListEntry entry = new PaymentListEntry();
 				entry.setPayeeName(memberNames[j]);
-				entry.setPayeePercentage(100);
-				entry.setPayeeAmount( totalPayeeAmount.get(j));
+				entry.setPayeePercentage(payeePercentage[j]);
+				entry.setPayeeAmount(sumPayeeAmount[j]);
 				entryList.add(entry);
 			}
+			
 			adapter.notifyDataSetChanged();
+			
 		}
 		
 
@@ -299,6 +289,8 @@ public class PaymentActivity extends DrawerActivity {
 		@Override
 		public void onLoaderReset(Loader<Cursor> loader) {
 		}
+
+		
 
 		
 	}

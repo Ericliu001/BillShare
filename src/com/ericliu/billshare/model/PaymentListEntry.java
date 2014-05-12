@@ -13,8 +13,8 @@ public class PaymentListEntry {
 	public int getPayeePercentage() {
 		return payeePercentage;
 	}
-	public void setPayeePercentage(int payeePercentage) {
-		this.payeePercentage = payeePercentage;
+	public void setPayeePercentage(Integer integer) {
+		this.payeePercentage = integer;
 	}
 	public double getPayeeAmount() {
 		return payeeAmount;
