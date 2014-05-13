@@ -35,6 +35,7 @@ public class CalculationParameterActivity extends DrawerActivity implements
 	public static final String CHECKED_RESULT = "checked_result";
 	public static final String PAYMENT_NAME = "payment_name";
 	public static final String PAYMENT_DESCRIPTION = "payment_description";
+	public static final String PAID_TIME = "paid_time";
 	private CalculationParameterFragment frag;
 
 	@Override
@@ -83,7 +84,7 @@ public class CalculationParameterActivity extends DrawerActivity implements
 			setRetainInstance(true);
 			intentAction = getActivity().getIntent().getAction();
 			
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.UK);
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US);
 			mDateString = dateFormat.format(new Date());
 		}
 
@@ -148,6 +149,7 @@ public class CalculationParameterActivity extends DrawerActivity implements
 					intent.putExtra(CHECKED_MEMBER_IDS, checkedMemberIds);
 					intent.putExtra(PAYMENT_NAME, etPaymentName.getText().toString());
 					intent.putExtra(PAYMENT_DESCRIPTION, etPaymentDescription.getText().toString());
+					intent.putExtra(PAID_TIME, mDateString);
 					startActivity(intent);
 					
 					if (MyApplication.isTesting) {

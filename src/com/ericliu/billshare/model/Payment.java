@@ -1,7 +1,11 @@
 package com.ericliu.billshare.model;
 
-import android.net.Uri;
+import com.ericliu.billshare.MyApplication;
+import com.ericliu.billshare.provider.BillProvider;
 
+import android.content.ContentValues;
+import android.net.Uri;
+import static com.ericliu.billshare.provider.DatabaseConstants.*;
 public class Payment extends Model {
 	
 	private long id;
@@ -16,8 +20,19 @@ public class Payment extends Model {
 
 	@Override
 	public Uri save() {
+		
+		ContentValues values = new ContentValues();
+		values.put(COL_PAYMENT_INFO_ID, payment_info_serial_number);
+		values.put(COL_BILL_ID, bill_id);
+		values.put(COL_PAYEE_ID, payee_id);
+		values.put(COL_PAYEE_DAYS, payee_days);
+		values.put(COL_PAYEE_START_DATE, payee_start_date);
+		values.put(COL_PAYEE_END_DATE, payee_end_date);
+		values.put(COL_PAYEE_AMOUNT, payee_amount);
+		
+		
 
-		return null;
+		return MyApplication.getInstance().getContentResolver().insert(BillProvider.PAYMENT_URI, values);
 	}
 
 	public void setId(long id) {

@@ -4,7 +4,11 @@ import static com.ericliu.billshare.provider.DatabaseConstants.COL_MEMBER_FULLNA
 import static com.ericliu.billshare.provider.DatabaseConstants.COL_ROWID;
 
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -13,6 +17,7 @@ import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -21,6 +26,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -62,7 +69,9 @@ public class PaymentActivity extends EditActivity {
 			implements
 			EvenDivListener,
 			com.ericliu.billshare.util.CalculatorDaysAsync.CalculatorDaysListener,
-			LoaderCallbacks<Cursor> {
+			LoaderCallbacks<Cursor>{
+
+		private boolean saved = false;
 		private Intent receivedIntent = null;
 
 		private TextView tvSum;
@@ -73,6 +82,7 @@ public class PaymentActivity extends EditActivity {
 		private long[] memberIds;
 		private long[] billIds;
 		private String[] memberNames;
+		private String paidTime;
 
 		private PaymentActivity mCallback;
 
@@ -132,6 +142,17 @@ public class PaymentActivity extends EditActivity {
 			entryList = new ArrayList<PaymentListEntry>();
 
 			activity.getLoaderManager().initLoader(0, null, this);
+
+			SimpleDateFormat receivedFormat = new SimpleDateFormat(
+					"yyyy-MM-dd HH:mm", Locale.US);
+			try {
+				Date date = receivedFormat.parse(receivedIntent
+						.getStringExtra(CalculationParameterActivity.PAID_TIME));
+				paidTime = receivedFormat.format(date);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 		}
 
@@ -213,15 +234,22 @@ public class PaymentActivity extends EditActivity {
 			PaymentInfo.Builder builder = new PaymentInfo.Builder()
 					.numberOfMembersPaid(memberIds.length)
 					.numberOfBillsPaid(billIds.length).totalAmount(totalAmount);
-			
-			if (!TextUtils.isEmpty(receivedIntent.getStringExtra(CalculationParameterActivity.PAYMENT_NAME))) {
-				builder.name(receivedIntent.getStringExtra(CalculationParameterActivity.PAYMENT_NAME));
+
+			if (!TextUtils.isEmpty(receivedIntent
+					.getStringExtra(CalculationParameterActivity.PAYMENT_NAME))) {
+				builder.name(receivedIntent
+						.getStringExtra(CalculationParameterActivity.PAYMENT_NAME));
 			}
-			
-			if (! TextUtils.isEmpty(receivedIntent.getStringExtra(CalculationParameterActivity.PAYMENT_DESCRIPTION))) {
-				builder.description(receivedIntent.getStringExtra(CalculationParameterActivity.PAYMENT_DESCRIPTION));
+
+			if (!TextUtils
+					.isEmpty(receivedIntent
+							.getStringExtra(CalculationParameterActivity.PAYMENT_DESCRIPTION))) {
+				builder.description(receivedIntent
+						.getStringExtra(CalculationParameterActivity.PAYMENT_DESCRIPTION));
 			}
-			
+
+			builder.paidTime(paidTime);
+
 			paymentInfo = builder.build();
 			int serialNo = paymentInfo.getSerialNumber();
 
@@ -253,11 +281,26 @@ public class PaymentActivity extends EditActivity {
 				double[] sumPayeeAmount, int[] payeePercentage,
 				double totalAmount) {
 
-			PaymentInfo.Builder builder = new PaymentInfo.Builder().totalAmount(totalAmount)
+			PaymentInfo.Builder builder = new PaymentInfo.Builder()
+					.totalAmount(totalAmount)
 					.numberOfMembersPaid(memberIds.length)
 					.numberOfBillsPaid(billIds.length);
 
-			
+			if (!TextUtils.isEmpty(receivedIntent
+					.getStringExtra(CalculationParameterActivity.PAYMENT_NAME))) {
+				builder.name(receivedIntent
+						.getStringExtra(CalculationParameterActivity.PAYMENT_NAME));
+			}
+
+			if (!TextUtils
+					.isEmpty(receivedIntent
+							.getStringExtra(CalculationParameterActivity.PAYMENT_DESCRIPTION))) {
+				builder.description(receivedIntent
+						.getStringExtra(CalculationParameterActivity.PAYMENT_DESCRIPTION));
+			}
+
+			builder.paidTime(paidTime);
+
 			paymentInfo = builder.build();
 			int serialNo = paymentInfo.getSerialNumber();
 
@@ -325,13 +368,13 @@ public class PaymentActivity extends EditActivity {
 		public boolean onOptionsItemSelected(MenuItem item) {
 			switch (item.getItemId()) {
 			case R.id.save:
-				
-				
-				savePaymentInfo(paymentInfo);
-				
+
+				if (paymentList != null && saved == false) {
+					savePaymentInfo(paymentInfo);
+					new SavePaymentListTask().execute(paymentList);
+					saved = true;
+				}
 				break;
-				
-				
 
 			default:
 				break;
@@ -344,6 +387,22 @@ public class PaymentActivity extends EditActivity {
 
 			mCallback.setPaymentInfo(paymentInfo);
 			mCallback.saveToDb();
+
+		}
+
+		private static class SavePaymentListTask extends
+				AsyncTask<ArrayList<Payment>, Void, Void> {
+
+			@Override
+			protected Void doInBackground(ArrayList<Payment>... params) {
+				ArrayList<Payment> paymentList = params[0];
+
+				for (int i = 0; i < paymentList.size(); i++) {
+					paymentList.get(i).save();
+
+				}
+				return null;
+			}
 
 		}
 
