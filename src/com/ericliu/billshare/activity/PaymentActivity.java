@@ -32,6 +32,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ericliu.billshare.R;
 import com.ericliu.billshare.model.Model;
@@ -255,12 +256,9 @@ public class PaymentActivity extends EditActivity {
 
 			for (int j = 0; j < memberIds.length; j++) {
 				for (int i = 0; i < billIds.length; i++) {
-					Payment payment = new Payment();
-					payment.setPayment_info_serial_number(serialNo);
-					payment.setBill_id(billIds[i]);
-					payment.setPayee_id(memberIds[j]);
-					payment.setPayee_amount(payeeAmountForEachBill.get(i));
-					// more fields need to be set here
+					Payment payment = new Payment.Builder(serialNo, billIds[i], memberIds[j])
+					.build()
+					;
 
 					paymentList.add(payment);
 				}
@@ -307,11 +305,10 @@ public class PaymentActivity extends EditActivity {
 			for (int j = 0; j < memberIds.length; j++) {
 
 				for (int i = 0; i < billIds.length; i++) {
-					Payment payment = new Payment();
-					payment.setPayment_info_serial_number(serialNo);
-					payment.setBill_id(billIds[i]);
-					payment.setPayee_id(memberIds[j]);
-					payment.setPayee_amount(payeeAmountBillPerMember[i][j]);
+					Payment payment = new Payment.Builder(serialNo, billIds[i], memberIds[j])
+					.payee_amount(payeeAmountBillPerMember[i][j])
+					.build()
+					;
 
 					paymentList.add(payment);
 				}
@@ -373,6 +370,7 @@ public class PaymentActivity extends EditActivity {
 					savePaymentInfo(paymentInfo);
 					new SavePaymentListTask().execute(paymentList);
 					saved = true;
+					Toast.makeText(mCallback, R.string.this_payment_has_been_saved, Toast.LENGTH_LONG).show();
 				}
 				break;
 

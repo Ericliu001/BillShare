@@ -1366,6 +1366,7 @@ containing a value of this type.
         public static final int select_bills=0x7f0a0033;
         public static final int select_members=0x7f0a0030;
         public static final int sum=0x7f0a003b;
+        public static final int this_payment_has_been_saved=0x7f0a004b;
         public static final int title_activity_bill=0x7f0a001e;
         public static final int title_activity_bill_edit=0x7f0a0020;
         public static final int title_activity_even_division=0x7f0a002b;

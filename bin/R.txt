@@ -462,6 +462,7 @@ int string select_amount_pick_date 0x7f0a004a
 int string select_bills 0x7f0a0033
 int string select_members 0x7f0a0030
 int string sum 0x7f0a003b
+int string this_payment_has_been_saved 0x7f0a004b
 int string title_activity_bill 0x7f0a001e
 int string title_activity_bill_edit 0x7f0a0020
 int string title_activity_even_division 0x7f0a002b
