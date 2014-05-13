@@ -61,5 +61,7 @@
     <string name="even_division">Even Division</string>
     <string name="calculate_by_days">Calculate by Days</string>
     <string name="calculation_based_on_days_members_lived_in">Calculation based on days members have lived in</string>
+    <string name="required_field_empty">Required Field Empty</string>
+    <string name="select_amount_pick_date">You must set the amount and pick billing start and end dates.</string>
 
 </resources>

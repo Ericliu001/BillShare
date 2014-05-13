@@ -42,11 +42,13 @@ import com.ericliu.billshare.model.Bill;
 import com.ericliu.billshare.model.Model;
 import com.ericliu.billshare.provider.BillProvider;
 import com.ericliu.billshare.provider.DatabaseConstants;
+import com.ericliu.billshare.util.UtilCompareDates;
 
 public class BillEditActivity extends EditActivity implements
 		DatePickerListener {
 	
 	private static final String TAG = "BillEditFragment";
+	public static final String PICK_ANOTHER_DATE = "pick_another_date";
 	private BillEditFragment frag;
 	private Bill mBill;
 
@@ -226,8 +228,12 @@ public class BillEditActivity extends EditActivity implements
 
 			switch (item.getItemId()) {
 			case R.id.save:
-
-				saveBill();
+				
+				if (checkEmpty()) {
+					saveBill();
+				}else{
+					
+				}
 				getActivity().finish();
 
 				break;
@@ -237,6 +243,15 @@ public class BillEditActivity extends EditActivity implements
 			}
 
 			return super.onOptionsItemSelected(item);
+		}
+
+		private boolean checkEmpty() {
+			
+			if(TextUtils.isEmpty(etAmount.getText()) || TextUtils.isEmpty(tvStartDate.getText()) || TextUtils.isEmpty(tvEndDate.getText()) ){
+			
+			return false;
+			}
+			return true;
 		}
 
 		private void saveBill() {
@@ -301,10 +316,19 @@ public class BillEditActivity extends EditActivity implements
 
 			switch (dateTypeId) {
 			case DATE_TYPE_START:
+				
+				if (UtilCompareDates.compareDates(dateString, tvEndDate.getText().toString()) < 0) {
+					Toast.makeText(getActivity(), " End date must be after the start date ", Toast.LENGTH_SHORT).show();
+				}
 				tvStartDate.setText(dateString);
 				break;
 
 			case DATE_TYPE_END:
+				if(UtilCompareDates.compareDates(tvStartDate.getText().toString(), dateString) <0){
+					
+					Toast.makeText(getActivity(), " End date must be after the start date ", Toast.LENGTH_SHORT).show();
+				} ;
+				
 				tvEndDate.setText(dateString);
 				break;
 
@@ -319,7 +343,7 @@ public class BillEditActivity extends EditActivity implements
 
 	}
 
-	public void setBill(Bill bill) {
+	private void setBill(Bill bill) {
 		this.mBill = bill;
 	}
 

@@ -9,6 +9,7 @@ public class TablePaymentInfo {
 			+ TABLE_PAYMENT_INFO
 			+ " ( "
 			+ COL_ROWID + " integer primary key autoincrement, "
+			+ COL_SERIAL_NUMBER + " integer not null, "
 			+ COL_NAME + "  text, "
 			+ COL_DESCRIPTION + " text, "
 			+ COL_TOTAL_AMOUNT + " numeric, "
@@ -52,6 +53,7 @@ public class TablePaymentInfo {
 			
 			
 			+ TABLE_PAYMENT_INFO + "." + COL_ROWID + ","
+			+ TABLE_PAYMENT_INFO + "." + COL_SERIAL_NUMBER + ","
 			+ TABLE_PAYMENT_INFO + "." + COL_NAME + ","
 			+ TABLE_PAYMENT_INFO + "." + COL_DESCRIPTION + ","
 			+ TABLE_PAYMENT_INFO + "." + COL_TOTAL_AMOUNT + ","

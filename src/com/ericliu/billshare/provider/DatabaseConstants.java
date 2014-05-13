@@ -43,6 +43,7 @@ public class DatabaseConstants {
 	
 	// constants for table payment_info
 	public static final String TABLE_PAYMENT_INFO = "table_payment_info";
+	public static final String COL_SERIAL_NUMBER = "serial_number";
 	public static final String COL_NAME = "payment_name";
 	public static final String COL_PAID_TIME = "paid_time";
 	public static final String COL_TOTAL_AMOUNT = "total_amount";

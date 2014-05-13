@@ -18,7 +18,7 @@ public class CalculatorDaysAsync {
 
 	public interface CalculatorDaysListener {
 		void setCalDaysResult(double[][] payeeAmountBillPerMember,
-				double[] sumPayeeAmount, int[] payeePercentage);
+				double[] sumPayeeAmount, int[] payeePercentage, double totalAmount);
 	}
 
 	public static void calculateByDaysAsync(long[] billIds, long[] memberIds,
@@ -28,6 +28,8 @@ public class CalculatorDaysAsync {
 
 	private static class CalDaysTask extends AsyncTask<Void, Void, Void> {
 
+		
+		private double totalAmount = 0d;
 		private long[] billIds;
 		private long[] memberIds;
 		private CalculatorDaysListener listener;
@@ -150,6 +152,7 @@ public class CalculatorDaysAsync {
 				
 				for (int ii = 0; ii < billIds.length; ii++) {
 					sumBillingDaysMultiBills += billingDaysPerBill[ii];
+					totalAmount += billingAmountPerBill[ii];
 				}
 
 				if (MyApplication.isTesting) {
@@ -238,7 +241,7 @@ public class CalculatorDaysAsync {
 			}
 
 			listener.setCalDaysResult(payeeAmountBillPerMember, sumPayeeAmount,
-					payeePercentage);
+					payeePercentage, totalAmount);
 
 		}
 

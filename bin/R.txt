@@ -454,9 +454,11 @@ int string paid_by_members 0x7f0a003d
 int string payment_name 0x7f0a002d
 int string phone_number 0x7f0a0019
 int string pick_date 0x7f0a0029
+int string required_field_empty 0x7f0a0049
 int string save 0x7f0a0035
 int string save_bill 0x7f0a0028
 int string save_member 0x7f0a001c
+int string select_amount_pick_date 0x7f0a004a
 int string select_bills 0x7f0a0033
 int string select_members 0x7f0a0030
 int string sum 0x7f0a003b

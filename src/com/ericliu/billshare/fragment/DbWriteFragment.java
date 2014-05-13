@@ -4,6 +4,7 @@ import com.ericliu.billshare.model.Model;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -54,16 +55,17 @@ public class DbWriteFragment extends Fragment {
 	}
 	
 	
-	private class DBWriteTask extends AsyncTask<Model, Void, Void>{
+	private class DBWriteTask extends AsyncTask<Model, Void, Uri>{
 
 		
 		@Override
-		protected Void doInBackground(Model... params) {
+		protected Uri doInBackground(Model... params) {
 			
-			params[0].save();
+			Uri uri = params[0].save();
 			
-			return null;
+			return uri;
 		}
+		
 		
 	}
 	

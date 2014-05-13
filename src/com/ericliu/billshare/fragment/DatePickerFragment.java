@@ -39,6 +39,8 @@ public class DatePickerFragment extends DialogFragment implements
 	@Override
 	public void onDateSet(DatePicker view, int year, int monthOfYear,
 			int dayOfMonth) {
+		
+		Bundle args = getArguments();
 
 		mDate = new Date(year - 1900, monthOfYear, dayOfMonth);
 		DatePickerListener activity = (DatePickerListener) getActivity();

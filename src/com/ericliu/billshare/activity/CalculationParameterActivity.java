@@ -1,5 +1,10 @@
 package com.ericliu.billshare.activity;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +14,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ericliu.billshare.MyApplication;
@@ -27,6 +33,8 @@ public class CalculationParameterActivity extends DrawerActivity implements
 	public static final String CHECKED_BILL_IDS = "checked_bill_ids";
 	public static final String CHECKED_MEMBER_IDS = "checked_member_ids";
 	public static final String CHECKED_RESULT = "checked_result";
+	public static final String PAYMENT_NAME = "payment_name";
+	public static final String PAYMENT_DESCRIPTION = "payment_description";
 	private CalculationParameterFragment frag;
 
 	@Override
@@ -55,12 +63,15 @@ public class CalculationParameterActivity extends DrawerActivity implements
 		private Button btSelectMembers;
 		private Button btSelectBills;
 		private Button btCalculate;
-
+		
+		private EditText etPaymentName;
+		private EditText etPaymentDescription;
 		private TextView tvCalculationTitle;
 		private TextView tvMemberSelected;
 		private TextView tvBillSelected;
 		
 		private String intentAction;
+		private String mDateString;
 
 		public CalculationParameterFragment() {
 		}
@@ -71,6 +82,9 @@ public class CalculationParameterActivity extends DrawerActivity implements
 			super.onCreate(savedInstanceState);
 			setRetainInstance(true);
 			intentAction = getActivity().getIntent().getAction();
+			
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.UK);
+			mDateString = dateFormat.format(new Date());
 		}
 
 		@Override
@@ -84,6 +98,10 @@ public class CalculationParameterActivity extends DrawerActivity implements
 					.findViewById(R.id.btSelectMember);
 			btCalculate = (Button) rootView.findViewById(R.id.btCalculate);
 			
+			
+			etPaymentName = (EditText) rootView.findViewById(R.id.etPaymentName);
+			etPaymentDescription = (EditText) rootView.findViewById(R.id.etDescription);
+			
 			tvCalculationTitle = (TextView) rootView.findViewById(R.id.tvCalculationTitle);
 			tvMemberSelected = (TextView) rootView
 					.findViewById(R.id.tvMemberSelected);
@@ -93,6 +111,9 @@ public class CalculationParameterActivity extends DrawerActivity implements
 			btSelectBills.setOnClickListener(this);
 			btSelectMembers.setOnClickListener(this);
 			btCalculate.setOnClickListener(this);
+			
+			
+			etPaymentDescription.setText(mDateString);
 
 			if (intentAction.equals(DrawerActivity.ACTION_EVEN_DIV)) {
 				btCalculate.setText(R.string.even_division);
@@ -125,6 +146,8 @@ public class CalculationParameterActivity extends DrawerActivity implements
 					intent.setAction(intentAction);
 					intent.putExtra(CHECKED_BILL_IDS, checkedBillIds);
 					intent.putExtra(CHECKED_MEMBER_IDS, checkedMemberIds);
+					intent.putExtra(PAYMENT_NAME, etPaymentName.getText().toString());
+					intent.putExtra(PAYMENT_DESCRIPTION, etPaymentDescription.getText().toString());
 					startActivity(intent);
 					
 					if (MyApplication.isTesting) {

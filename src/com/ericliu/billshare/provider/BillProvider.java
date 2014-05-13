@@ -199,6 +199,7 @@ public class BillProvider extends ContentProvider {
 		case PAYMENT_INFO:
 			rowID = db.insert(TABLE_PAYMENT_INFO, null, values);
 			newUri = ContentUris.withAppendedId(PAYMENT_INFO_URI, rowID);
+			break;
 			
 		default:
 			throw new IllegalArgumentException(" Unknow URL "+ uri);

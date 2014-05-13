@@ -5,7 +5,7 @@ import android.net.Uri;
 public class Payment extends Model {
 	
 	private long id;
-	private long payment_info_id;
+	private long payment_info_serial_number;
 	private long bill_id;
 	private long payee_id;
 	private int payee_days;
@@ -24,8 +24,8 @@ public class Payment extends Model {
 		this.id = id;
 	}
 
-	public void setPayment_info_id(long payment_info_id) {
-		this.payment_info_id = payment_info_id;
+	public void setPayment_info_serial_number(long payment_info_id) {
+		this.payment_info_serial_number = payment_info_id;
 	}
 
 	public void setBill_id(long bill_id) {
@@ -56,8 +56,8 @@ public class Payment extends Model {
 		return id;
 	}
 
-	public long getPayment_info_id() {
-		return payment_info_id;
+	public long getPayment_info_serial_number() {
+		return payment_info_serial_number;
 	}
 
 	public long getBill_id() {

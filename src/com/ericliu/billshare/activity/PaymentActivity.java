@@ -14,8 +14,10 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,21 +27,25 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.ericliu.billshare.R;
+import com.ericliu.billshare.model.Model;
 import com.ericliu.billshare.model.Payment;
+import com.ericliu.billshare.model.PaymentInfo;
 import com.ericliu.billshare.model.PaymentListEntry;
 import com.ericliu.billshare.provider.BillProvider;
 import com.ericliu.billshare.util.CalculatorDaysAsync;
 import com.ericliu.billshare.util.CalculatorEvenDivAsync;
 import com.ericliu.billshare.util.CalculatorEvenDivAsync.EvenDivListener;
 
-public class PaymentActivity extends DrawerActivity {
+public class PaymentActivity extends EditActivity {
 
 	private static final String TAG = "paymentfragment";
 	private PaymentFragment frag;
+	private PaymentInfo mPaymentInfo;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
 
 		frag = (PaymentFragment) getFragmentManager().findFragmentByTag(TAG);
 		if (frag == null) {
@@ -49,31 +55,14 @@ public class PaymentActivity extends DrawerActivity {
 		}
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.edit, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
-	public static class PaymentFragment extends Fragment implements
-			EvenDivListener, com.ericliu.billshare.util.CalculatorDaysAsync.CalculatorDaysListener, LoaderCallbacks<Cursor> {
+	public static class PaymentFragment extends Fragment
+			implements
+			EvenDivListener,
+			com.ericliu.billshare.util.CalculatorDaysAsync.CalculatorDaysListener,
+			LoaderCallbacks<Cursor> {
 		private Intent receivedIntent = null;
 
 		private TextView tvSum;
@@ -85,8 +74,11 @@ public class PaymentActivity extends DrawerActivity {
 		private long[] billIds;
 		private String[] memberNames;
 
-		private ArrayList<Payment> paymentList;
-		private ArrayList<PaymentListEntry> entryList;
+		private PaymentActivity mCallback;
+
+		private ArrayList<Payment> paymentList = null;
+		private ArrayList<PaymentListEntry> entryList = null;
+		PaymentInfo paymentInfo;
 
 		private ArrayAdapter<PaymentListEntry> adapter;
 		private static final String[] PROJECTION = { COL_ROWID,
@@ -104,6 +96,7 @@ public class PaymentActivity extends DrawerActivity {
 
 			super.onCreate(savedInstanceState);
 			setRetainInstance(true);
+			setHasOptionsMenu(true);
 
 			dollarForum = new DecimalFormat("$###,###,###,###.##");
 
@@ -114,6 +107,7 @@ public class PaymentActivity extends DrawerActivity {
 
 			super.onAttach(activity);
 
+			mCallback = (PaymentActivity) activity;
 			receivedIntent = activity.getIntent();
 
 			memberIds = receivedIntent
@@ -145,9 +139,9 @@ public class PaymentActivity extends DrawerActivity {
 			CalculatorEvenDivAsync.evenDivAsync(billIds, memberIds, this);
 
 		}
-		
+
 		private void calculateByDays() {
-			
+
 			CalculatorDaysAsync.calculateByDaysAsync(billIds, memberIds, this);
 		}
 
@@ -192,7 +186,8 @@ public class PaymentActivity extends DrawerActivity {
 					}
 					PaymentListEntry entry = getItem(position);
 					viewHolder.tvPayeeFullName.setText(entry.getPayeeName());
-					viewHolder.pbPercentage.setProgress(entry.getPayeePercentage());
+					viewHolder.pbPercentage.setProgress(entry
+							.getPayeePercentage());
 					viewHolder.tvPayeeAmount.setText(dollarForum.format(entry
 							.getPayeeAmount()));
 
@@ -215,14 +210,25 @@ public class PaymentActivity extends DrawerActivity {
 		public void setEvenDivResult(ArrayList<Double> payeeAmountForEachBill,
 				double totalAmount, double payeeAmountForTotal) {
 
-			// PaymentInfo paymentInfo = new PaymentInfo();
-			// Uri uri = paymentInfo.save();
-			// long paymentInfoID = Long.valueOf(uri.getLastPathSegment());
+			PaymentInfo.Builder builder = new PaymentInfo.Builder()
+					.numberOfMembersPaid(memberIds.length)
+					.numberOfBillsPaid(billIds.length).totalAmount(totalAmount);
+			
+			if (!TextUtils.isEmpty(receivedIntent.getStringExtra(CalculationParameterActivity.PAYMENT_NAME))) {
+				builder.name(receivedIntent.getStringExtra(CalculationParameterActivity.PAYMENT_NAME));
+			}
+			
+			if (! TextUtils.isEmpty(receivedIntent.getStringExtra(CalculationParameterActivity.PAYMENT_DESCRIPTION))) {
+				builder.description(receivedIntent.getStringExtra(CalculationParameterActivity.PAYMENT_DESCRIPTION));
+			}
+			
+			paymentInfo = builder.build();
+			int serialNo = paymentInfo.getSerialNumber();
 
 			for (int j = 0; j < memberIds.length; j++) {
 				for (int i = 0; i < billIds.length; i++) {
 					Payment payment = new Payment();
-					// payment.setPayment_info_id(paymentInfoID);
+					payment.setPayment_info_serial_number(serialNo);
 					payment.setBill_id(billIds[i]);
 					payment.setPayee_id(memberIds[j]);
 					payment.setPayee_amount(payeeAmountForEachBill.get(i));
@@ -241,23 +247,42 @@ public class PaymentActivity extends DrawerActivity {
 			adapter.notifyDataSetChanged();
 			tvSum.setText(dollarForum.format(totalAmount));
 		}
-		
+
 		@Override
 		public void setCalDaysResult(double[][] payeeAmountBillPerMember,
-				double[] sumPayeeAmount, int[] payeePercentage) {
+				double[] sumPayeeAmount, int[] payeePercentage,
+				double totalAmount) {
+
+			PaymentInfo.Builder builder = new PaymentInfo.Builder().totalAmount(totalAmount)
+					.numberOfMembersPaid(memberIds.length)
+					.numberOfBillsPaid(billIds.length);
+
+			
+			paymentInfo = builder.build();
+			int serialNo = paymentInfo.getSerialNumber();
+
 			for (int j = 0; j < memberIds.length; j++) {
-				
+
+				for (int i = 0; i < billIds.length; i++) {
+					Payment payment = new Payment();
+					payment.setPayment_info_serial_number(serialNo);
+					payment.setBill_id(billIds[i]);
+					payment.setPayee_id(memberIds[j]);
+					payment.setPayee_amount(payeeAmountBillPerMember[i][j]);
+
+					paymentList.add(payment);
+				}
+
 				PaymentListEntry entry = new PaymentListEntry();
 				entry.setPayeeName(memberNames[j]);
 				entry.setPayeePercentage(payeePercentage[j]);
 				entry.setPayeeAmount(sumPayeeAmount[j]);
 				entryList.add(entry);
 			}
-			
+
 			adapter.notifyDataSetChanged();
-			
+			tvSum.setText(dollarForum.format(totalAmount));
 		}
-		
 
 		@Override
 		public Loader<Cursor> onCreateLoader(int id, Bundle args) {
@@ -279,20 +304,59 @@ public class PaymentActivity extends DrawerActivity {
 			if (receivedIntent.getAction().equals(
 					DrawerActivity.ACTION_EVEN_DIV)) {
 				calculateEvenDiv();
-			}else if (receivedIntent.getAction().equals(DrawerActivity.ACTION_CALCULATE_BY_DAYS)) {
+			} else if (receivedIntent.getAction().equals(
+					DrawerActivity.ACTION_CALCULATE_BY_DAYS)) {
 				calculateByDays();
 			}
 		}
-
-		
 
 		@Override
 		public void onLoaderReset(Loader<Cursor> loader) {
 		}
 
-		
+		@Override
+		public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-		
+			super.onCreateOptionsMenu(menu, inflater);
+			inflater.inflate(R.menu.edit, menu);
+		}
+
+		@Override
+		public boolean onOptionsItemSelected(MenuItem item) {
+			switch (item.getItemId()) {
+			case R.id.save:
+				
+				
+				savePaymentInfo(paymentInfo);
+				
+				break;
+				
+				
+
+			default:
+				break;
+			}
+
+			return super.onOptionsItemSelected(item);
+		}
+
+		private void savePaymentInfo(PaymentInfo paymentInfo) {
+
+			mCallback.setPaymentInfo(paymentInfo);
+			mCallback.saveToDb();
+
+		}
+
+	}
+
+	private void setPaymentInfo(PaymentInfo paymentInfo) {
+		mPaymentInfo = paymentInfo;
+	}
+
+	@Override
+	public Model getModel() {
+
+		return mPaymentInfo;
 	}
 
 }

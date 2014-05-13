@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+import android.text.TextUtils;
+
 public class UtilCompareDates {
 	static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd",
 			Locale.US);;
@@ -17,6 +19,11 @@ public class UtilCompareDates {
 			String memberEndtring, String billStartString, String billEndString) {
 
 		int interval = 0;
+		
+		if (TextUtils.isEmpty(memberStartString) || TextUtils.isEmpty(memberEndtring) || TextUtils.isEmpty(billStartString) || TextUtils.isEmpty(billEndString)
+				) {
+			return -1;
+		}
 
 		try {
 			java.util.Date memberStartDate = dateFormat
@@ -46,6 +53,11 @@ public class UtilCompareDates {
 
 	public static int compareDates(String startDateString, String endDateString) {
 		int interval = 0;
+		
+		if (TextUtils.isEmpty(startDateString) || TextUtils.isEmpty(endDateString)
+				) {
+			return -1;
+		}
 		try {
 			java.util.Date startDate = dateFormat.parse(startDateString);
 			java.util.Date endDate = dateFormat.parse(endDateString);

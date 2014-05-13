@@ -1358,9 +1358,11 @@ containing a value of this type.
         public static final int payment_name=0x7f0a002d;
         public static final int phone_number=0x7f0a0019;
         public static final int pick_date=0x7f0a0029;
+        public static final int required_field_empty=0x7f0a0049;
         public static final int save=0x7f0a0035;
         public static final int save_bill=0x7f0a0028;
         public static final int save_member=0x7f0a001c;
+        public static final int select_amount_pick_date=0x7f0a004a;
         public static final int select_bills=0x7f0a0033;
         public static final int select_members=0x7f0a0030;
         public static final int sum=0x7f0a003b;
