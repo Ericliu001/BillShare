@@ -64,5 +64,7 @@
     <string name="required_field_empty">Required Field Empty</string>
     <string name="select_amount_pick_date">You must set the amount and pick billing start and end dates.</string>
     <string name="this_payment_has_been_saved">This payment has been saved.</string>
+    <string name="title_activity_history">HistoryActivity</string>
+    <string name="bills_paid">Bills Paid:</string>
 
 </resources>

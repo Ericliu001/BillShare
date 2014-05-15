@@ -117,7 +117,8 @@ public class DrawerActivity extends Activity implements
 			break;
 
 		case PAYMENT_HISTORY:
-
+			i = new Intent(this, HistoryActivity.class);
+			startActivity(i);
 			break;
 
 		case ROOMMATES:

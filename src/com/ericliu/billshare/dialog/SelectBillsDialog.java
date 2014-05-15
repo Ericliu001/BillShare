@@ -77,7 +77,13 @@ public class SelectBillsDialog extends DialogFragment implements OnClickListener
 	public void onAttach(Activity activity) {
 		
 		super.onAttach(activity);
-		activity.getLoaderManager().initLoader(loaderID, null, this);
+		
+		Loader<Cursor> loader = activity.getLoaderManager().getLoader(loaderID);
+        if (loader != null && !loader.isReset()) {
+            activity.getLoaderManager().restartLoader(loaderID, null, this);
+        } else {
+        	activity.getLoaderManager().initLoader(loaderID, null, this);
+        }
 		
 		try {
 			mCallback = (SelectBillsDialogListener) activity;
@@ -196,11 +202,6 @@ public class SelectBillsDialog extends DialogFragment implements OnClickListener
 		Bundle data = new Bundle();
 	}
 	
-	@Override
-	public void onDetach() {
-		getActivity().getLoaderManager().destroyLoader(loaderID);
-		super.onDetach();
-	}
 	
 	
 

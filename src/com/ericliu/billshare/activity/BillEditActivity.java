@@ -196,10 +196,18 @@ public class BillEditActivity extends EditActivity implements
 				etAmount.setText(c.getString(c.getColumnIndex(COL_AMOUNT)));
 				
 				
-				tvStartDate.setText(c.getString(c.getColumnIndex(COL_BILLING_START)));
 				
+				String billStartDateString = c.getString(c.getColumnIndex(COL_BILLING_START));
+				if (!billStartDateString.equals("1900-01-01")) {
+					
+					tvStartDate.setText(billStartDateString);
+				}
 				
-				tvEndDate.setText(c.getString(c.getColumnIndex(COL_BILLING_END)));
+				String billingEndDateString = c.getString(c.getColumnIndex(COL_BILLING_END));
+				if (! billingEndDateString.equals("3000-01-01")) {
+					
+					tvEndDate.setText(billingEndDateString);
+				}
 				
 				tvDueDate.setText( c.getString(c.getColumnIndex(COL_DUE_DATE)));
 				

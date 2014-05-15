@@ -56,5 +56,33 @@ public class ArrayToString {
 		return result;
 
 	}
+	
+	public static String arrayToString(String[] array) {
+		String result = "[";
+		for (int i = 0; i < array.length; i++) {
+			result = result + " " + array[i];
+		}
+
+		result = result + "]";
+
+		return result;
+
+	}
+	
+	
+	public static String arrayToString(String[][] array) {
+		String result = "[";
+		for (int i = 0; i < array.length; i++) {
+			for (int j = 0; j < array[i].length; j++) {
+
+				result = result + " " + array[i][j];
+			}
+		}
+
+		result = result + "]";
+
+		return result;
+
+	}
 
 }

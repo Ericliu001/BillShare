@@ -50,6 +50,38 @@ public class UtilCompareDates {
 		return interval;
 
 	}
+	
+	
+	public static String[] getPayeeStartEndDates(String memberStartString,
+			String memberEndtring, String billStartString, String billEndString){
+		String[] startEndDates = new String[2];
+		try {
+			java.util.Date memberStartDate = dateFormat
+					.parse(memberStartString);
+			java.util.Date memberEndDate = dateFormat.parse(memberEndtring);
+			java.util.Date billStartDate = dateFormat.parse(billStartString);
+			java.util.Date billEndDate = dateFormat.parse(billEndString);
+
+			java.util.Date startDate = memberStartDate.after(billStartDate) ? memberStartDate
+					: billStartDate;
+			java.util.Date endDate = memberEndDate.before(billEndDate) ? memberEndDate
+					: billEndDate;
+
+			if (startDate.after(endDate)) {
+			}
+			
+			
+			startEndDates[0] = dateFormat.format(startDate);
+			startEndDates[1] = dateFormat.format(endDate);
+
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return startEndDates;
+	};
 
 	public static int compareDates(String startDateString, String endDateString) {
 		int interval = 0;

@@ -20,6 +20,7 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,12 +35,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ericliu.billshare.MyApplication;
 import com.ericliu.billshare.R;
 import com.ericliu.billshare.model.Model;
 import com.ericliu.billshare.model.Payment;
 import com.ericliu.billshare.model.PaymentInfo;
 import com.ericliu.billshare.model.PaymentListEntry;
 import com.ericliu.billshare.provider.BillProvider;
+import com.ericliu.billshare.util.ArrayToString;
 import com.ericliu.billshare.util.CalculatorDaysAsync;
 import com.ericliu.billshare.util.CalculatorEvenDivAsync;
 import com.ericliu.billshare.util.CalculatorEvenDivAsync.EvenDivListener;
@@ -230,8 +233,14 @@ public class PaymentActivity extends EditActivity {
 
 		@Override
 		public void setEvenDivResult(ArrayList<Double> payeeAmountForEachBill,
-				double totalAmount, double payeeAmountForTotal) {
+				double totalAmount, double payeeAmountForTotal, String[] startDatesOfBills, String[] endDatesOfBills) {
 
+			
+			if (MyApplication.isTesting) {
+				Log.i("eric", " start dates: " + ArrayToString.arrayToString(startDatesOfBills));
+				Log.i("eric", " end dates: " + ArrayToString.arrayToString(endDatesOfBills));
+			}
+			
 			PaymentInfo.Builder builder = new PaymentInfo.Builder()
 					.numberOfMembersPaid(memberIds.length)
 					.numberOfBillsPaid(billIds.length).totalAmount(totalAmount);
@@ -257,6 +266,8 @@ public class PaymentActivity extends EditActivity {
 			for (int j = 0; j < memberIds.length; j++) {
 				for (int i = 0; i < billIds.length; i++) {
 					Payment payment = new Payment.Builder(serialNo, billIds[i], memberIds[j])
+					.payeeStartDate(startDatesOfBills[i])
+					.payeeEndDate(endDatesOfBills[i])
 					.build()
 					;
 
@@ -277,8 +288,14 @@ public class PaymentActivity extends EditActivity {
 		@Override
 		public void setCalDaysResult(double[][] payeeAmountBillPerMember,
 				double[] sumPayeeAmount, int[] payeePercentage,
-				double totalAmount) {
+				double totalAmount, String[][] payeeStartDatesPerBill, String[][] payeeEndDatesPerBill) {
 
+			
+			if (MyApplication.isTesting) {
+				Log.i("eric", " start dates: " + ArrayToString.arrayToString(payeeStartDatesPerBill));
+				Log.i("eric", " end dates: " + ArrayToString.arrayToString(payeeEndDatesPerBill));
+			}
+			
 			PaymentInfo.Builder builder = new PaymentInfo.Builder()
 					.totalAmount(totalAmount)
 					.numberOfMembersPaid(memberIds.length)
@@ -307,6 +324,8 @@ public class PaymentActivity extends EditActivity {
 				for (int i = 0; i < billIds.length; i++) {
 					Payment payment = new Payment.Builder(serialNo, billIds[i], memberIds[j])
 					.payee_amount(payeeAmountBillPerMember[i][j])
+					.payeeStartDate(payeeStartDatesPerBill[i][j])
+					.payeeEndDate(payeeEndDatesPerBill[i][j])
 					.build()
 					;
 

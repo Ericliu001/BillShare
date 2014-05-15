@@ -66,7 +66,7 @@ public class TablePaymentInfo {
 			+ " left join  " + TABLE_BILL 
 			+ " on " + TABLE_PAYMENT + "." + COL_BILL_ID + "=" + TABLE_BILL + "." + COL_ROWID
 			+ " left join " + TABLE_PAYMENT_INFO 
-			+ " on " + TABLE_PAYMENT + "." + COL_PAYMENT_INFO_ID + "=" + TABLE_PAYMENT_INFO + "." + COL_ROWID
+			+ " on " + TABLE_PAYMENT + "." + COL_PAYMENT_INFO_ID + "=" + TABLE_PAYMENT_INFO + "." + COL_SERIAL_NUMBER
 			+";"
 			;
 	

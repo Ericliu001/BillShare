@@ -56,7 +56,13 @@ public class SelectMembersDialog extends DialogFragment implements
 				android.R.layout.simple_list_item_multiple_choice, null, from,
 				to, 0);
 
-		activity.getLoaderManager().initLoader(loaderId, null, this);
+		Loader<Cursor> loader = activity.getLoaderManager().getLoader(loaderId);
+		if (loader != null && !loader.isReset()) {
+			activity.getLoaderManager().restartLoader(loaderId, null, this);
+		} else {
+
+			activity.getLoaderManager().initLoader(loaderId, null, this);
+		}
 	}
 
 	@Override
@@ -79,8 +85,6 @@ public class SelectMembersDialog extends DialogFragment implements
 		lv = (ListView) dialogView.findViewById(R.id.lvMulti);
 		lv.setAdapter(adapter);
 		lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-		
-		
 
 		return builder.create();
 	}
@@ -100,11 +104,6 @@ public class SelectMembersDialog extends DialogFragment implements
 
 	}
 
-	@Override
-	public void onDetach() {
-		getActivity().getLoaderManager().destroyLoader(loaderId);
-		super.onDetach();
-	}
 
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {

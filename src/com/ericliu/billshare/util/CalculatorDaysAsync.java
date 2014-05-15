@@ -18,7 +18,7 @@ public class CalculatorDaysAsync {
 
 	public interface CalculatorDaysListener {
 		void setCalDaysResult(double[][] payeeAmountBillPerMember,
-				double[] sumPayeeAmount, int[] payeePercentage, double totalAmount);
+				double[] sumPayeeAmount, int[] payeePercentage, double totalAmount, String[][] payeeStartDatesPerBill, String[][] payeeEndDatesPerBill);
 	}
 
 	public static void calculateByDaysAsync(long[] billIds, long[] memberIds,
@@ -40,6 +40,8 @@ public class CalculatorDaysAsync {
 		private double[][] payeeAmountBillPerMember;
 		private double[] sumPayeeAmount;
 		private int[] payeePercentage;
+		private String[][] payeeStartDatesPerBill;
+		private String[][] payeeEndDatesPerBill;
 
 		public CalDaysTask(long[] billIds, long[] memberIds,
 				CalculatorDaysListener listener) {
@@ -53,6 +55,8 @@ public class CalculatorDaysAsync {
 			payeeAmountBillPerMember = new double[billIds.length][memberIds.length];
 			sumPayeeAmount = new double[memberIds.length];
 			payeePercentage = new int[memberIds.length];
+			payeeStartDatesPerBill = new String[billIds.length][memberIds.length];
+			payeeEndDatesPerBill = new String[billIds.length][memberIds.length];
 		}
 
 		@Override
@@ -121,6 +125,11 @@ public class CalculatorDaysAsync {
 								billEndDate);
 						if (payingDays >= 0) {
 							payingDaysBillPerMember[i][j] = payingDays;
+							payeeStartDatesPerBill[i][j] = UtilCompareDates.getPayeeStartEndDates(memberStartDate, memberEndDate, billStartDate,
+									billEndDate)[0];
+							
+							payeeEndDatesPerBill[i][j] = UtilCompareDates.getPayeeStartEndDates(memberStartDate, memberEndDate, billStartDate,
+								billEndDate)[1];
 
 						} else {
 							payingDaysBillPerMember[i][j] = 0;
@@ -241,7 +250,7 @@ public class CalculatorDaysAsync {
 			}
 
 			listener.setCalDaysResult(payeeAmountBillPerMember, sumPayeeAmount,
-					payeePercentage, totalAmount);
+					payeePercentage, totalAmount, payeeStartDatesPerBill, payeeEndDatesPerBill);
 
 		}
 

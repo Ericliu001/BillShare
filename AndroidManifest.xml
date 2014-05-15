@@ -55,6 +55,10 @@
             android:name="com.ericliu.billshare.activity.PaymentActivity"
             android:label="@string/title_activity_payment" >
         </activity>
+        <activity
+            android:name="com.ericliu.billshare.activity.HistoryActivity"
+            android:label="@string/title_activity_history" >
+        </activity>
     </application>
 
 </manifest>
