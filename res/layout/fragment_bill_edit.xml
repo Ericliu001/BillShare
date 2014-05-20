@@ -45,6 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_span="2"
+                android:hint="@string/required"
                 android:imeOptions="actionDone"
                 android:inputType="numberDecimal" >
 
@@ -67,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="2"
-                android:hint="@string/undefined" />
+                android:hint="@string/required" />
         </TableRow>
 
         <Button
@@ -96,7 +97,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="2"
-                android:hint="@string/undefined" />
+                android:hint="@string/required" />
         </TableRow>
 
         <Button

@@ -122,7 +122,7 @@ public class DrawerActivity extends Activity implements
 			break;
 
 		case ROOMMATES:
-			 i = new Intent(this, MemeberActivity.class);
+			 i = new Intent(this, MemberActivity.class);
 			startActivity(i);
 			break;
 			

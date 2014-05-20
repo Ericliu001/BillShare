@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,7 +23,10 @@ import android.widget.TextView;
 
 import com.ericliu.billshare.MyApplication;
 import com.ericliu.billshare.R;
+import com.ericliu.billshare.dialog.DeleteDialog;
+import com.ericliu.billshare.dialog.DeleteDialog.DeleteDialogListener;
 import com.ericliu.billshare.fragment.DatePickerFragment;
+import com.ericliu.billshare.fragment.DbWriteFragment;
 import com.ericliu.billshare.fragment.DatePickerFragment.DatePickerListener;
 import com.ericliu.billshare.model.Member;
 import com.ericliu.billshare.model.Model;
@@ -32,7 +36,7 @@ import com.ericliu.billshare.provider.DatabaseConstants;
 import static com.ericliu.billshare.provider.DatabaseConstants.*;
 
 public class MemberEditActivity extends EditActivity implements
-		DatePickerListener {
+		DatePickerListener, DeleteDialogListener {
 
 	private static final String TAG = "MemberEditFragment";
 	private Member mMember = null;
@@ -196,12 +200,40 @@ public class MemberEditActivity extends EditActivity implements
 				saveMember();
 				getActivity().finish();
 				break;
+				
+				
+			case R.id.delete:
+				Bundle args = new Bundle();
+				args.putString(DeleteDialog.TITLE, getResources().getString(R.string.confirm_delete));
+				args.putString(DeleteDialog.MESSAGE, getResources().getString(R.string.delete_member));
+				DeleteDialog deleteDialog = DeleteDialog.newInstance(args);
+				deleteDialog.show(getFragmentManager(), "delete");
+				break;
+				
+				
+			case android.R.id.home:
+				Intent i = new Intent(getActivity(), MemberActivity.class);
+				startActivity(i);
+				return true;
 
 			default:
 				break;
 			}
 
 			return super.onOptionsItemSelected(item);
+		}
+
+		private void deleteMember() {
+			if (id > 0) {
+				Member member = new Member();
+				member.setId(id);
+				
+				setMemberAttributes(member);
+				member.setDeleted(true);
+				mCallBack.setMember(member);
+				mCallBack.saveToDb();
+			}
+			
 		}
 
 		private void saveMember() {
@@ -211,6 +243,13 @@ public class MemberEditActivity extends EditActivity implements
 				member.setId(id);
 			}
 
+			setMemberAttributes(member);
+
+			mCallBack.setMember(member);
+			mCallBack.saveToDb();
+		}
+
+		public void setMemberAttributes(Member member) {
 			member.setFirstName(etFirstName.getText().toString());
 			member.setLastName(etLastName.getText().toString());
 			member.setPhone(etPhone.getText().toString());
@@ -223,9 +262,6 @@ public class MemberEditActivity extends EditActivity implements
 				member.setMoveOutDate(moveOutDateToSave);
 				
 			}
-
-			mCallBack.setMember(member);
-			mCallBack.saveToDb();
 		}
 
 		@Override
@@ -267,6 +303,11 @@ public class MemberEditActivity extends EditActivity implements
 			}
 		}
 
+		public void yesToDelete() {
+			deleteMember();
+			getActivity().finish();
+		}
+
 	}
 
 	public void setMember(Member member) {
@@ -282,6 +323,15 @@ public class MemberEditActivity extends EditActivity implements
 	@Override
 	public void onFinishPicking() {
 		frag.onFinishPicking();
+	}
+
+	@Override
+	public void doPositiveClick() {
+		frag.yesToDelete();
+	}
+
+	@Override
+	public void doNegativeClick() {
 	}
 
 }

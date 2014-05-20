@@ -66,5 +66,12 @@
     <string name="this_payment_has_been_saved">This payment has been saved.</string>
     <string name="title_activity_history">HistoryActivity</string>
     <string name="bills_paid">Bills Paid:</string>
+    <string name="delete">Delete</string>
+    <string name="delete_bill">This bill is going to be deleted.</string>
+    <string name="confirm_delete">Confirm Delete</string>
+    <string name="delete_member">This member is going to be deleted</string>
+    <string name="fields_empty">Required Fields Are Empty</string>
+    <string name="must_fill_fields_bill">You must set an amount, pick the billing start date, and pick the billing end date for the bill.</string>
+    <string name="required">Required</string>
 
 </resources>

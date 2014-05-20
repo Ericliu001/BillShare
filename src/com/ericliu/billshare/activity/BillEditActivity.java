@@ -13,10 +13,12 @@ import java.util.Locale;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.sax.StartElementListener;
+import android.support.v4.app.NavUtils;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,7 +38,11 @@ import android.widget.Toast;
 
 import com.ericliu.billshare.MyApplication;
 import com.ericliu.billshare.R;
+import com.ericliu.billshare.dialog.DeleteDialog;
+import com.ericliu.billshare.dialog.DeleteDialog.DeleteDialogListener;
+import com.ericliu.billshare.dialog.MessageDialog;
 import com.ericliu.billshare.fragment.DatePickerFragment;
+import com.ericliu.billshare.fragment.DbWriteFragment;
 import com.ericliu.billshare.fragment.DatePickerFragment.DatePickerListener;
 import com.ericliu.billshare.model.Bill;
 import com.ericliu.billshare.model.Model;
@@ -45,7 +51,7 @@ import com.ericliu.billshare.provider.DatabaseConstants;
 import com.ericliu.billshare.util.UtilCompareDates;
 
 public class BillEditActivity extends EditActivity implements
-		DatePickerListener {
+		DatePickerListener, DeleteDialogListener {
 	
 	private static final String TAG = "BillEditFragment";
 	public static final String PICK_ANOTHER_DATE = "pick_another_date";
@@ -126,6 +132,7 @@ public class BillEditActivity extends EditActivity implements
 			super.onCreate(savedInstanceState);
 			setRetainInstance(true);
 			setHasOptionsMenu(true);
+			
 
 			datePickerFrag = new DatePickerFragment();
 			
@@ -237,14 +244,33 @@ public class BillEditActivity extends EditActivity implements
 			switch (item.getItemId()) {
 			case R.id.save:
 				
-				if (checkEmpty()) {
+				if (!checkIsEmpty()) {
 					saveBill();
+					getActivity().finish();
 				}else{
-					
+					Bundle args = new Bundle();
+					args.putString(MessageDialog.TITLE, getResources().getString(R.string.fields_empty));
+					args.putString(MessageDialog.MESSAGE, getResources().getString(R.string.must_fill_fields_bill));
+					MessageDialog messageDialog = MessageDialog.newInstance(args);
+					messageDialog.show(getFragmentManager(), "message");
 				}
-				getActivity().finish();
+				
 
 				break;
+			
+			case R.id.delete:
+				Bundle args = new Bundle();
+				args.putString(DeleteDialog.TITLE, getResources().getString(R.string.confirm_delete));
+				args.putString(DeleteDialog.MESSAGE, getResources().getString(R.string.delete_bill));
+				DeleteDialog deleteDialog = DeleteDialog.newInstance(args);
+				deleteDialog.show(getFragmentManager(), "delete");
+				break;
+				
+			case android.R.id.home:
+				Intent i = new Intent(getActivity(), BillActivity.class);
+				startActivity(i);
+				
+				return true;
 
 			default:
 				break;
@@ -253,13 +279,15 @@ public class BillEditActivity extends EditActivity implements
 			return super.onOptionsItemSelected(item);
 		}
 
-		private boolean checkEmpty() {
+		
+
+		private boolean checkIsEmpty() {
 			
 			if(TextUtils.isEmpty(etAmount.getText()) || TextUtils.isEmpty(tvStartDate.getText()) || TextUtils.isEmpty(tvEndDate.getText()) ){
 			
-			return false;
-			}
 			return true;
+			}
+			return false;
 		}
 
 		private void saveBill() {
@@ -270,6 +298,13 @@ public class BillEditActivity extends EditActivity implements
 
 			}
 
+			setBillAttributes(bill);
+
+			mCallBack.setBill(bill);
+			mCallBack.saveToDb();
+		}
+
+		public void setBillAttributes(Bill bill) {
 			bill.setType(spType.getSelectedItem().toString());
 			bill.setAmount(Double.valueOf(etAmount.getText().toString()));
 			
@@ -283,9 +318,21 @@ public class BillEditActivity extends EditActivity implements
 				bill.setDueDate(tvDueDate.getText().toString());
 			
 			bill.setPaid(cbPaid.isChecked() ? 1 : 0);
-
-			mCallBack.setBill(bill);
-			mCallBack.saveToDb();
+		}
+		
+		private void deleteBill() {
+			if (id > 0) {
+				Bill bill = new Bill();
+				bill.setId(id);
+				setBillAttributes(bill);
+				
+				bill.setDeleted(true);
+				
+				mCallBack.setBill(bill);
+				mCallBack.saveToDb();
+			}
+			
+			
 		}
 
 		@Override
@@ -349,6 +396,11 @@ public class BillEditActivity extends EditActivity implements
 			}
 		}
 
+		public void yesToDelete() {
+			deleteBill();
+			getActivity().finish();
+		}
+
 	}
 
 	private void setBill(Bill bill) {
@@ -364,6 +416,15 @@ public class BillEditActivity extends EditActivity implements
 	@Override
 	public void onFinishPicking() {
 		frag.onFinishPicking();
+	}
+
+	@Override
+	public void doPositiveClick() {
+		frag.yesToDelete();
+	}
+
+	@Override
+	public void doNegativeClick() {
 	}
 
 }

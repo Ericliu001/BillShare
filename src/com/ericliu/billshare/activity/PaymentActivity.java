@@ -37,6 +37,7 @@ import android.widget.Toast;
 
 import com.ericliu.billshare.MyApplication;
 import com.ericliu.billshare.R;
+import com.ericliu.billshare.fragment.DbWriteFragment;
 import com.ericliu.billshare.model.Model;
 import com.ericliu.billshare.model.Payment;
 import com.ericliu.billshare.model.PaymentInfo;
@@ -392,6 +393,16 @@ public class PaymentActivity extends EditActivity {
 					Toast.makeText(mCallback, R.string.this_payment_has_been_saved, Toast.LENGTH_LONG).show();
 				}
 				break;
+				
+			case R.id.delete:
+				getActivity().finish();
+				break;
+				
+			case android.R.id.home:
+				Intent i = new Intent(getActivity(), BillActivity.class);
+				startActivity(i);
+				
+				return true;
 
 			default:
 				break;

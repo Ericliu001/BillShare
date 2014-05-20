@@ -17,6 +17,7 @@ public class Bill extends Model {
 	private String endDate;
 	private String dueDate;
 	private int paid;
+	private boolean deleted;
 	
 	
 
@@ -31,6 +32,7 @@ public class Bill extends Model {
 		values.put(COL_BILLING_END, endDate);
 		values.put(COL_DUE_DATE, dueDate);
 		values.put(COL_PAID, paid);
+		values.put(COL_DELETED, deleted? 1:0);
 		
 		if (id > 0) {
 		uri = Uri.withAppendedPath(BillProvider.BILL_URI, String.valueOf(id));
@@ -87,6 +89,18 @@ public class Bill extends Model {
 
 	public void setPaid(int paid) {
 		this.paid = paid;
+	}
+
+
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 
 }

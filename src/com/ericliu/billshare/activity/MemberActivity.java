@@ -20,7 +20,7 @@ import com.ericliu.billshare.R;
 import com.ericliu.billshare.provider.BillProvider;
 import com.ericliu.billshare.provider.DatabaseConstants;
 
-public class MemeberActivity extends DrawerActivity {
+public class MemberActivity extends DrawerActivity {
 
 	private static final String TAG = "MemberFragment";
 

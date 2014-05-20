@@ -17,7 +17,8 @@ public abstract class EditActivity extends Activity implements DbFragCallBack {
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		dbWriteFrag = (DbWriteFragment) getFragmentManager().findFragmentByTag(
 				"SAVE");
 

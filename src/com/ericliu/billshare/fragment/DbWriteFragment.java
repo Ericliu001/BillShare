@@ -9,28 +9,27 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 public class DbWriteFragment extends Fragment {
-	
+
 	private DbFragCallBack mCallBack;
 	private DBWriteTask mTask;
-	
-	public static interface DbFragCallBack{
-		
+
+	public static interface DbFragCallBack {
+
 		Model getModel();
 	}
-	
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		
+
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
 	}
-	
+
 	@Override
 	public void onAttach(Activity activity) {
-		
+
 		super.onAttach(activity);
-		
+
 		try {
 			mCallBack = (DbFragCallBack) getActivity();
 		} catch (Exception e) {
@@ -38,35 +37,29 @@ public class DbWriteFragment extends Fragment {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
-	public void writeToDB(){
+
+	public void writeToDB() {
 		mTask = new DBWriteTask();
 		mTask.execute(mCallBack.getModel());
 	}
-	
-	
+
 	@Override
 	public void onDetach() {
-		
+
 		super.onDetach();
 		mCallBack = null;
 	}
-	
-	
-	private class DBWriteTask extends AsyncTask<Model, Void, Uri>{
 
-		
+	private class DBWriteTask extends AsyncTask<Model, Void, Uri> {
+
 		@Override
 		protected Uri doInBackground(Model... params) {
-			
+
 			Uri uri = params[0].save();
-			
+
 			return uri;
 		}
-		
-		
+
 	}
-	
+
 }

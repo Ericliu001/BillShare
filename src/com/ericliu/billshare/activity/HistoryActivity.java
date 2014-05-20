@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.SimpleCursorTreeAdapter;
 
+import com.ericliu.billshare.MyApplication;
 import com.ericliu.billshare.R;
 import com.ericliu.billshare.R.id;
 import com.ericliu.billshare.R.layout;
@@ -114,13 +115,13 @@ public class HistoryActivity extends DrawerActivity {
 
 				String selection = COL_SERIAL_NUMBER + " =? ";
 				String[] selectionArgs = { String.valueOf(id) };
-				cursorLoader = new CursorLoader(getActivity(),
+				cursorLoader = new CursorLoader(MyApplication.getInstance(),
 						BillProvider.PAYMENT_FULL_DETAIL, childProjection,
 						selection, selectionArgs, null);
 			} else {
 				String[] groupProjection = { COL_ROWID, COL_SERIAL_NUMBER,
 						COL_NAME, COL_TOTAL_AMOUNT, COL_NUMBER_OF_BILLS_PAID };
-				cursorLoader = new CursorLoader(getActivity(),
+				cursorLoader = new CursorLoader(MyApplication.getInstance(),
 						BillProvider.PAYMENT_INFO_URI, groupProjection, null,
 						null, COL_ROWID + " DESC ");
 			}

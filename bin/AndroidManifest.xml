@@ -32,12 +32,14 @@
         </provider>
 
         <activity
-            android:name="com.ericliu.billshare.activity.MemeberActivity"
+            android:name="com.ericliu.billshare.activity.MemberActivity"
             android:label="@string/title_activity_memeber" >
         </activity>
         <activity
             android:name="com.ericliu.billshare.activity.MemberEditActivity"
-            android:label="@string/title_activity_member_edit" >
+            android:label="@string/title_activity_member_edit"
+            android:windowSoftInputMode="stateHidden"
+             >
         </activity>
         <activity
             android:name="com.ericliu.billshare.activity.BillActivity"
@@ -45,11 +47,15 @@
         </activity>
         <activity
             android:name="com.ericliu.billshare.activity.BillEditActivity"
-            android:label="@string/title_activity_bill_edit" >
+            android:label="@string/title_activity_bill_edit"
+            android:windowSoftInputMode="stateHidden"
+             >
         </activity>
         <activity
             android:name="com.ericliu.billshare.activity.CalculationParameterActivity"
-            android:label="@string/title_activity_even_division" >
+            android:label="@string/title_activity_even_division"
+            android:windowSoftInputMode="stateHidden"
+             >
         </activity>
         <activity
             android:name="com.ericliu.billshare.activity.PaymentActivity"
