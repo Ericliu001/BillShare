@@ -4,6 +4,7 @@ import com.ericliu.billshare.provider.BillProvider;
 
 import android.content.ContentValues;
 import android.net.Uri;
+import android.text.TextUtils;
 
 import static com.ericliu.billshare.provider.DatabaseConstants.*;
 
@@ -28,9 +29,21 @@ public class Bill extends Model {
 		ContentValues values = new ContentValues();
 		values.put(COL_TYPE, type);
 		values.put(COL_AMOUNT, amount);
-		values.put(COL_BILLING_START, startDate);
-		values.put(COL_BILLING_END, endDate);
-		values.put(COL_DUE_DATE, dueDate);
+		
+		if (! TextUtils.isEmpty(startDate)) {
+			values.put(COL_BILLING_START, startDate);
+		}
+		
+		
+		if (! TextUtils.isEmpty(endDate)) {
+			values.put(COL_BILLING_END, endDate);
+		}
+		
+		
+		if (! TextUtils.isEmpty(dueDate)) {
+			values.put(COL_DUE_DATE, dueDate);
+		}
+		
 		values.put(COL_PAID, paid);
 		values.put(COL_DELETED, deleted? 1:0);
 		

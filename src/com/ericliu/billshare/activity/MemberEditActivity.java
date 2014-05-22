@@ -26,6 +26,7 @@ import com.ericliu.billshare.MyApplication;
 import com.ericliu.billshare.R;
 import com.ericliu.billshare.dialog.DateWrongDialog;
 import com.ericliu.billshare.dialog.DeleteDialog;
+import com.ericliu.billshare.dialog.MessageDialog;
 import com.ericliu.billshare.dialog.DateWrongDialog.DateWrongListener;
 import com.ericliu.billshare.dialog.DeleteDialog.DeleteDialogListener;
 import com.ericliu.billshare.fragment.DatePickerFragment;
@@ -127,6 +128,7 @@ public class MemberEditActivity extends EditActivity implements
 					container, false);
 
 			etFirstName = (EditText) rootView.findViewById(R.id.etFirstName);
+			
 			etLastName = (EditText) rootView.findViewById(R.id.etLastName);
 			etPhone = (EditText) rootView.findViewById(R.id.etPhone);
 			etEmail = (EditText) rootView.findViewById(R.id.etEmail);
@@ -202,8 +204,22 @@ public class MemberEditActivity extends EditActivity implements
 
 			switch (item.getItemId()) {
 			case R.id.save:
-				saveMember();
-				getActivity().finish();
+				
+				
+				
+				if (! checkIsEmpty()) {
+					saveMember();
+					getActivity().finish();
+				}else {
+					Bundle args = new Bundle();
+					args.putString(MessageDialog.TITLE, getResources()
+							.getString(R.string.fields_empty));
+					args.putString(MessageDialog.MESSAGE, getResources()
+							.getString(R.string.must_fill_fields_member));
+					MessageDialog messageDialog = MessageDialog
+							.newInstance(args);
+					messageDialog.show(getFragmentManager(), "message");
+				}
 				break;
 				
 				
@@ -340,6 +356,15 @@ public class MemberEditActivity extends EditActivity implements
 			deleteMember();
 			getActivity().finish();
 		}
+
+		private boolean checkIsEmpty() {
+		
+					if (TextUtils.isEmpty(etFirstName.getText())) {
+		
+						return true;
+					}
+					return false;
+				}
 
 	}
 

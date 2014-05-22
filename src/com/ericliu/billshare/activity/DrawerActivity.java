@@ -21,11 +21,13 @@ import com.ericliu.billshare.R;
 public class DrawerActivity extends Activity implements
 		OnItemClickListener {
 
-	public static final int QUICK_EVEN_DIVISION = 2;
-	public static final int CALCULATE_BY_DAYS = 3;
-	public static final int PAYMENT_HISTORY = 4;
-	public static final int ROOMMATES = 1;
-	public static final int MANAGING_BILLS = 0;
+	public static final int HOME_PAGE = 0;
+	public static final int MANAGING_BILLS = 1;
+	public static final int ROOMMATES = 2;
+	public static final int QUICK_EVEN_DIVISION = 3;
+	public static final int CALCULATE_BY_DAYS = 4;
+	public static final int PAYMENT_HISTORY = 5;
+	
 	
 	public static final String ACTION_EVEN_DIV = "action_even_division";
 	public static final String ACTION_CALCULATE_BY_DAYS = "action_calculate_by_days";
@@ -128,6 +130,11 @@ public class DrawerActivity extends Activity implements
 			
 		case MANAGING_BILLS:
 			 i = new Intent(this, BillActivity.class);
+			startActivity(i);
+			break;
+			
+		case HOME_PAGE:
+			i = new Intent(this, Main.class);
 			startActivity(i);
 			break;
 

@@ -13,31 +13,50 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.ListView;
 import android.widget.SimpleCursorTreeAdapter;
+import android.widget.TextView;
 
 import com.ericliu.billshare.MyApplication;
 import com.ericliu.billshare.R;
 import com.ericliu.billshare.R.id;
 import com.ericliu.billshare.R.layout;
+import com.ericliu.billshare.activity.helper.ActionModeHelper;
+import com.ericliu.billshare.activity.helper.ActionModeHelper.ActionModeListener;
 import com.ericliu.billshare.adapter.HistorySimpleCursorTreeAdapter;
+import com.ericliu.billshare.fragment.DbWriteFragment;
+import com.ericliu.billshare.fragment.DbWriteFragment.DbFragCallBack;
+import com.ericliu.billshare.model.Model;
+import com.ericliu.billshare.model.PaymentInfo;
+import com.ericliu.billshare.model.PaymentInfo.Builder;
 import com.ericliu.billshare.provider.BillProvider;
 
 import static com.ericliu.billshare.provider.DatabaseConstants.*;
 
-public class HistoryActivity extends DrawerActivity {
+public class HistoryActivity extends DrawerActivity implements DbFragCallBack{
 
+	private static final String DBWRITE_FRAG_TAG = "DBwriteFragment";
+	private static final String PLACEHOLDER_TAG = "placeholder";
 	private HistoryFragment placeHolderFrag;
+	private DbWriteFragment dbWriteFrag;
+	private PaymentInfo mPaymentInfo;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		placeHolderFrag = (HistoryFragment) getFragmentManager()
-				.findFragmentByTag("saved");
+				.findFragmentByTag(PLACEHOLDER_TAG);
 		if (placeHolderFrag == null) {
 			placeHolderFrag = new HistoryFragment();
 			getFragmentManager().beginTransaction()
-					.add(R.id.container, placeHolderFrag).commit();
+					.add(R.id.container, placeHolderFrag, PLACEHOLDER_TAG).commit();
+		}
+		
+		dbWriteFrag = (DbWriteFragment) getFragmentManager().findFragmentByTag(DBWRITE_FRAG_TAG);
+		if (dbWriteFrag == null) {
+			dbWriteFrag = new DbWriteFragment();
+			getFragmentManager().beginTransaction().add(dbWriteFrag, DBWRITE_FRAG_TAG).commit();
 		}
 	}
 
@@ -45,12 +64,15 @@ public class HistoryActivity extends DrawerActivity {
 	 * A placeholder fragment containing a simple view.
 	 */
 	public static class HistoryFragment extends Fragment implements
-			LoaderCallbacks<Cursor> {
+			LoaderCallbacks<Cursor>, ActionModeListener {
 
 		private static final int groupLoaderId = -1;
 
 		private ExpandableListView elv;
 		private HistorySimpleCursorTreeAdapter adapter;
+		private HistoryActivity mCallback;
+		
+		
 
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
@@ -64,6 +86,9 @@ public class HistoryActivity extends DrawerActivity {
 		public void onAttach(Activity activity) {
 
 			super.onAttach(activity);
+			
+			mCallback = (HistoryActivity) activity;
+			
 
 			Loader<Cursor> groupLoader = activity.getLoaderManager().getLoader(
 					groupLoaderId);
@@ -84,6 +109,8 @@ public class HistoryActivity extends DrawerActivity {
 					container, false);
 
 			elv = (ExpandableListView) rootView.findViewById(R.id.elv);
+			TextView tvEmpty = (TextView) rootView.findViewById(R.id.tvEmptyHistory);
+			elv.setEmptyView(tvEmpty);
 			String[] groupFrom = { COL_NAME, COL_TOTAL_AMOUNT,
 					COL_NUMBER_OF_BILLS_PAID };
 			int[] groupTo = { R.id.tvPaymentInfoName, R.id.tvPaymentInfoAmount,
@@ -99,6 +126,9 @@ public class HistoryActivity extends DrawerActivity {
 					R.layout.history_parent_layout, groupFrom, groupTo,
 					R.layout.history_child_layout, childFrom, childTo);
 			elv.setAdapter(adapter);
+			elv.setLongClickable(true);
+			elv.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+			elv.setOnItemLongClickListener(new ActionModeHelper(this, elv));
 
 			return rootView;
 		}
@@ -154,6 +184,45 @@ public class HistoryActivity extends DrawerActivity {
 			}
 
 		}
+
+		@Override
+		public boolean performAction(int id, int checkedPosition) {
+			switch (id) {
+			case R.id.delete:
+				deletePaymentInfo(checkedPosition);
+				
+				return true;
+			default:
+				break;
+			}
+
+			return false;
+		}
+
+		private void deletePaymentInfo(int checkedPosition) {
+			long id = adapter.getGroupId(checkedPosition);
+			
+			PaymentInfo.Builder builder = new PaymentInfo.Builder();
+			builder.setId(id);
+			builder.deleted(true);
+			PaymentInfo paymentInfo = builder.build();
+			mCallback.setPaymentInfo(paymentInfo);
+			mCallback.writeToDb();
+		}
+	}
+	
+	private void setPaymentInfo(PaymentInfo paymentInfo){
+		mPaymentInfo = paymentInfo;
+	}
+
+	public void writeToDb() {
+		dbWriteFrag.writeToDB();
+	}
+
+	@Override
+	public Model getModel() {
+		
+		return mPaymentInfo;
 	}
 
 }

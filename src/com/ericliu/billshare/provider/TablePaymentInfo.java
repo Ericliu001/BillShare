@@ -15,6 +15,7 @@ public class TablePaymentInfo {
 			+ COL_TOTAL_AMOUNT + " numeric, "
 			+ COL_NUMBER_OF_MEMBERS_PAID + " integer, "
 			+ COL_NUMBER_OF_BILLS_PAID + " integer, "
+			+ COL_DELETED + " boolean not null default 0, "
 			+ COL_PAID_TIME + " datetime "
 			
 			+");"
@@ -59,7 +60,8 @@ public class TablePaymentInfo {
 			+ TABLE_PAYMENT_INFO + "." + COL_TOTAL_AMOUNT + ","
 			+ TABLE_PAYMENT_INFO + "." + COL_NUMBER_OF_MEMBERS_PAID + ","
 			+ TABLE_PAYMENT_INFO + "." + COL_NUMBER_OF_BILLS_PAID + ","
-			+ TABLE_PAYMENT_INFO + "." + COL_PAID_TIME
+			+ TABLE_PAYMENT_INFO + "." + COL_PAID_TIME + ","
+			+ TABLE_PAYMENT_INFO + "." + COL_DELETED + " "
 			
 			+ " from  " + TABLE_PAYMENT + " left join  " + TABLE_MEMBER 
 			+ " on " + TABLE_PAYMENT + "." + COL_PAYEE_ID + "=" + TABLE_MEMBER + "." + COL_ROWID
@@ -67,12 +69,33 @@ public class TablePaymentInfo {
 			+ " on " + TABLE_PAYMENT + "." + COL_BILL_ID + "=" + TABLE_BILL + "." + COL_ROWID
 			+ " left join " + TABLE_PAYMENT_INFO 
 			+ " on " + TABLE_PAYMENT + "." + COL_PAYMENT_INFO_ID + "=" + TABLE_PAYMENT_INFO + "." + COL_SERIAL_NUMBER
+			+ " where " + TABLE_PAYMENT_INFO + "." + COL_DELETED + " =0 "  
 			+";"
 			;
+	
+	
+	private static final String VIEW_PAYMENT_INFO_CREATE = " create view "
+			+ VIEW_PAYMENT_INFO
+			+ " as select "
+			+ COL_ROWID + " , "
+			+ COL_SERIAL_NUMBER + " , "
+			+ COL_NAME + "  , "
+			+ COL_DESCRIPTION + " , "
+			+ COL_TOTAL_AMOUNT + " , "
+			+ COL_NUMBER_OF_MEMBERS_PAID + " , "
+			+ COL_NUMBER_OF_BILLS_PAID + " , "
+			+ COL_DELETED + " , "
+			+ COL_PAID_TIME + "  "
+			+ " from "
+			+ TABLE_PAYMENT_INFO
+			+ " where " + COL_DELETED + " =0 "
+			+ ";";
+
 	
 	public static void onCreate(SQLiteDatabase db){
 		db.execSQL(TABLE_CREATE);
 		db.execSQL(VIEW_PAYMENT_FULL_CREATE);
+		db.execSQL(VIEW_PAYMENT_INFO_CREATE);
 	}
 	
 	public static void onUpdate(SQLiteDatabase db){

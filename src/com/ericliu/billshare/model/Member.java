@@ -4,6 +4,7 @@ import com.ericliu.billshare.provider.BillProvider;
 
 import android.content.ContentValues;
 import android.net.Uri;
+import android.text.TextUtils;
 
 import static com.ericliu.billshare.provider.DatabaseConstants.*;
 
@@ -29,8 +30,16 @@ public class Member extends Model {
 		values.put(COL_LASTNAME, lastName);
 		values.put(COL_PHONE, phone);
 		values.put(COL_EMAIL, email);
-		values.put(COL_MOVE_IN_DATE, moveInDate);
-		values.put(COL_MOVE_OUT_DATE, moveOutDate);
+		
+		if (! TextUtils.isEmpty(moveInDate)) {
+			values.put(COL_MOVE_IN_DATE, moveInDate);
+		}
+		
+		
+		if (! TextUtils.isEmpty(moveOutDate)) {
+			values.put(COL_MOVE_OUT_DATE, moveOutDate);
+		}
+		
 		values.put(COL_DELETED, deleted ? 1:0);
 		
 		

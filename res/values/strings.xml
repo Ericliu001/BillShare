@@ -72,7 +72,7 @@
     <string name="bills">Bills</string>
     <string name="members">Members</string>
     <string name="history">History</string>
-    <string name="you_havent_created_any_bill_yet">You haven\'t created any bill yet.</string>
+    <string name="you_havent_created_any_bill_yet">No unpaid bills found.</string>
     <string name="you_havent_created_any_member_yet">You haven\'t created any member yet.</string>
     <string name="pay_from">Pay from</string>
     <string name="to">to</string>
@@ -81,5 +81,8 @@
     <string name="end_date_must_be_after_start_date">End Date must be after Start Date</string>
     <string name="move_in_date_must_be_before_move_out_date">Move-in-date must be before Move-out-date</string>
     <string name="move_out_date_must_be_after_move_in_date">Move-out-date must be after Move-in-date</string>
+    <string name="edit_history">Edit History</string>
+    <string name="there_is_no_payment_history_yet">There is no payment history yet</string>
+    <string name="must_fill_fields_member">You must fill in the first name. </string>
 
 </resources>

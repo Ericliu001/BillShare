@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginLeft="15dp"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -12,7 +13,9 @@
             android:id="@+id/tvChildType"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:layout_weight="1"
+            
             android:text="TextView" />
 
         <TextView
@@ -20,6 +23,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="TextView" />
 
         <TextView
@@ -27,6 +31,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="TextView" />
 
         <TextView
@@ -34,17 +39,20 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="TextView" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+         >
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="@string/pay_from" />
 
         <TextView
@@ -52,12 +60,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="TextView" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="@string/to" />
 
         <TextView
@@ -65,6 +75,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="TextView" />
     </LinearLayout>
 

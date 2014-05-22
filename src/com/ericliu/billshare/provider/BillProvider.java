@@ -128,7 +128,7 @@ public class BillProvider extends ContentProvider {
 			break;
 			
 		case PAYMENT_INFO:
-			qb.setTables(TABLE_PAYMENT_INFO);
+			qb.setTables(VIEW_PAYMENT_INFO);
 			break;
 			
 		case PAYMENT_INFO_ID:
@@ -277,7 +277,8 @@ public class BillProvider extends ContentProvider {
 			
 		case PAYMENT_INFO_ID:
 			segment = uri.getLastPathSegment();
-			count = db.update(TABLE_PAYMENT_INFO, values, where, selectionArgs);
+			count = db.update(TABLE_PAYMENT_INFO, values, "_id=" + segment + where, selectionArgs);
+			break;
 			
 		default:
 			throw new IllegalArgumentException(" Unknow URL "+ uri);
