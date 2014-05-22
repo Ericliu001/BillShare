@@ -57,7 +57,7 @@ public class PaymentActivity extends EditActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_drawer);
 
 		frag = (PaymentFragment) getFragmentManager().findFragmentByTag(TAG);
 		if (frag == null) {

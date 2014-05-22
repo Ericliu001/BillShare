@@ -142,8 +142,12 @@ public class SelectBillsDialog extends DialogFragment implements OnClickListener
 		builder.setView(dialogView).setMessage(R.string.paid_bill_not_display);
 		
 		lv = (ListView) dialogView.findViewById(R.id.lvMulti);
+		TextView tvEmpty = (TextView) dialogView.findViewById(R.id.tvEmpty);
+		tvEmpty.setText(R.string.you_havent_created_any_bill_yet);
 		lv.setAdapter(adapter);
 		lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+		lv.setEmptyView(tvEmpty);
+		
 		
 		
 		return builder.create();

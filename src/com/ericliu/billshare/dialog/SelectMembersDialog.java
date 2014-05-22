@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 import com.ericliu.billshare.R;
 import com.ericliu.billshare.provider.BillProvider;
@@ -82,9 +83,13 @@ public class SelectMembersDialog extends DialogFragment implements
 				.setPositiveButton(R.string.done, this)
 				.setNegativeButton(R.string.cancel, this);
 
+		
+		TextView tvEmpty = (TextView) dialogView.findViewById(R.id.tvEmpty);
 		lv = (ListView) dialogView.findViewById(R.id.lvMulti);
 		lv.setAdapter(adapter);
 		lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+		lv.setEmptyView(tvEmpty);
+		tvEmpty.setText(R.string.you_havent_created_any_member_yet);
 
 		return builder.create();
 	}

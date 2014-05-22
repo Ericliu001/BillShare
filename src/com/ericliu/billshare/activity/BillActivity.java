@@ -12,6 +12,7 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -149,6 +150,15 @@ public class BillActivity extends DrawerActivity {
 			};
 
 			setListAdapter(adapter);
+			
+		}
+		
+		
+		@Override
+		public void onActivityCreated(Bundle savedInstanceState) {
+			
+			super.onActivityCreated(savedInstanceState);
+			setEmptyText(getResources().getString(R.string.you_havent_created_any_bill_yet));
 		}
 
 		@Override

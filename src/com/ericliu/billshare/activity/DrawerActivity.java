@@ -21,11 +21,11 @@ import com.ericliu.billshare.R;
 public class DrawerActivity extends Activity implements
 		OnItemClickListener {
 
-	private static final int QUICK_EVEN_DIVISION = 2;
-	private static final int CALCULATE_BY_DAYS = 3;
-	private static final int PAYMENT_HISTORY = 4;
-	private static final int ROOMMATES = 1;
-	private static final int MANAGING_BILLS = 0;
+	public static final int QUICK_EVEN_DIVISION = 2;
+	public static final int CALCULATE_BY_DAYS = 3;
+	public static final int PAYMENT_HISTORY = 4;
+	public static final int ROOMMATES = 1;
+	public static final int MANAGING_BILLS = 0;
 	
 	public static final String ACTION_EVEN_DIV = "action_even_division";
 	public static final String ACTION_CALCULATE_BY_DAYS = "action_calculate_by_days";
@@ -39,7 +39,7 @@ public class DrawerActivity extends Activity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_drawer);
 
 		drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		drawerList = (ListView) findViewById(R.id.drawerList);

@@ -11,9 +11,11 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.ericliu.billshare.R;
@@ -90,6 +92,16 @@ public class MemberActivity extends DrawerActivity {
 					R.layout.member_row, null, PROJECTION, to, 0);
 
 			setListAdapter(adapter);
+			
+		}
+		
+		
+		
+		@Override
+		public void onActivityCreated(Bundle savedInstanceState) {
+			
+			super.onActivityCreated(savedInstanceState);
+			setEmptyText(getResources().getString(R.string.you_havent_created_any_member_yet));
 		}
 		
 		
