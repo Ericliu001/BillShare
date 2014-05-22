@@ -17,8 +17,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.sax.StartElementListener;
-import android.support.v4.app.NavUtils;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,15 +32,15 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ericliu.billshare.MyApplication;
 import com.ericliu.billshare.R;
+import com.ericliu.billshare.dialog.DateWrongDialog;
+import com.ericliu.billshare.dialog.DateWrongDialog.DateWrongListener;
 import com.ericliu.billshare.dialog.DeleteDialog;
 import com.ericliu.billshare.dialog.DeleteDialog.DeleteDialogListener;
 import com.ericliu.billshare.dialog.MessageDialog;
 import com.ericliu.billshare.fragment.DatePickerFragment;
-import com.ericliu.billshare.fragment.DbWriteFragment;
 import com.ericliu.billshare.fragment.DatePickerFragment.DatePickerListener;
 import com.ericliu.billshare.model.Bill;
 import com.ericliu.billshare.model.Model;
@@ -51,10 +49,11 @@ import com.ericliu.billshare.provider.DatabaseConstants;
 import com.ericliu.billshare.util.UtilCompareDates;
 
 public class BillEditActivity extends EditActivity implements
-		DatePickerListener, DeleteDialogListener {
-	
+		DatePickerListener, DeleteDialogListener, DateWrongListener {
+
 	private static final String TAG = "BillEditFragment";
 	public static final String PICK_ANOTHER_DATE = "pick_another_date";
+	public static final String DATE_WRONG = "date_wrong";
 	private BillEditFragment frag;
 	private Bill mBill;
 
@@ -65,14 +64,11 @@ public class BillEditActivity extends EditActivity implements
 
 		long id = getIntent().getLongExtra(DatabaseConstants.COL_ROWID, -1);
 
-		
 		frag = (BillEditFragment) getFragmentManager().findFragmentByTag(TAG);
 		if (frag == null) {
 			frag = BillEditFragment.newInstance(id);
-			getFragmentManager()
-					.beginTransaction()
-					.add(R.id.container, frag,
-							TAG).commit();
+			getFragmentManager().beginTransaction()
+					.add(R.id.container, frag, TAG).commit();
 		}
 	}
 
@@ -98,7 +94,7 @@ public class BillEditActivity extends EditActivity implements
 		private Button btEndDate;
 		private Button btDueDate;
 
-		private  int dateTypeId;
+		private int dateTypeId;
 		private static final int DATE_TYPE_START = 1;
 		private static final int DATE_TYPE_END = 2;
 		private static final int DATE_TYPE_DUE = 3;
@@ -107,7 +103,11 @@ public class BillEditActivity extends EditActivity implements
 				COL_AMOUNT, COL_BILLING_START, COL_BILLING_END, COL_DUE_DATE,
 				COL_PAID };
 
-		private  String undefined;
+		private static final String SAVED_START_DATE = "saved_start_date";
+		private static final String SAVED_END_DATE = "saved_end_date";
+		private static final String SAVED_DUE_DATE = "saved_due_date";
+
+		private String undefined;
 
 		public static BillEditFragment newInstance(long id) {
 			BillEditFragment frag = new BillEditFragment();
@@ -132,10 +132,9 @@ public class BillEditActivity extends EditActivity implements
 			super.onCreate(savedInstanceState);
 			setRetainInstance(true);
 			setHasOptionsMenu(true);
-			
 
 			datePickerFrag = new DatePickerFragment();
-			
+
 			undefined = getResources().getString(R.string.undefined);
 		}
 
@@ -173,6 +172,8 @@ public class BillEditActivity extends EditActivity implements
 
 				fillForm(id);
 			}
+			
+			
 
 			return rootView;
 		}
@@ -201,24 +202,22 @@ public class BillEditActivity extends EditActivity implements
 				spType.setSelection(position, true);
 
 				etAmount.setText(c.getString(c.getColumnIndex(COL_AMOUNT)));
-				
-				
-				
-				String billStartDateString = c.getString(c.getColumnIndex(COL_BILLING_START));
+
+				String billStartDateString = c.getString(c
+						.getColumnIndex(COL_BILLING_START));
 				if (!billStartDateString.equals("1900-01-01")) {
-					
+
 					tvStartDate.setText(billStartDateString);
 				}
-				
-				String billingEndDateString = c.getString(c.getColumnIndex(COL_BILLING_END));
-				if (! billingEndDateString.equals("3000-01-01")) {
-					
+
+				String billingEndDateString = c.getString(c
+						.getColumnIndex(COL_BILLING_END));
+				if (!billingEndDateString.equals("3000-01-01")) {
+
 					tvEndDate.setText(billingEndDateString);
 				}
-				
-				tvDueDate.setText( c.getString(c.getColumnIndex(COL_DUE_DATE)));
-				
-				
+
+				tvDueDate.setText(c.getString(c.getColumnIndex(COL_DUE_DATE)));
 
 				cbPaid.setChecked(c.getInt(c.getColumnIndex(COL_PAID)) > 0 ? true
 						: false);
@@ -230,7 +229,12 @@ public class BillEditActivity extends EditActivity implements
 					c.close();
 				}
 			}
+			
+			
+			
 		}
+		
+		
 
 		@Override
 		public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -243,33 +247,37 @@ public class BillEditActivity extends EditActivity implements
 
 			switch (item.getItemId()) {
 			case R.id.save:
-				
+
 				if (!checkIsEmpty()) {
 					saveBill();
 					getActivity().finish();
-				}else{
+				} else {
 					Bundle args = new Bundle();
-					args.putString(MessageDialog.TITLE, getResources().getString(R.string.fields_empty));
-					args.putString(MessageDialog.MESSAGE, getResources().getString(R.string.must_fill_fields_bill));
-					MessageDialog messageDialog = MessageDialog.newInstance(args);
+					args.putString(MessageDialog.TITLE, getResources()
+							.getString(R.string.fields_empty));
+					args.putString(MessageDialog.MESSAGE, getResources()
+							.getString(R.string.must_fill_fields_bill));
+					MessageDialog messageDialog = MessageDialog
+							.newInstance(args);
 					messageDialog.show(getFragmentManager(), "message");
 				}
-				
 
 				break;
-			
+
 			case R.id.delete:
 				Bundle args = new Bundle();
-				args.putString(DeleteDialog.TITLE, getResources().getString(R.string.confirm_delete));
-				args.putString(DeleteDialog.MESSAGE, getResources().getString(R.string.delete_bill));
+				args.putString(DeleteDialog.TITLE,
+						getResources().getString(R.string.confirm_delete));
+				args.putString(DeleteDialog.MESSAGE,
+						getResources().getString(R.string.delete_bill));
 				DeleteDialog deleteDialog = DeleteDialog.newInstance(args);
 				deleteDialog.show(getFragmentManager(), "delete");
 				break;
-				
+
 			case android.R.id.home:
 				Intent i = new Intent(getActivity(), BillActivity.class);
 				startActivity(i);
-				
+
 				return true;
 
 			default:
@@ -279,13 +287,13 @@ public class BillEditActivity extends EditActivity implements
 			return super.onOptionsItemSelected(item);
 		}
 
-		
-
 		private boolean checkIsEmpty() {
-			
-			if(TextUtils.isEmpty(etAmount.getText()) || TextUtils.isEmpty(tvStartDate.getText()) || TextUtils.isEmpty(tvEndDate.getText()) ){
-			
-			return true;
+
+			if (TextUtils.isEmpty(etAmount.getText())
+					|| TextUtils.isEmpty(tvStartDate.getText())
+					|| TextUtils.isEmpty(tvEndDate.getText())) {
+
+				return true;
 			}
 			return false;
 		}
@@ -307,32 +315,28 @@ public class BillEditActivity extends EditActivity implements
 		public void setBillAttributes(Bill bill) {
 			bill.setType(spType.getSelectedItem().toString());
 			bill.setAmount(Double.valueOf(etAmount.getText().toString()));
-			
-				
-				bill.setStartDate(tvStartDate.getText().toString());
-			
-				
-				bill.setEndDate(tvEndDate.getText().toString());
-			
-				
-				bill.setDueDate(tvDueDate.getText().toString());
-			
+
+			bill.setStartDate(tvStartDate.getText().toString());
+
+			bill.setEndDate(tvEndDate.getText().toString());
+
+			bill.setDueDate(tvDueDate.getText().toString());
+
 			bill.setPaid(cbPaid.isChecked() ? 1 : 0);
 		}
-		
+
 		private void deleteBill() {
 			if (id > 0) {
 				Bill bill = new Bill();
 				bill.setId(id);
 				setBillAttributes(bill);
-				
+
 				bill.setDeleted(true);
-				
+
 				mCallBack.setBill(bill);
 				mCallBack.saveToDb();
 			}
-			
-			
+
 		}
 
 		@Override
@@ -371,19 +375,34 @@ public class BillEditActivity extends EditActivity implements
 
 			switch (dateTypeId) {
 			case DATE_TYPE_START:
-				
-				if (UtilCompareDates.compareDates(dateString, tvEndDate.getText().toString()) < 0) {
-					Toast.makeText(getActivity(), " End date must be after the start date ", Toast.LENGTH_SHORT).show();
+
+				if (!TextUtils.isEmpty(tvEndDate.getText())) {
+					if (UtilCompareDates.compareDates(dateString, tvEndDate
+							.getText().toString()) < 0) {
+						Bundle args = new Bundle();
+						args.putString(DateWrongDialog.TITLE, getResources().getString(R.string.date_picking_mistake));
+						args.putString(DateWrongDialog.MESSAGE, getResources().getString(R.string.start_date_must_be_before_end_date));
+						DateWrongDialog dateWrongdialog = DateWrongDialog.newInstance(args);
+						dateWrongdialog.show(getFragmentManager(), BillEditActivity.DATE_WRONG);
+					}
 				}
 				tvStartDate.setText(dateString);
 				break;
 
 			case DATE_TYPE_END:
-				if(UtilCompareDates.compareDates(tvStartDate.getText().toString(), dateString) <0){
-					
-					Toast.makeText(getActivity(), " End date must be after the start date ", Toast.LENGTH_SHORT).show();
-				} ;
-				
+				if (!TextUtils.isEmpty(tvStartDate.getText())) {
+					if (UtilCompareDates.compareDates(tvStartDate.getText()
+							.toString(), dateString) < 0) {
+
+						Bundle args = new Bundle();
+						args.putString(DateWrongDialog.TITLE, getResources().getString(R.string.date_picking_mistake));
+						args.putString(DateWrongDialog.MESSAGE, getResources().getString(R.string.end_date_must_be_after_start_date));
+						DateWrongDialog dateWrongdialog = DateWrongDialog.newInstance(args);
+						dateWrongdialog.show(getFragmentManager(), BillEditActivity.DATE_WRONG);
+					}
+				}
+				;
+
 				tvEndDate.setText(dateString);
 				break;
 
@@ -416,6 +435,11 @@ public class BillEditActivity extends EditActivity implements
 	@Override
 	public void onFinishPicking() {
 		frag.onFinishPicking();
+		DateWrongDialog dateWrongDialog =  (DateWrongDialog) getFragmentManager().findFragmentByTag(BillEditActivity.DATE_WRONG);
+		if (dateWrongDialog != null) {
+			
+			dateWrongDialog.dismiss();
+		}
 	}
 
 	@Override
@@ -425,6 +449,12 @@ public class BillEditActivity extends EditActivity implements
 
 	@Override
 	public void doNegativeClick() {
+	}
+
+	@Override
+	public void reSelectDate() {
+		frag.showDatePickerDialog();
+		
 	}
 
 }

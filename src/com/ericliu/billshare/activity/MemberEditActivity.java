@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,7 +24,9 @@ import android.widget.TextView;
 
 import com.ericliu.billshare.MyApplication;
 import com.ericliu.billshare.R;
+import com.ericliu.billshare.dialog.DateWrongDialog;
 import com.ericliu.billshare.dialog.DeleteDialog;
+import com.ericliu.billshare.dialog.DateWrongDialog.DateWrongListener;
 import com.ericliu.billshare.dialog.DeleteDialog.DeleteDialogListener;
 import com.ericliu.billshare.fragment.DatePickerFragment;
 import com.ericliu.billshare.fragment.DbWriteFragment;
@@ -32,13 +35,15 @@ import com.ericliu.billshare.model.Member;
 import com.ericliu.billshare.model.Model;
 import com.ericliu.billshare.provider.BillProvider;
 import com.ericliu.billshare.provider.DatabaseConstants;
+import com.ericliu.billshare.util.UtilCompareDates;
 
 import static com.ericliu.billshare.provider.DatabaseConstants.*;
 
 public class MemberEditActivity extends EditActivity implements
-		DatePickerListener, DeleteDialogListener {
+		DatePickerListener, DeleteDialogListener, DateWrongListener {
 
 	private static final String TAG = "MemberEditFragment";
+	public static final String DATE_WRONG_TAG = "date_wrong_tag";
 	private Member mMember = null;
 	private MemberEditFragment frag;
 
@@ -268,18 +273,22 @@ public class MemberEditActivity extends EditActivity implements
 		public void onClick(View v) {
 			switch (v.getId()) {
 			case R.id.btPickMoveInDate:
-				datePickerFrag.show(getFragmentManager(), "datePicker");
+				showDatePicker();
 				chosenDateType = DATE_TYPE_MOVE_IN;
 				break;
 
 			case R.id.btPickMoveOutDate:
-				datePickerFrag.show(getFragmentManager(), "datePicker");
+				showDatePicker();
 				chosenDateType = DATE_TYPE_MOVE_OUT;
 				break;
 
 			default:
 				break;
 			}
+		}
+
+		public void showDatePicker() {
+			datePickerFrag.show(getFragmentManager(), "datePicker");
 		}
 
 		public void onFinishPicking() {
@@ -289,11 +298,35 @@ public class MemberEditActivity extends EditActivity implements
 			String dateString = dateFormat.format(datePickerFrag.getDate());
 			switch (chosenDateType) {
 			case DATE_TYPE_MOVE_IN:
+				
+				
+				if (! TextUtils.isEmpty(tvMoveOutDate.getText())) {
+					if (UtilCompareDates.compareDates(dateString, tvMoveOutDate.getText().toString()) < 0) {
+						Bundle args = new Bundle();
+						args.putString(DateWrongDialog.TITLE, getResources().getString(R.string.date_picking_mistake));
+						args.putString(DateWrongDialog.MESSAGE, getResources().getString(R.string.move_in_date_must_be_before_move_out_date));
+						DateWrongDialog dateWrongdialog = DateWrongDialog.newInstance(args);
+						dateWrongdialog.show(getFragmentManager(), DATE_WRONG_TAG);
+					}
+				}
+				
 				tvMoveInDate.setText(dateString);
 				moveInDateToSave = dateString;
 				break;
 
 			case DATE_TYPE_MOVE_OUT:
+				
+				if (! TextUtils.isEmpty(tvMoveInDate.getText())) {
+					if (UtilCompareDates.compareDates(tvMoveInDate.getText().toString(), dateString) < 0) {
+						Bundle args = new Bundle();
+						args.putString(DateWrongDialog.TITLE, getResources().getString(R.string.date_picking_mistake));
+						args.putString(DateWrongDialog.MESSAGE, getResources().getString(R.string.move_out_date_must_be_after_move_in_date));
+						DateWrongDialog dateWrongdialog = DateWrongDialog.newInstance(args);
+						dateWrongdialog.show(getFragmentManager(), DATE_WRONG_TAG);
+					}
+				}
+				
+				
 				tvMoveOutDate.setText(dateString);
 				moveOutDateToSave = dateString;
 				break;
@@ -323,6 +356,10 @@ public class MemberEditActivity extends EditActivity implements
 	@Override
 	public void onFinishPicking() {
 		frag.onFinishPicking();
+		DateWrongDialog dateWrongDialog = (DateWrongDialog) getFragmentManager().findFragmentByTag(DATE_WRONG_TAG);
+		if (dateWrongDialog != null) {
+			dateWrongDialog.dismiss();
+		}
 	}
 
 	@Override
@@ -332,6 +369,11 @@ public class MemberEditActivity extends EditActivity implements
 
 	@Override
 	public void doNegativeClick() {
+	}
+
+	@Override
+	public void reSelectDate() {
+		frag.showDatePicker();
 	}
 
 }

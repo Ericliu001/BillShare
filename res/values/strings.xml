@@ -2,7 +2,6 @@
 <resources>
 
     <string name="app_name">BillShare</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
@@ -20,35 +19,32 @@
     <string name="cancel">Cancel</string>
     <string name="title_activity_bill">Bills</string>
     <string name="create_bill">Create Bill</string>
-    <string name="title_activity_bill_edit">BillEditActivity</string>
+    <string name="title_activity_bill_edit">Edit Bill</string>
     <string name="create_member">Create Member</string>
     <string name="bill_type">Bill Type</string>
     <string name="amount">amount</string>
-    <string name="billing_start_date">Billing Start Date</string>
-    <string name="billing_end_date">Billing End Date</string>
+    <string name="billing_start_date">Billing Start-Date</string>
+    <string name="billing_end_date">Billing End-Date</string>
     <string name="paid">Paid</string>
     <string name="due_date">Due Date</string>
     <string name="save_bill">Save Bill</string>
     <string name="pick_date">Pick Date</string>
     <string name="undefined">Undefined</string>
-    <string name="title_activity_even_division">EvenDivisionActivity</string>
+    <string name="title_activity_even_division">Even Division</string>
     <string name="even_division_calculation">Even Division Calculation</string>
     <string name="payment_name">Payment Name</string>
-    <string name="number_of_chosen_members">Number of Chosen Members</string>
-    <string name="number_of_selected_members">Member Number   </string>
+    <string name="number_of_selected_members">Member Number:</string>
     <string name="select_members">Select Members</string>
-    <string name="number_of_selected_bills">Number of Selected Bills</string>
-    <string name="total_amount">Total Amount   </string>
-    <string name="select_bills">Select Bills</string>
+    <string name="total_amount">Total Amount:   </string>
+    <string name="select_bills">Select Bills:</string>
     <string name="description">Description</string>
     <string name="save">Save</string>
     <string name="calculate">Calculate</string>
     <string name="ok">OK</string>
     <string name="done">Done</string>
     <string name="paid_bill_not_display">Bills that are checked as paid will not show up in this list.</string>
-    <string name="title_activity_payment">PaymentActivity</string>
+    <string name="title_activity_payment">Payment</string>
     <string name="sum">Sum</string>
-    <string name="total_amount_in_bills">Total Amount in Bills</string>
     <string name="paid_by_members">Paid by Members</string>
     <string name="number_of_members_paying">Number of Members Paying</string>
     <string name="number_of_bills">Number of Bills</string>
@@ -56,15 +52,15 @@
     <string name="you_must_select_member_bill">You must select at least one member and one bill.</string>
     <string name="move_in_date">Move In Date</string>
     <string name="move_out_date">Move Out Date</string>
-    <string name="after_billing_end">If not specified, assumed after Billing End</string>
-    <string name="before_billing_start">If not specified, asumed before Billing Start</string>
+    <string name="after_billing_end">If not specified, assumed after Billing Ends</string>
+    <string name="before_billing_start">If not specified, asumed before Billing Starts</string>
     <string name="even_division">Even Division</string>
     <string name="calculate_by_days">Calculate by Days</string>
-    <string name="calculation_based_on_days_members_lived_in">Calculation based on days members have lived in</string>
-    <string name="required_field_empty">Required Field Empty</string>
-    <string name="select_amount_pick_date">You must set the amount and pick billing start and end dates.</string>
+    <string name="calculation_based_on_days_members_lived_in">Calculation based on days the members have lived in</string>
+    <string name="required_field_empty">Required Fields Empty</string>
+    <string name="select_amount_pick_date">You must fill the amount and select billing start and end dates.</string>
     <string name="this_payment_has_been_saved">This payment has been saved.</string>
-    <string name="title_activity_history">HistoryActivity</string>
+    <string name="title_activity_history">Payment History</string>
     <string name="bills_paid">Bills Paid:</string>
     <string name="delete">Delete</string>
     <string name="delete_bill">This bill is going to be deleted.</string>
@@ -78,5 +74,12 @@
     <string name="history">History</string>
     <string name="you_havent_created_any_bill_yet">You haven\'t created any bill yet.</string>
     <string name="you_havent_created_any_member_yet">You haven\'t created any member yet.</string>
+    <string name="pay_from">Pay from</string>
+    <string name="to">to</string>
+    <string name="date_picking_mistake">Date Picking Mistake</string>
+    <string name="start_date_must_be_before_end_date">Start Date must be before End Date</string>
+    <string name="end_date_must_be_after_start_date">End Date must be after Start Date</string>
+    <string name="move_in_date_must_be_before_move_out_date">Move-in-date must be before Move-out-date</string>
+    <string name="move_out_date_must_be_after_move_in_date">Move-out-date must be after Move-in-date</string>
 
 </resources>

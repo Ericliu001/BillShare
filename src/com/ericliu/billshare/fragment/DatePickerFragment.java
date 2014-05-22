@@ -4,17 +4,21 @@ import java.util.Calendar;
 import java.util.Date;
 
 import com.ericliu.billshare.MyApplication;
+import com.ericliu.billshare.R;
+import com.ericliu.billshare.dialog.DateWrongDialog.DateWrongListener;
 
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.DatePicker;
 
 public class DatePickerFragment extends DialogFragment implements
-		OnDateSetListener {
+		DatePickerDialog.OnDateSetListener {
 
 	public interface DatePickerListener {
 
@@ -22,6 +26,21 @@ public class DatePickerFragment extends DialogFragment implements
 	}
 
 	private Date mDate;
+	private DatePickerListener mCallback;
+	
+	
+	@Override
+	public void onAttach(Activity activity) {
+		
+		super.onAttach(activity);
+		
+		try {
+			mCallback = (DatePickerListener) activity;
+		} catch (ClassCastException e) {
+			// TODO: handle exception
+			throw new ClassCastException(activity.getClass().getName() + " does not implement interface DateWrongListner.");
+		}
+	}
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -31,20 +50,23 @@ public class DatePickerFragment extends DialogFragment implements
 		int monthOfYear = cal.get(Calendar.MONTH);
 		int dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
 		
-
-		return new DatePickerDialog(getActivity(), this, year, monthOfYear,
+		DatePickerDialog picker = new DatePickerDialog(getActivity(), this, year, monthOfYear,
 				dayOfMonth);
+
+		return picker;
 	}
+	
+	
 
 	@Override
 	public void onDateSet(DatePicker view, int year, int monthOfYear,
 			int dayOfMonth) {
-		
 		Bundle args = getArguments();
+		
+		
 
 		mDate = new Date(year - 1900, monthOfYear, dayOfMonth);
-		DatePickerListener activity = (DatePickerListener) getActivity();
-		activity.onFinishPicking();
+		mCallback.onFinishPicking();
 	}
 
 	public Date getDate() {
