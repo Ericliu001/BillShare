@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.ericliu.billshare.R;
@@ -29,6 +30,7 @@ public class MemberActivity extends DrawerActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		drawerList.setItemChecked(DrawerActivity.ROOMMATES, true);
 		
 		long id = getIntent().getLongExtra(DatabaseConstants.COL_ROWID, -1);
 
@@ -136,4 +138,13 @@ public class MemberActivity extends DrawerActivity {
 
 	}
 
+	
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		if (position != DrawerActivity.ROOMMATES) {
+			
+			super.onItemClick(parent, view, position, id);
+		}
+	}
 }

@@ -267,6 +267,7 @@ public class PaymentActivity extends EditActivity {
 			for (int j = 0; j < memberIds.length; j++) {
 				for (int i = 0; i < billIds.length; i++) {
 					Payment payment = new Payment.Builder(serialNo, billIds[i], memberIds[j])
+					.payee_amount(payeeAmountForEachBill.get(i))
 					.payeeStartDate(startDatesOfBills[i])
 					.payeeEndDate(endDatesOfBills[i])
 					.build()

@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -37,6 +39,7 @@ public class CalculationParameterActivity extends DrawerActivity implements
 	public static final String PAYMENT_DESCRIPTION = "payment_description";
 	public static final String PAID_TIME = "paid_time";
 	private CalculationParameterFragment frag;
+	int drawerlistCheckedPosition = DrawerActivity.CALCULATE_BY_DAYS;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,7 @@ public class CalculationParameterActivity extends DrawerActivity implements
 	public static class CalculationParameterFragment extends Fragment implements
 			OnClickListener {
 
+		private CalculationParameterActivity mCallback;
 		private long[] checkedBillIds = {} ;
 		private long[] checkedMemberIds = {};
 
@@ -75,6 +79,13 @@ public class CalculationParameterActivity extends DrawerActivity implements
 		private String mDateString;
 
 		public CalculationParameterFragment() {
+		}
+		
+		@Override
+		public void onAttach(Activity activity) {
+			
+			super.onAttach(activity);
+			mCallback = (CalculationParameterActivity) activity;
 		}
 
 		@Override
@@ -119,14 +130,20 @@ public class CalculationParameterActivity extends DrawerActivity implements
 			if (intentAction.equals(DrawerActivity.ACTION_EVEN_DIV)) {
 				btCalculate.setText(R.string.even_division);
 				tvCalculationTitle.setText(R.string.even_division_calculation);
+				mCallback.checkDrawerList(DrawerActivity.QUICK_EVEN_DIVISION);
+				mCallback.drawerlistCheckedPosition = DrawerActivity.QUICK_EVEN_DIVISION;
 				
 			}else if (intentAction.equals(DrawerActivity.ACTION_CALCULATE_BY_DAYS)) {
 				btCalculate.setText(R.string.calculate_by_days);
 				tvCalculationTitle.setText(R.string.calculation_based_on_days_members_lived_in);
+				mCallback.checkDrawerList(DrawerActivity.CALCULATE_BY_DAYS);
+				mCallback.drawerlistCheckedPosition = DrawerActivity.CALCULATE_BY_DAYS;
 			}
 			
 			return rootView;
 		}
+		
+		
 
 		@Override
 		public void onClick(View v) {
@@ -188,6 +205,10 @@ public class CalculationParameterActivity extends DrawerActivity implements
 		}
 
 	}
+	
+	private void checkDrawerList(final int checkedItemId){
+		drawerList.setItemChecked(checkedItemId, true);
+	}
 
 	@Override
 	public void onFinishSelectBills(long[] ids) {
@@ -197,6 +218,17 @@ public class CalculationParameterActivity extends DrawerActivity implements
 	@Override
 	public void onFinishSelectMembers(long[] ids) {
 		frag.onFinishSelectMembers(ids);
+	}
+	
+	
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		
+		if (position != drawerlistCheckedPosition) {
+			
+			super.onItemClick(parent, view, position, id);
+		}
 	}
 
 }

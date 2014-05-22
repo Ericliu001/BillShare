@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
@@ -36,6 +37,7 @@ public class BillActivity extends DrawerActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		drawerList.setItemChecked(DrawerActivity.MANAGING_BILLS, true);
 
 		if (getFragmentManager().findFragmentByTag(TAG) == null) {
 			getFragmentManager().beginTransaction()
@@ -189,6 +191,16 @@ public class BillActivity extends DrawerActivity {
 			adapter.swapCursor(null);
 		}
 
+	}
+	
+	
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		if (position != DrawerActivity.MANAGING_BILLS) {
+			
+			super.onItemClick(parent, view, position, id);
+		}
 	}
 
 }

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 
 
@@ -22,6 +23,7 @@ public class Main extends DrawerActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
+		drawerList.setItemChecked(DrawerActivity.HOME_PAGE, true);
 		
 		frag = (MainFragment) getFragmentManager().findFragmentByTag(TAG);
 		if (frag == null) {
@@ -87,6 +89,16 @@ public class Main extends DrawerActivity {
 			default:
 				break;
 			}
+		}
+	}
+	
+	
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		if (position != DrawerActivity.HOME_PAGE) {
+			
+			super.onItemClick(parent, view, position, id);
 		}
 	}
 }

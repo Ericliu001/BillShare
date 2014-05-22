@@ -77,11 +77,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:text="@string/pick_date"
-            android:textSize="15sp" />
+            android:textSize="15sp" 
+            android:layout_marginBottom="15dp"
+            />
 
-        <View
-            android:layout_height="15dip"
-            android:background="@android:color/background_light" />
 
         <TableRow
             android:layout_width="match_parent"
@@ -106,11 +105,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:text="@string/pick_date"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+             android:layout_marginBottom="15dp"
+             />
 
-        <View
-            android:layout_height="15dip"
-            android:background="@android:color/background_light" />
 
         <TableRow
             android:layout_width="match_parent"
@@ -135,11 +133,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:text="@string/pick_date"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+             android:layout_marginBottom="15dp"
+             />
 
-        <View
-            android:layout_height="15dip"
-            android:background="@android:color/background_light" />
 
         <CheckBox
             android:id="@+id/cbPaid"

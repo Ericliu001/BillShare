@@ -35,7 +35,7 @@ public class DrawerActivity extends Activity implements
 	
 	private DrawerLayout drawerLayout = null;
 	private ActionBarDrawerToggle toggle;
-	private ListView drawerList;
+	protected ListView drawerList;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -45,6 +45,9 @@ public class DrawerActivity extends Activity implements
 
 		drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		drawerList = (ListView) findViewById(R.id.drawerList);
+		
+		drawerList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+		drawerList.setItemChecked(DrawerActivity.HOME_PAGE, true);
 
 		drawerList.setAdapter(new ArrayAdapter<String>(this,
 				R.layout.drawer_row, getResources().getStringArray(
@@ -106,10 +109,11 @@ public class DrawerActivity extends Activity implements
 
 		switch (position) {
 		case QUICK_EVEN_DIVISION:
-			i = new Intent(this, CalculationParameterActivity.class);
-			i.setAction(ACTION_EVEN_DIV);
 			
-			startActivity(i);
+			
+				i = new Intent(this, CalculationParameterActivity.class);
+				i.setAction(ACTION_EVEN_DIV);
+				startActivity(i);
 			break;
 
 		case CALCULATE_BY_DAYS:

@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.SimpleCursorTreeAdapter;
@@ -44,6 +45,7 @@ public class HistoryActivity extends DrawerActivity implements DbFragCallBack{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		drawerList.setItemChecked(DrawerActivity.PAYMENT_HISTORY, true);
 
 		placeHolderFrag = (HistoryFragment) getFragmentManager()
 				.findFragmentByTag(PLACEHOLDER_TAG);
@@ -147,7 +149,7 @@ public class HistoryActivity extends DrawerActivity implements DbFragCallBack{
 				String[] selectionArgs = { String.valueOf(id) };
 				cursorLoader = new CursorLoader(MyApplication.getInstance(),
 						BillProvider.PAYMENT_FULL_DETAIL, childProjection,
-						selection, selectionArgs, null);
+						selection, selectionArgs, COL_TYPE);
 			} else {
 				String[] groupProjection = { COL_ROWID, COL_SERIAL_NUMBER,
 						COL_NAME, COL_TOTAL_AMOUNT, COL_NUMBER_OF_BILLS_PAID };
@@ -223,6 +225,16 @@ public class HistoryActivity extends DrawerActivity implements DbFragCallBack{
 	public Model getModel() {
 		
 		return mPaymentInfo;
+	}
+	
+	
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		if (position != DrawerActivity.PAYMENT_HISTORY) {
+			
+			super.onItemClick(parent, view, position, id);
+		}
 	}
 
 }
