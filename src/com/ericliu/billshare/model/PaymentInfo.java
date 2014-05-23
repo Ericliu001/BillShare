@@ -85,7 +85,7 @@ public class PaymentInfo extends Model {
 
 	private PaymentInfo(Builder builder) {
 		this.id = builder.id;
-		this.serialNumber = builder.serialNumber;
+		this.serialNumber = Builder.serialNumber;
 		this.name = builder.name;
 		this.description = builder.description;
 		this.totalAmount = builder.totalAmount;

@@ -35,60 +35,6 @@ public class BillDatabaseHelper extends SQLiteOpenHelper {
 		TablePayment.onCreate(db);
 		TableMember.onCreate(db);
 		TablePaymentInfo.onCreate(db);
-		
-		
-		ContentValues values = new ContentValues();
-		
-		// initial values for table member
-		
-		values = new ContentValues();
-		values.put(COL_FIRSTNAME, "Eric");
-		values.put(COL_LASTNAME, "Liu");
-		db.insert(TABLE_MEMBER, null, values);
-		
-		values = new ContentValues();
-		values.put(COL_FIRSTNAME, "Steven");
-		values.put(COL_LASTNAME, "Cao");
-		db.insert(TABLE_MEMBER, null, values);
-		
-		values = new ContentValues();
-		values.put(COL_FIRSTNAME, "Peng");
-		values.put(COL_LASTNAME, "Du");
-		db.insert(TABLE_MEMBER, null, values);
-		
-		values = new ContentValues();
-		values.put(COL_FIRSTNAME, "Baofang");
-		values.put(COL_LASTNAME, "Ji");
-		db.insert(TABLE_MEMBER, null, values);
-		
-		
-		
-		// initial values for table bill
-		values = new ContentValues();
-		values.put(COL_TYPE, "Electricity");
-		values.put(COL_AMOUNT, 234.45);
-		values.put(COL_BILLING_START, "2014-05-01");
-		values.put(COL_BILLING_END, "2014-05-31");
-		db.insert(TABLE_BILL, null, values);
-		
-		values = new ContentValues();
-		values.put(COL_TYPE, "Water");
-		values.put(COL_AMOUNT, 34.25);
-		values.put(COL_BILLING_START, "2014-05-10");
-		values.put(COL_BILLING_END, "2014-05-21");
-		db.insert(TABLE_BILL, null, values);
-		
-		values = new ContentValues();
-		values.put(COL_TYPE, "Gas");
-		values.put(COL_AMOUNT, 1644.45);
-		values.put(COL_PAID, 0);
-		db.insert(TABLE_BILL, null, values);
-		
-		values = new ContentValues();
-		values.put(COL_TYPE, "Water");
-		values.put(COL_AMOUNT, 700.45);
-		values.put(COL_PAID, 0);
-		db.insert(TABLE_BILL, null, values);
 	}
 
 	@Override

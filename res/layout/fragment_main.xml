@@ -1,97 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/GridLayout1"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:columnCount="2"
-    android:orientation="horizontal"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin" >
+    android:layout_height="fill_parent" >
 
-    <LinearLayout
-        android:layout_column="0"
-        android:layout_gravity="fill"
-        android:layout_row="0"
-        android:orientation="vertical" >
+    <GridLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:columnCount="2"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin" >
 
-        <ImageButton
-            android:id="@+id/ibBill"
-            android:layout_width="@dimen/main_activity_imageview_width"
-            android:layout_height="@dimen/main_activity_imageview_height"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_bill" />
+        <LinearLayout
+            android:layout_column="0"
+            android:layout_gravity="fill"
+            android:layout_row="0"
+            android:orientation="vertical" >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/bills" />
+            <ImageButton
+                android:id="@+id/ibBill"
+                android:layout_width="@dimen/main_activity_imageview_width"
+                android:layout_height="@dimen/main_activity_imageview_height"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_bill" />
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/bills" />
+        </LinearLayout>
 
-    <LinearLayout
-        android:layout_column="1"
-        android:layout_gravity="center"
-        android:layout_row="0"
-        android:orientation="vertical" >
+        <LinearLayout
+            android:layout_column="1"
+            android:layout_gravity="center"
+            android:layout_row="0"
+            android:orientation="vertical" >
 
-        <ImageButton
-            android:id="@+id/ibMember"
-            android:layout_width="@dimen/main_activity_imageview_width"
-            android:layout_height="@dimen/main_activity_imageview_height"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_member" />
+            <ImageButton
+                android:id="@+id/ibMember"
+                android:layout_width="@dimen/main_activity_imageview_width"
+                android:layout_height="@dimen/main_activity_imageview_height"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_member" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/members" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/members" />
+        </LinearLayout>
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_column="0"
+            android:layout_gravity="center"
+            android:layout_row="1"
+            android:orientation="vertical" >
 
-    <LinearLayout
-        android:layout_column="0"
-        android:layout_gravity="center"
-        android:layout_row="1"
-        android:orientation="vertical" >
+            <ImageButton
+                android:id="@+id/ibCalculate"
+                android:layout_width="@dimen/main_activity_imageview_width"
+                android:layout_height="@dimen/main_activity_imageview_height"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_calculate" />
 
-        <ImageButton
-            android:id="@+id/ibCalculate"
-            android:layout_width="@dimen/main_activity_imageview_width"
-            android:layout_height="@dimen/main_activity_imageview_height"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_calculate" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/calculate" />
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/calculate" />
+        <LinearLayout
+            android:layout_column="1"
+            android:layout_gravity="center"
+            android:layout_row="1"
+            android:orientation="vertical" >
 
-    </LinearLayout>
+            <ImageButton
+                android:id="@+id/ibHistory"
+                android:layout_width="@dimen/main_activity_imageview_width"
+                android:layout_height="@dimen/main_activity_imageview_height"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_history" />
 
-    <LinearLayout
-        android:layout_column="1"
-        android:layout_gravity="center"
-        android:layout_row="1"
-        android:orientation="vertical" >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/history" />
+        </LinearLayout>
+    </GridLayout>
 
-        <ImageButton
-            android:id="@+id/ibHistory"
-            android:layout_width="@dimen/main_activity_imageview_width"
-            android:layout_height="@dimen/main_activity_imageview_height"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_history" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/history" />
-
-    </LinearLayout>
-
-</GridLayout>
+</ScrollView>
