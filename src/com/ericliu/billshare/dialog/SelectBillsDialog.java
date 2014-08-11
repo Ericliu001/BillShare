@@ -66,6 +66,8 @@ public class SelectBillsDialog extends DialogFragment implements OnClickListener
 		COL_BILL_NAME
 	};
 	
+	
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		
